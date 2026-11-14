@@ -13,8 +13,23 @@
 Для SQLite поместите обе базы по указанным путям. Формат отдельного архива данных — `sqlite-inputs.tar.gz` с путями от корня репозитория. При наличии этого файла распаковка из корня выглядит так.
 
 ```bash
-tar -xzf /path/to/sqlite-inputs.tar.gz
-python3 data/single_file_experiment/single_file_tool.py verify
+(
+  set -e
+  mkdir -p work
+
+  curl --fail --location --retry 3 \
+    --output work/sqlite-inputs.tar.gz \
+    "https://github.com/angryflaren/s3sync-pqc-lab/releases/download/databases/sqlite-inputs.tar.gz"
+
+  tar -xzf work/sqlite-inputs.tar.gz
+
+  sha256sum --check <<'EOF'
+477b691d8e490056c7a863e4860deee78dfde6eccbd6492afdcf70569a14fe76  data/single_file_experiment/initial.sqlite
+a6008780ed732949bb5a49d1f23e937e0164cc6900b2104def0196a7e16c573f  data/corpus/base/sqlite/catalog.sqlite
+EOF
+
+  python3 data/single_file_experiment/single_file_tool.py verify
+)
 ```
 
 Для базы E1 ожидается SHA-256 `477b691d8e490056c7a863e4860deee78dfde6eccbd6492afdcf70569a14fe76`. Для исходного файла SQLite E2 — `a6008780ed732949bb5a49d1f23e937e0164cc6900b2104def0196a7e16c573f`. История zstd воспроизводится локально от `e23d0a96164ed0da410c7a3a334b70e56c7ed022` до `49cf51799ea051457f57243527aa2058f999f005`. Исходный корпус содержит также JSONL, ZIP и справочные файлы. Их состав описан в [паспорте корпуса](../data/corpus/README_RU.md).
