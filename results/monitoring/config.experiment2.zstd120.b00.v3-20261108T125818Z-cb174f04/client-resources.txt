@@ -1,0 +1,23 @@
+	Command being timed: "dotnet run --project /home/lab/s3sync-lab/project/S3Sync.csproj -c Release --no-build --no-launch-profile -- run2 /home/lab/s3sync-lab/project/S3Sync_Threshold3_Validation/config.experiment2.zstd120.b00.v3.json"
+	User time (seconds): 625.13
+	System time (seconds): 476.77
+	Percent of CPU this job got: 60%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 30:28.86
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 190172
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 3
+	Minor (reclaiming a frame) page faults: 18561168
+	Voluntary context switches: 589541
+	Involuntary context switches: 1083834
+	Swaps: 0
+	File system inputs: 29368
+	File system outputs: 594296912
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

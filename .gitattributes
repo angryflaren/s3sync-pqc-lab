@@ -1,0 +1,8 @@
+# Сохраняем байты, на которых вычислялись контрольные суммы.
+/project/** -text
+/data/** -text
+/results/** -text
+/configs/PROTOCOL_THRESHOLD3.json -text
+*.pdf binary
+*.gz binary
+*.tar binary

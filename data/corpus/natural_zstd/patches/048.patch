@@ -1,0 +1,134 @@
+diff --git a/.github/workflows/dev-short-tests.yml b/.github/workflows/dev-short-tests.yml
+index 59f4c1b77519f7776769a88fc761cb67731dd3c8..20a11335fc33afb2a473eef9ff59b4fc6afccb4a 100644
+--- a/.github/workflows/dev-short-tests.yml
++++ b/.github/workflows/dev-short-tests.yml
+@@ -403,7 +403,7 @@ jobs:
+           { name: PPC64LE,  xcc_pkg: gcc-powerpc64le-linux-gnu, xcc: powerpc64le-linux-gnu-gcc, xemu_pkg: qemu-system-ppc,    xemu: qemu-ppc64le-static },
+           { name: S390X,    xcc_pkg: gcc-s390x-linux-gnu,       xcc: s390x-linux-gnu-gcc,       xemu_pkg: qemu-system-s390x,  xemu: qemu-s390x-static   },
+           { name: MIPS,     xcc_pkg: gcc-mips-linux-gnu,        xcc: mips-linux-gnu-gcc,        xemu_pkg: qemu-system-mips,   xemu: qemu-mips-static    },
+-          { name: RISC-V,   xcc_pkg: gcc-riscv64-linux-gnu,     xcc: riscv64-linux-gnu-gcc,     xemu_pkg: qemu-system-riscv64,xemu: qemu-riscv64-static },
++          { name: RISC-V,   xcc_pkg: gcc-14-riscv64-linux-gnu,  xcc: riscv64-linux-gnu-gcc-14,  xemu_pkg: qemu-system-riscv64,xemu: qemu-riscv64-static },
+           { name: M68K,     xcc_pkg: gcc-m68k-linux-gnu,        xcc: m68k-linux-gnu-gcc,        xemu_pkg: qemu-system-m68k,   xemu: qemu-m68k-static    },
+           { name: SPARC,    xcc_pkg: gcc-sparc64-linux-gnu,     xcc: sparc64-linux-gnu-gcc,     xemu_pkg: qemu-system-sparc,  xemu: qemu-sparc64-static },
+         ]
+diff --git a/lib/common/compiler.h b/lib/common/compiler.h
+index 410068de4a412c2a245c2452542a4c317f1d9d45..5e70570ec7a1eefd711c0a880fbdf193e569e569 100644
+--- a/lib/common/compiler.h
++++ b/lib/common/compiler.h
+@@ -224,16 +224,11 @@
+ #  if defined(__ARM_FEATURE_SVE2)
+ #    define ZSTD_ARCH_ARM_SVE2
+ #  endif
+-#if defined(__riscv) && defined(__riscv_vector)
+-    #if defined(__GNUC__)
+-        #if (__GNUC__ > 14 || (__GNUC__ == 14 && __GNUC_MINOR__ >= 1))
+-            #define ZSTD_ARCH_RISCV_RVV
+-        #endif
+-    #elif defined(__clang__)
+-        #if __clang_major__ > 18 || (__clang_major__ == 18 && __clang_minor__ >= 1)
+-            #define ZSTD_ARCH_RISCV_RVV
+-        #endif
+-    #endif
++#  if defined(__riscv) && defined(__riscv_vector)
++#    if ((defined(__GNUC__) && !defined(__clang__) && __GNUC__ >= 14) || \
++        (defined(__clang__) && __clang_major__ >= 19))
++        #define ZSTD_ARCH_RISCV_RVV
++#  endif
+ #endif
+ #
+ #  if defined(ZSTD_ARCH_X86_AVX2)
+diff --git a/lib/common/zstd_internal.h b/lib/common/zstd_internal.h
+index 791b6485d23c8c8d65a8a14ebaee48e582be03f0..86a0fc5c809edc5bbdee6e27675b9c00800212f2 100644
+--- a/lib/common/zstd_internal.h
++++ b/lib/common/zstd_internal.h
+@@ -185,6 +185,8 @@ static void ZSTD_copy16(void* dst, const void* src) {
+     vst1q_u8((uint8_t*)dst, vld1q_u8((const uint8_t*)src));
+ #elif defined(ZSTD_ARCH_X86_SSE2)
+     _mm_storeu_si128((__m128i*)dst, _mm_loadu_si128((const __m128i*)src));
++#elif defined(ZSTD_ARCH_RISCV_RVV)
++    __riscv_vse8_v_u8m1((uint8_t*)dst, __riscv_vle8_v_u8m1((const uint8_t*)src, 16), 16);
+ #elif defined(__clang__)
+     ZSTD_memmove(dst, src, 16);
+ #else
+diff --git a/lib/compress/zstd_compress.c b/lib/compress/zstd_compress.c
+index ce58910676c3a349b0740032c6f21fe09175ee29..1d6f0fcae0eacd5b086939aa749bb8962b3089cf 100644
+--- a/lib/compress/zstd_compress.c
++++ b/lib/compress/zstd_compress.c
+@@ -7292,7 +7292,7 @@ size_t convertSequences_noRepcodes(
+     return longLen;
+ }
+ 
+-#elif defined ZSTD_ARCH_RISCV_RVV
++#elif defined (ZSTD_ARCH_RISCV_RVV)
+ #include <riscv_vector.h>
+ /*
+  * Convert `vl` sequences per iteration, using RVV intrinsics:
+@@ -7824,7 +7824,7 @@ BlockSummary ZSTD_get1BlockSummary(const ZSTD_Sequence* seqs, size_t nbSeqs)
+     }
+ }
+ 
+-#elif defined ZSTD_ARCH_RISCV_RVV
++#elif defined (ZSTD_ARCH_RISCV_RVV)
+ 
+ BlockSummary ZSTD_get1BlockSummary(const ZSTD_Sequence* seqs, size_t nbSeqs)
+ {
+diff --git a/lib/compress/zstd_lazy.c b/lib/compress/zstd_lazy.c
+index f5efa8d8a6f091fdd35b12c1908792e2ceb65c7e..18b7b43948f938a9128be25191ebd03d6d5ac7c5 100644
+--- a/lib/compress/zstd_lazy.c
++++ b/lib/compress/zstd_lazy.c
+@@ -1052,33 +1052,39 @@ ZSTD_row_getNEONMask(const U32 rowEntries, const BYTE* const src, const BYTE tag
+ #endif
+ #if defined(ZSTD_ARCH_RISCV_RVV) && (__riscv_xlen == 64)
+ FORCE_INLINE_TEMPLATE ZSTD_VecMask
+-ZSTD_row_getRVVMask(int nbChunks, const BYTE* const src, const BYTE tag, const U32 head)
++ZSTD_row_getRVVMask(int rowEntries, const BYTE* const src, const BYTE tag, const U32 head)
+ {
+     ZSTD_VecMask matches;
+     size_t vl;
+ 
+     if (rowEntries == 16) {
+         vl = __riscv_vsetvl_e8m1(16);
+-        vuint8m1_t chunk = __riscv_vle8_v_u8m1(src, vl);
+-        vbool8_t mask = __riscv_vmseq_vx_u8m1_b8(chunk, tag, vl);
+-        vuint16m1_t mask_u16 = __riscv_vreinterpret_v_b8_u16m1(mask);
+-        matches = __riscv_vmv_x_s_u16m1_u16(mask_u16);
+-        return ZSTD_rotateRight_U16((U16)matches, head);
++        {
++            vuint8m1_t chunk = __riscv_vle8_v_u8m1(src, vl);
++            vbool8_t mask = __riscv_vmseq_vx_u8m1_b8(chunk, tag, vl);
++            vuint16m1_t mask_u16 = __riscv_vreinterpret_v_b8_u16m1(mask);
++            matches = __riscv_vmv_x_s_u16m1_u16(mask_u16);
++            return ZSTD_rotateRight_U16((U16)matches, head);
++        }
+ 
+     } else if (rowEntries == 32) {
+         vl = __riscv_vsetvl_e8m2(32);
+-        vuint8m2_t chunk = __riscv_vle8_v_u8m2(src, vl);
+-        vbool4_t mask = __riscv_vmseq_vx_u8m2_b4(chunk, tag, vl);
+-        vuint32m1_t mask_u32 = __riscv_vreinterpret_v_b4_u32m1(mask);
+-        matches = __riscv_vmv_x_s_u32m1_u32(mask_u32);
+-        return ZSTD_rotateRight_U32((U32)matches, head);
++        {
++            vuint8m2_t chunk = __riscv_vle8_v_u8m2(src, vl);
++            vbool4_t mask = __riscv_vmseq_vx_u8m2_b4(chunk, tag, vl);
++            vuint32m1_t mask_u32 = __riscv_vreinterpret_v_b4_u32m1(mask);
++            matches = __riscv_vmv_x_s_u32m1_u32(mask_u32);
++            return ZSTD_rotateRight_U32((U32)matches, head);
++        }
+     } else { // rowEntries = 64
+         vl = __riscv_vsetvl_e8m4(64);
+-        vuint8m4_t chunk = __riscv_vle8_v_u8m4(src, vl);
+-        vbool2_t mask = __riscv_vmseq_vx_u8m4_b2(chunk, tag, vl);
+-        vuint64m1_t mask_u64 = __riscv_vreinterpret_v_b2_u64m1(mask);
+-        matches = __riscv_vmv_x_s_u64m1_u64(mask_u64);
+-        return ZSTD_rotateRight_U64(matches, head);
++        {
++            vuint8m4_t chunk = __riscv_vle8_v_u8m4(src, vl);
++            vbool2_t mask = __riscv_vmseq_vx_u8m4_b2(chunk, tag, vl);
++            vuint64m1_t mask_u64 = __riscv_vreinterpret_v_b2_u64m1(mask);
++            matches = __riscv_vmv_x_s_u64m1_u64(mask_u64);
++            return ZSTD_rotateRight_U64(matches, head);
++        }
+     }
+ }
+ #endif

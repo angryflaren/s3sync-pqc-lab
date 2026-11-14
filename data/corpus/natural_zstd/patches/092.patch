@@ -1,0 +1,26 @@
+diff --git a/build/meson/tests/valgrindTest.py b/build/meson/tests/valgrindTest.py
+index 05d84878b9dcd53ee503fcf24ba7bb58f4a812c0..8bf840704a33ded0c9f9fbb2df4c7d9c82ca8c15 100644
+--- a/build/meson/tests/valgrindTest.py
++++ b/build/meson/tests/valgrindTest.py
+@@ -19,7 +19,7 @@ def valgrindTest(valgrind, datagen, fuzzer, zstd, fullbench):
+ 
+   subprocess.check_call([*VALGRIND_ARGS, datagen, '-g50M'], stdout=subprocess.DEVNULL)
+ 
+-  if subprocess.call([*VALGRIND_ARGS, zstd],
++  if subprocess.call([*VALGRIND_ARGS, zstd, '--fake-stdin-is-console'],
+                      stdout=subprocess.DEVNULL) == 0:
+     raise subprocess.SubprocessError('zstd without argument should have failed')
+ 
+diff --git a/tests/Makefile b/tests/Makefile
+index c74c219dc7d4acd2f5dfcb265560e5a8812b1107..bfa796ba05b99c2b5a2f4b06776df0d9a629f3f5 100644
+--- a/tests/Makefile
++++ b/tests/Makefile
+@@ -281,7 +281,7 @@ test-valgrind: VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --err
+ test-valgrind: zstd datagen fuzzer fullbench
+ 	@echo "\n ---- valgrind tests : memory analyzer ----"
+ 	$(VALGRIND) ./datagen -g50M > $(VOID)
+-	$(VALGRIND) $(PRGDIR)/zstd ; if [ $$? -eq 0 ] ; then echo "zstd without argument should have failed"; false; fi
++	$(VALGRIND) $(PRGDIR)/zstd --fake-stdin-is-console ; if [ $$? -eq 0 ] ; then echo "zstd without argument should have failed"; false; fi
+ 	./datagen -g80 | $(VALGRIND) $(PRGDIR)/zstd - -c > $(VOID)
+ 	./datagen -g16KB | $(VALGRIND) $(PRGDIR)/zstd -vf - -c > $(VOID)
+ 	./datagen -g2930KB | $(VALGRIND) $(PRGDIR)/zstd -5 -vf - -o tmp

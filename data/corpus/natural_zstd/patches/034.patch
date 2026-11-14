@@ -1,0 +1,13 @@
+diff --git a/.github/workflows/android-ndk-build.yml b/.github/workflows/android-ndk-build.yml
+index 330d58ffef50c65c1c29c0131ec40d00bff5a1c5..99183049c012a4ecf8e827082a0b1538bca7e16a 100644
+--- a/.github/workflows/android-ndk-build.yml
++++ b/.github/workflows/android-ndk-build.yml
+@@ -16,7 +16,7 @@ jobs:
+     - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+ 
+     - name: Set up JDK 17
+-      uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
++      uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
+       with:
+         java-version: '17'
+         distribution: 'temurin'

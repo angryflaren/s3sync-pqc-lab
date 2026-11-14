@@ -1,0 +1,12 @@
+{
+  "started_utc": "2026-11-08T13:28:49.935680+00:00",
+  "experiment": "run2",
+  "config": "/home/lab/s3sync-lab/project/S3Sync_Threshold3_Validation/config.experiment2.zstd120.b08.v3.json",
+  "project": "/home/lab/s3sync-lab/project/S3Sync.csproj",
+  "platform": "Linux-7.0.0-14-generic-x86_64-with-glibc2.43",
+  "cpu_count": 4,
+  "sample_interval_seconds": 2,
+  "free_disk_bytes_before": 83631628288,
+  "memory_note": "GNU time reports client process-tree maximum RSS, not total VPS memory; sar records system memory.",
+  "budget_mode": "virtual"
+}

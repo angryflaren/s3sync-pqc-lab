@@ -1,0 +1,11 @@
+{
+  "group": "natural_zstd",
+  "readProfile": "read_heavy",
+  "updates": 120,
+  "availableUpdates": 120,
+  "initialFiles": 652,
+  "initialContentBytes": 8427969,
+  "bundleFormat": "S3GRP002",
+  "MaximumGroupBytes": 268435456,
+  "readTraceSha256": ""
+}

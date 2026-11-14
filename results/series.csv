@@ -1,0 +1,12 @@
+stage,original_results_dir,series_id,monitor_id,trials_in_tree,original_review
+e1-pilot,results-experiment1-pilot,20261107T134939Z-b0a38c13,,3,console
+e1,results-experiment1,20261107T135327Z-6e96f042,,3,csv
+sqlite-pilot-b00,results-experiment2-b00-pilot,experiment2-20261108T090342Z-fab3f5af,config.experiment2.b00.pilot-20261108T090339Z-c3c698dc,3,csv
+sqlite-pilot-b08,results-experiment2-b08-pilot,experiment2-20261108T090450Z-86de0a7d,config.experiment2.b08.pilot-20261108T090447Z-e85e2064,3,csv
+sqlite60-b00,results-experiment2-b00-s60,experiment2-20261108T095532Z-bdcec144,config.experiment2.b00.s60-20261108T095529Z-b173b923,3,csv
+sqlite60-b08,results-experiment2-b08-s60,experiment2-20261108T100424Z-a1a04b70,config.experiment2.b08.s60-20261108T100421Z-756d24fa,3,csv
+zstd-pilot-v3,results-experiment2-zstd-pilot-v3,experiment2-20261108T112415Z-c89dd736,config.experiment2.zstd.pilot.v3-20261108T112413Z-7b5d4658,4,console
+sqlite240-b00-v3,results-experiment2-sqlite240-b00-v3,experiment2-20261108T112932Z-54b3bcb9,config.experiment2.sqlite240.b00.v3-20261108T112929Z-97495715,4,csv
+sqlite240-b08-v3,results-experiment2-sqlite240-b08-v3,experiment2-20261108T121413Z-b4bf31f4,config.experiment2.sqlite240.b08.v3-20261108T121409Z-763a4bab,4,csv
+zstd120-b00-v3,results-experiment2-zstd120-b00-v3,experiment2-20261108T125821Z-4bffb648,config.experiment2.zstd120.b00.v3-20261108T125818Z-cb174f04,8,csv
+zstd120-b08-v3,results-experiment2-zstd120-b08-v3,experiment2-20261108T132853Z-cdfec2b9,config.experiment2.zstd120.b08.v3-20261108T132849Z-2d997f97,8,csv

@@ -1,0 +1,868 @@
+{
+  "Format": 1,
+  "Status": "completed",
+  "Group": "0038a115c4384c779925a24ef5916f09",
+  "ObjectPrefix": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2",
+  "HeadKey": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/HEAD.json",
+  "Version": 120,
+  "Root": "21641aa5c91c10c0225e2808866d1ca8c688746e4424b332e444e1542a6782e9f63f4a2f4ad14419e12d1111ed9d2ab0",
+  "File": {
+    "Length": 8575125,
+    "Sha256": "b1f4ac05f0c22ff945266b68cbf8a4fab5019e7bd293d5b823c0559b281bd9dd"
+  },
+  "Head": {
+    "Format": 1,
+    "Group": "0038a115c4384c779925a24ef5916f09",
+    "Version": 120,
+    "Root": "21641aa5c91c10c0225e2808866d1ca8c688746e4424b332e444e1542a6782e9f63f4a2f4ad14419e12d1111ed9d2ab0",
+    "Objects": [
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b107da1a41ec34acdbb3733284d3a71786b74da84c2f4660635abc445f55535b448858e1bb463b95d5b0a83465b495e4.bin",
+        "Root": "b107da1a41ec34acdbb3733284d3a71786b74da84c2f4660635abc445f55535b448858e1bb463b95d5b0a83465b495e4",
+        "Bytes": 8482954,
+        "Version": 0,
+        "Kind": "Full"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/a7e02f60d73230d3cd04129dfea31214ecec2596ff0d3baa6f7434b45509a2bf01f9a63f06b15b6cd2c9fbfaed4dd5dd.bin",
+        "Root": "a7e02f60d73230d3cd04129dfea31214ecec2596ff0d3baa6f7434b45509a2bf01f9a63f06b15b6cd2c9fbfaed4dd5dd",
+        "Bytes": 12941,
+        "Version": 1,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/3239000a2579035bb965384c27afeadda5044ff19a2adbb22397c70fb2bfb2bd4fd1fd1f82b4318709a3131dc73c1eac.bin",
+        "Root": "3239000a2579035bb965384c27afeadda5044ff19a2adbb22397c70fb2bfb2bd4fd1fd1f82b4318709a3131dc73c1eac",
+        "Bytes": 29371,
+        "Version": 2,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b9372a908da0952ef94e8c4e7f0441d91f4502785561d29d884e9be222cac19d2f933d6b26d4be15930fdfdd8fe70bb6.bin",
+        "Root": "b9372a908da0952ef94e8c4e7f0441d91f4502785561d29d884e9be222cac19d2f933d6b26d4be15930fdfdd8fe70bb6",
+        "Bytes": 47753,
+        "Version": 3,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/80cec63c30ba40f2acae10da8293e655069de5853ec8d714e0362a9e3e5488daf24088329cc7abd81b8a3db1990c3d37.bin",
+        "Root": "80cec63c30ba40f2acae10da8293e655069de5853ec8d714e0362a9e3e5488daf24088329cc7abd81b8a3db1990c3d37",
+        "Bytes": 12940,
+        "Version": 4,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/2743de273f2500b102ce9b0a13f1da9f9e8a85d9d62eef1af81cc65fe29498b5fed15a3bc29eb9835f02862f038aa9c7.bin",
+        "Root": "2743de273f2500b102ce9b0a13f1da9f9e8a85d9d62eef1af81cc65fe29498b5fed15a3bc29eb9835f02862f038aa9c7",
+        "Bytes": 56585,
+        "Version": 5,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/1c0d1039d4d21e38b6a8a70daf162655d09030ec8aec376a211dddae9917a9482c4de45597fe5edb3939031526ef1e87.bin",
+        "Root": "1c0d1039d4d21e38b6a8a70daf162655d09030ec8aec376a211dddae9917a9482c4de45597fe5edb3939031526ef1e87",
+        "Bytes": 12954,
+        "Version": 6,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/90f55dfd533d350526496b75f74bfc60ac6d9f73e0b747dc9211befbaf5a2fe5459c2b9b6783236c9f5bf0945910fea4.bin",
+        "Root": "90f55dfd533d350526496b75f74bfc60ac6d9f73e0b747dc9211befbaf5a2fe5459c2b9b6783236c9f5bf0945910fea4",
+        "Bytes": 8803,
+        "Version": 7,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/89175a8de358b89e265d0edc9308212a2be4c63f9d2b29a588f3fadde7769c8768e3dd5125a07f74043c492ee9197841.bin",
+        "Root": "89175a8de358b89e265d0edc9308212a2be4c63f9d2b29a588f3fadde7769c8768e3dd5125a07f74043c492ee9197841",
+        "Bytes": 71579,
+        "Version": 8,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/a45eee76024d6891cfe67f7ea731e735cdc634562c592b0037688b8424ac07b87c722c6baf9f6628482bb138ed051b21.bin",
+        "Root": "a45eee76024d6891cfe67f7ea731e735cdc634562c592b0037688b8424ac07b87c722c6baf9f6628482bb138ed051b21",
+        "Bytes": 12271,
+        "Version": 9,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/11c76373bdf3e63a6935516da13469242c8b76fa6afc76473288cc220ec692c433557eec8a579714bc3836186b618732.bin",
+        "Root": "11c76373bdf3e63a6935516da13469242c8b76fa6afc76473288cc220ec692c433557eec8a579714bc3836186b618732",
+        "Bytes": 25586,
+        "Version": 10,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/ec327aa3fb36137fdaa48ba5367eeb73c16239313b36e0f5e53a2384dc1eb37f15d26946afc874716d3848291c70e778.bin",
+        "Root": "ec327aa3fb36137fdaa48ba5367eeb73c16239313b36e0f5e53a2384dc1eb37f15d26946afc874716d3848291c70e778",
+        "Bytes": 20680,
+        "Version": 11,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/4695aff17e54442b70b12087e49a9464b0a9321625420f7fc3dd3a7e478da9f81a9e4d2ce693e7e8d224eaa5acaf1f95.bin",
+        "Root": "4695aff17e54442b70b12087e49a9464b0a9321625420f7fc3dd3a7e478da9f81a9e4d2ce693e7e8d224eaa5acaf1f95",
+        "Bytes": 17329,
+        "Version": 12,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b9ff217e8d898a75329f953b6114d8b0dd345c940f10d63726bd6f811a252ebf69b5d4a4f7abfb116cd5c25fafdaac80.bin",
+        "Root": "b9ff217e8d898a75329f953b6114d8b0dd345c940f10d63726bd6f811a252ebf69b5d4a4f7abfb116cd5c25fafdaac80",
+        "Bytes": 8736,
+        "Version": 13,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b6be10f8baf806b1d561812aaf615f4591bd49e2a2605b0c47b12ea44952a2839d172ae7775302ff3137882c43c577ee.bin",
+        "Root": "b6be10f8baf806b1d561812aaf615f4591bd49e2a2605b0c47b12ea44952a2839d172ae7775302ff3137882c43c577ee",
+        "Bytes": 29330,
+        "Version": 14,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/bce1b218f53703c9e80a8b0b6fc9c3bc7e5d37320f024f10b96c9c6aceccf0164f4581a7b94319fa8b2a500bf4ad69c2.bin",
+        "Root": "bce1b218f53703c9e80a8b0b6fc9c3bc7e5d37320f024f10b96c9c6aceccf0164f4581a7b94319fa8b2a500bf4ad69c2",
+        "Bytes": 12893,
+        "Version": 15,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/0f452e564a7b12b31a727bacd11a1c63ad0e4789c5dd817d2819f142e18160374f671540b0972f07e99ece2dbee9f12c.bin",
+        "Root": "0f452e564a7b12b31a727bacd11a1c63ad0e4789c5dd817d2819f142e18160374f671540b0972f07e99ece2dbee9f12c",
+        "Bytes": 12756,
+        "Version": 16,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/2c44011af35b3327700b58c32bfb07d34105e291a20764d91e707be417e24cf227d339b9cf758fc4c9e5f110c5364af8.bin",
+        "Root": "2c44011af35b3327700b58c32bfb07d34105e291a20764d91e707be417e24cf227d339b9cf758fc4c9e5f110c5364af8",
+        "Bytes": 12894,
+        "Version": 17,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/4a9437799b7c7cc86584e805aa65d27f8e983e869158566652ade68a299dbf50f4bf61bd4f9e212d5c5d89515b8ca058.bin",
+        "Root": "4a9437799b7c7cc86584e805aa65d27f8e983e869158566652ade68a299dbf50f4bf61bd4f9e212d5c5d89515b8ca058",
+        "Bytes": 65919,
+        "Version": 18,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/2a160cd0c0461a8892429529622629b07b7b59724c8c571c430f5dbe9c3d92aef39b86e00e6f6f177bd8b4f86c727f0c.bin",
+        "Root": "2a160cd0c0461a8892429529622629b07b7b59724c8c571c430f5dbe9c3d92aef39b86e00e6f6f177bd8b4f86c727f0c",
+        "Bytes": 38765,
+        "Version": 19,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/3225c9f70a9fc7a5d685f03eac0fc89852f55794cac03c7e848c757b1e1b8eb60160a715bb9f33ab2cecb97cf7b1775e.bin",
+        "Root": "3225c9f70a9fc7a5d685f03eac0fc89852f55794cac03c7e848c757b1e1b8eb60160a715bb9f33ab2cecb97cf7b1775e",
+        "Bytes": 22612,
+        "Version": 20,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/4c3aa24e121dbc55bccb8ec89b20dc79d9272978c9085256ae42f52daeba4c7358341fc7292273916c750a8e9c08e971.bin",
+        "Root": "4c3aa24e121dbc55bccb8ec89b20dc79d9272978c9085256ae42f52daeba4c7358341fc7292273916c750a8e9c08e971",
+        "Bytes": 12911,
+        "Version": 21,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e0b4c9f6bf564d6eed1594be28380c53ccf0bb643cdaad1484c9454bbd25a993686a4cabbc41de80abdee641f48b9385.bin",
+        "Root": "e0b4c9f6bf564d6eed1594be28380c53ccf0bb643cdaad1484c9454bbd25a993686a4cabbc41de80abdee641f48b9385",
+        "Bytes": 12566,
+        "Version": 22,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/f0cdd76f1a737042daf956ff1186cfcd90e218b8a228ab06f52ffcd2b19e23ed9333bd94e58beeb10ed7a61a710d645a.bin",
+        "Root": "f0cdd76f1a737042daf956ff1186cfcd90e218b8a228ab06f52ffcd2b19e23ed9333bd94e58beeb10ed7a61a710d645a",
+        "Bytes": 17218,
+        "Version": 23,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/63fcb3d82e731492457e1b4028da3ddb32ad18478c0e7de4be739927fd41d403380eba44d7f4784057c33a2e993247fb.bin",
+        "Root": "63fcb3d82e731492457e1b4028da3ddb32ad18478c0e7de4be739927fd41d403380eba44d7f4784057c33a2e993247fb",
+        "Bytes": 13268,
+        "Version": 24,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/185f2db61577c7cdbd0f268cfda2fc5923f1187eb1463a01e662e639f89dc94c4c22510286a0c0f1689e0b763a5755a2.bin",
+        "Root": "185f2db61577c7cdbd0f268cfda2fc5923f1187eb1463a01e662e639f89dc94c4c22510286a0c0f1689e0b763a5755a2",
+        "Bytes": 8789,
+        "Version": 25,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/804025c8243d508ba6db78f46aeb10f1b67c4183b92d80658d72aef5df7481ccafa514ec14eb89ad3ef99007871c061e.bin",
+        "Root": "804025c8243d508ba6db78f46aeb10f1b67c4183b92d80658d72aef5df7481ccafa514ec14eb89ad3ef99007871c061e",
+        "Bytes": 58899,
+        "Version": 26,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/4107708ef232b234a36ab4ea0b39affaefb718bb88798c1b754c9df501cf8c508fa70a0c7f6393f791e4408e7c45cba1.bin",
+        "Root": "4107708ef232b234a36ab4ea0b39affaefb718bb88798c1b754c9df501cf8c508fa70a0c7f6393f791e4408e7c45cba1",
+        "Bytes": 8849,
+        "Version": 27,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/f8f3ce0e7f342c3acd6606c7f2f5b90f856ea6488de5b74a1465f7e395766f779389f14baf54a20c2be247be2cc51287.bin",
+        "Root": "f8f3ce0e7f342c3acd6606c7f2f5b90f856ea6488de5b74a1465f7e395766f779389f14baf54a20c2be247be2cc51287",
+        "Bytes": 70212,
+        "Version": 28,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/76d53af6ec65b9f6e00d0148868761aa428e26ab19df69138a4c3194202954f4ccd82d688f67fe92c70efc7a00d87ebe.bin",
+        "Root": "76d53af6ec65b9f6e00d0148868761aa428e26ab19df69138a4c3194202954f4ccd82d688f67fe92c70efc7a00d87ebe",
+        "Bytes": 13008,
+        "Version": 29,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/a58150c880773cfab1edb17a83e9e6c33b33f3d1fe2c5ad42eee31c82f98eb11d5dafe1dc9c0803a841091a04ebb8044.bin",
+        "Root": "a58150c880773cfab1edb17a83e9e6c33b33f3d1fe2c5ad42eee31c82f98eb11d5dafe1dc9c0803a841091a04ebb8044",
+        "Bytes": 12938,
+        "Version": 30,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/419d1b12f9028ef22aa543703896f5647b82f43fc163f7f4647d0dccf5db3d5889a9cb1761691e47284a2355968c0576.bin",
+        "Root": "419d1b12f9028ef22aa543703896f5647b82f43fc163f7f4647d0dccf5db3d5889a9cb1761691e47284a2355968c0576",
+        "Bytes": 27733,
+        "Version": 31,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/a2b53df0c0626fa32940d4d2b46261211cf9bb70d645df000b36d50ec2043fa24185b3d9f8c382e2c44ecff722f16d84.bin",
+        "Root": "a2b53df0c0626fa32940d4d2b46261211cf9bb70d645df000b36d50ec2043fa24185b3d9f8c382e2c44ecff722f16d84",
+        "Bytes": 8794,
+        "Version": 32,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/c53ed26a284d057f83bc5bf23238970839231ba67108d3f1c8a11975f8e000d87dce8cb60b7e508569e7cbef13f3b92c.bin",
+        "Root": "c53ed26a284d057f83bc5bf23238970839231ba67108d3f1c8a11975f8e000d87dce8cb60b7e508569e7cbef13f3b92c",
+        "Bytes": 20252,
+        "Version": 33,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/4a83f8dc01e08822f1a1cc8871a2a6a022619db2dfc61629db0b543edd7a1d11a9d8d9641e450160d51aa9c98651284a.bin",
+        "Root": "4a83f8dc01e08822f1a1cc8871a2a6a022619db2dfc61629db0b543edd7a1d11a9d8d9641e450160d51aa9c98651284a",
+        "Bytes": 8772,
+        "Version": 34,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/6217c014ad79fbf163870c4ab2d5596fa7846b247880e9b8f89f6afad01debaf57fb1f7897c4fc2c562aab2ea8615a5f.bin",
+        "Root": "6217c014ad79fbf163870c4ab2d5596fa7846b247880e9b8f89f6afad01debaf57fb1f7897c4fc2c562aab2ea8615a5f",
+        "Bytes": 21255,
+        "Version": 35,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/1cb103f4adc98837b10c5fd5dfc5c17bc71d984b59f9a0f330604061d263830e136153429896b6c3caeaf41e13c119ee.bin",
+        "Root": "1cb103f4adc98837b10c5fd5dfc5c17bc71d984b59f9a0f330604061d263830e136153429896b6c3caeaf41e13c119ee",
+        "Bytes": 34031,
+        "Version": 36,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/70ee377d537ff9b8f24f8a08b535173a5379d141a4de29f7ff4099d9a240eaecfde9d17e6f878d7263d2832ae8aebc04.bin",
+        "Root": "70ee377d537ff9b8f24f8a08b535173a5379d141a4de29f7ff4099d9a240eaecfde9d17e6f878d7263d2832ae8aebc04",
+        "Bytes": 12991,
+        "Version": 37,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/d7118f1cd66e6ed87fc681f799669148832e758adc12d4c61850920bc107ef17cac12e5ffcd13d7ac6407dc6ba008684.bin",
+        "Root": "d7118f1cd66e6ed87fc681f799669148832e758adc12d4c61850920bc107ef17cac12e5ffcd13d7ac6407dc6ba008684",
+        "Bytes": 29347,
+        "Version": 38,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/2729f99340aac5fd523c153a86055269f14a7ccd2afb5a0fa4d0f0ff3f6cb1944e0782bdeb2a443f68fd6c21519e3a0a.bin",
+        "Root": "2729f99340aac5fd523c153a86055269f14a7ccd2afb5a0fa4d0f0ff3f6cb1944e0782bdeb2a443f68fd6c21519e3a0a",
+        "Bytes": 8789,
+        "Version": 39,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b9f8a8285fe97ba601e99b69ea72af017e996b7f69c9b772d62210936d54d109c053b2ab70eeda3600cf6f124bde6b2d.bin",
+        "Root": "b9f8a8285fe97ba601e99b69ea72af017e996b7f69c9b772d62210936d54d109c053b2ab70eeda3600cf6f124bde6b2d",
+        "Bytes": 18450,
+        "Version": 40,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/0421757cfd68dfb05ad6c1327615da2cb713ae1d2a64ce1800057ec4b6fed0760490d2e4e385c49c0de7daf788904b65.bin",
+        "Root": "0421757cfd68dfb05ad6c1327615da2cb713ae1d2a64ce1800057ec4b6fed0760490d2e4e385c49c0de7daf788904b65",
+        "Bytes": 13162,
+        "Version": 41,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/fbd9a87a8cfc9b07081d5c562adcb8fe498deffdf26c35ff2b64fbedb65aafffecd56d0fefe6a813904a40f110e03622.bin",
+        "Root": "fbd9a87a8cfc9b07081d5c562adcb8fe498deffdf26c35ff2b64fbedb65aafffecd56d0fefe6a813904a40f110e03622",
+        "Bytes": 13140,
+        "Version": 42,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/8805f076c04a85a8d4532240eb3e5f81d48c72d2dbc98fffd9e1cf621e09b4e457f5f7d04e74b4b76ca8d9663cb81bbc.bin",
+        "Root": "8805f076c04a85a8d4532240eb3e5f81d48c72d2dbc98fffd9e1cf621e09b4e457f5f7d04e74b4b76ca8d9663cb81bbc",
+        "Bytes": 17625,
+        "Version": 43,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/86568f129a5a94a0db486f53f30e721e9222bdd7f518fa87439375ef48c1326ba13f4e21e83b7ba107f8b2c0531bec31.bin",
+        "Root": "86568f129a5a94a0db486f53f30e721e9222bdd7f518fa87439375ef48c1326ba13f4e21e83b7ba107f8b2c0531bec31",
+        "Bytes": 13684,
+        "Version": 44,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/1756adca3362099d9f2b9782fd3110037b5019453cfd5fb957737fe264be26f24436e0b0a31131224b55f465d8f38783.bin",
+        "Root": "1756adca3362099d9f2b9782fd3110037b5019453cfd5fb957737fe264be26f24436e0b0a31131224b55f465d8f38783",
+        "Bytes": 45922,
+        "Version": 45,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/8bbab9151f1fc9c9fab6bbb13933dd41857cb4dec62ce16549765ef03de8f26a14307825bcdf0734c498ccb5730aaca4.bin",
+        "Root": "8bbab9151f1fc9c9fab6bbb13933dd41857cb4dec62ce16549765ef03de8f26a14307825bcdf0734c498ccb5730aaca4",
+        "Bytes": 16955,
+        "Version": 46,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/9802e9fa8d97d327e0d3e38d9d867d17757f398dff8cd35718ff95fd0fbac52fb4702e5d45859e4fb59e1c5ca1f687c3.bin",
+        "Root": "9802e9fa8d97d327e0d3e38d9d867d17757f398dff8cd35718ff95fd0fbac52fb4702e5d45859e4fb59e1c5ca1f687c3",
+        "Bytes": 17045,
+        "Version": 47,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/5a5441d9a4139d6e3c27aefee896c9bd29c40496d65d92fcebffb3227f921f389a9a29446cc0afa8952a7501c75eff6d.bin",
+        "Root": "5a5441d9a4139d6e3c27aefee896c9bd29c40496d65d92fcebffb3227f921f389a9a29446cc0afa8952a7501c75eff6d",
+        "Bytes": 50080,
+        "Version": 48,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/4d81a9c4ad76d452023ffab7f889965bdcb90ccd84449bbc27febedb3459a059c4cb788bcffb89fb2b0c23d73f990b55.bin",
+        "Root": "4d81a9c4ad76d452023ffab7f889965bdcb90ccd84449bbc27febedb3459a059c4cb788bcffb89fb2b0c23d73f990b55",
+        "Bytes": 13019,
+        "Version": 49,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/1733298cb27d69ac4656d8bbe999e62411d2e2e7bc37efe00acd3ab89710847a2d53da80eb7527f390de935e447204ca.bin",
+        "Root": "1733298cb27d69ac4656d8bbe999e62411d2e2e7bc37efe00acd3ab89710847a2d53da80eb7527f390de935e447204ca",
+        "Bytes": 20048,
+        "Version": 50,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/c6f871b287b82b18ad646b3f8af4935510e1d32e927fec9ccb977527f18102c00e46b31364d1ecdb81dcf5ef027f1ae8.bin",
+        "Root": "c6f871b287b82b18ad646b3f8af4935510e1d32e927fec9ccb977527f18102c00e46b31364d1ecdb81dcf5ef027f1ae8",
+        "Bytes": 17017,
+        "Version": 51,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/76076b78cb832420338d752f7b6a5b1f849683a9ad0a94d516e2eff042c48cc215509edb6fe369ebf6abba41531bafc6.bin",
+        "Root": "76076b78cb832420338d752f7b6a5b1f849683a9ad0a94d516e2eff042c48cc215509edb6fe369ebf6abba41531bafc6",
+        "Bytes": 21087,
+        "Version": 52,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e7b486efecc2768e9e2601bf076aa9186360a78567e59ec287d0e4741597f6b299a133cd3fb6cef3c3571126bb7790e6.bin",
+        "Root": "e7b486efecc2768e9e2601bf076aa9186360a78567e59ec287d0e4741597f6b299a133cd3fb6cef3c3571126bb7790e6",
+        "Bytes": 78026,
+        "Version": 53,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e242c71abfe5aaa8edaf0d0e280e86a2c6b781d3c096e495eb261e0cd04f5ffc5b60962dcac31d3806c8a583e490e464.bin",
+        "Root": "e242c71abfe5aaa8edaf0d0e280e86a2c6b781d3c096e495eb261e0cd04f5ffc5b60962dcac31d3806c8a583e490e464",
+        "Bytes": 39236,
+        "Version": 54,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/1486d080a5d654ab105bb5e11d71f77f8cd0ab2ad3b4f0c883b2ad8366b99d958b3019f99ab210415c0e8d6c2c4dc1fb.bin",
+        "Root": "1486d080a5d654ab105bb5e11d71f77f8cd0ab2ad3b4f0c883b2ad8366b99d958b3019f99ab210415c0e8d6c2c4dc1fb",
+        "Bytes": 25225,
+        "Version": 55,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/f7859c6c3921515026c5cd8a09393f911b29c59c676ee009c761a4520c72f40fc8b85b25c444ef6f4915e232df6f27a2.bin",
+        "Root": "f7859c6c3921515026c5cd8a09393f911b29c59c676ee009c761a4520c72f40fc8b85b25c444ef6f4915e232df6f27a2",
+        "Bytes": 12885,
+        "Version": 56,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/0d8b857efce69d1f9789d7a5aca0c6e7fdb500297308185730da5095d0ed1e07bd986a575c7bb08dafeddc0c48de8a6c.bin",
+        "Root": "0d8b857efce69d1f9789d7a5aca0c6e7fdb500297308185730da5095d0ed1e07bd986a575c7bb08dafeddc0c48de8a6c",
+        "Bytes": 70236,
+        "Version": 57,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/5237ac172db0bb86f75db7cdbf0149437888595a3adde11928b519eee3692976ab936f4f991f1510a9adcce65320e8e0.bin",
+        "Root": "5237ac172db0bb86f75db7cdbf0149437888595a3adde11928b519eee3692976ab936f4f991f1510a9adcce65320e8e0",
+        "Bytes": 25629,
+        "Version": 58,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e721605378026bd9131fa8b5bba7be84ca828a68174f5c1ff295f6636bea24921b47090be3149ade48f14956f5430768.bin",
+        "Root": "e721605378026bd9131fa8b5bba7be84ca828a68174f5c1ff295f6636bea24921b47090be3149ade48f14956f5430768",
+        "Bytes": 8136,
+        "Version": 59,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/81f2b90a1c3a1e1ffc9493b9061e37364469a1136148f9d246ffd842e72ffe5ccf6b647c79b2b130214034f75219121e.bin",
+        "Root": "81f2b90a1c3a1e1ffc9493b9061e37364469a1136148f9d246ffd842e72ffe5ccf6b647c79b2b130214034f75219121e",
+        "Bytes": 8927,
+        "Version": 60,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/9100e325567cdf0d2c490895fefc80f0d9bde92aa1186d81a0ddb54adee4dd5d54402a7f800569ad22ad515c8e5835bd.bin",
+        "Root": "9100e325567cdf0d2c490895fefc80f0d9bde92aa1186d81a0ddb54adee4dd5d54402a7f800569ad22ad515c8e5835bd",
+        "Bytes": 70212,
+        "Version": 61,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/90c1f242531b5fc49ba888158ed4d6ab7d4b80c153a158bbb9f6b29b1d0d96523d80efcd3f53cb2915643b9848106e0f.bin",
+        "Root": "90c1f242531b5fc49ba888158ed4d6ab7d4b80c153a158bbb9f6b29b1d0d96523d80efcd3f53cb2915643b9848106e0f",
+        "Bytes": 8772,
+        "Version": 62,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/84ea1fe1d883923e9e1e0f702e36bd4826d87d3698779f9f2f9f1d0b0785ed243ec7009c15cfb3412ad8c86582ec057a.bin",
+        "Root": "84ea1fe1d883923e9e1e0f702e36bd4826d87d3698779f9f2f9f1d0b0785ed243ec7009c15cfb3412ad8c86582ec057a",
+        "Bytes": 25251,
+        "Version": 63,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/1111458ac4c3f70af2bbbdf20489081f5d4c3414b7ce7bafbb420e6d7aec5be9027c6cfe67ea3be206c0d0ad37d97b6e.bin",
+        "Root": "1111458ac4c3f70af2bbbdf20489081f5d4c3414b7ce7bafbb420e6d7aec5be9027c6cfe67ea3be206c0d0ad37d97b6e",
+        "Bytes": 12885,
+        "Version": 64,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b607eea0e5b98d2f9d072a35c6f68ce2ca1e6f086483965808584bea964b561a126cc35cc8dd2408a8ab986df4d0b84d.bin",
+        "Root": "b607eea0e5b98d2f9d072a35c6f68ce2ca1e6f086483965808584bea964b561a126cc35cc8dd2408a8ab986df4d0b84d",
+        "Bytes": 25229,
+        "Version": 65,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/8e0e437f26dfd9522823de570616fa1223c5089c75ba825d46df5141824973bead03df57122264e086d96d262b21eef5.bin",
+        "Root": "8e0e437f26dfd9522823de570616fa1223c5089c75ba825d46df5141824973bead03df57122264e086d96d262b21eef5",
+        "Bytes": 8782,
+        "Version": 66,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/af99a5abe71204ccbd6466d3ffc47293764afbb314813d4b7715f0958e4326f67c1c93039216edccc15ac4af2d92f87f.bin",
+        "Root": "af99a5abe71204ccbd6466d3ffc47293764afbb314813d4b7715f0958e4326f67c1c93039216edccc15ac4af2d92f87f",
+        "Bytes": 13473,
+        "Version": 67,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/818b7237019a50ff5d6fca15c0b55e5e098c98a98d8164ab842fb52d669a97fe3a5740bb1c5a084159e63c87fb6a4cba.bin",
+        "Root": "818b7237019a50ff5d6fca15c0b55e5e098c98a98d8164ab842fb52d669a97fe3a5740bb1c5a084159e63c87fb6a4cba",
+        "Bytes": 117048,
+        "Version": 68,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/6ec0ed5f3c66bcf998016973d0e6de67dcb644e409740f106cc0060075c19a05c1be97daa59d279c70f7ae19f6f9b51e.bin",
+        "Root": "6ec0ed5f3c66bcf998016973d0e6de67dcb644e409740f106cc0060075c19a05c1be97daa59d279c70f7ae19f6f9b51e",
+        "Bytes": 8772,
+        "Version": 69,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/520fc3f07b64b0756dcdd02e942f476328a99c727138584f36d5a50bcfa1ba858ebaa84654426da199ff27dfcd039801.bin",
+        "Root": "520fc3f07b64b0756dcdd02e942f476328a99c727138584f36d5a50bcfa1ba858ebaa84654426da199ff27dfcd039801",
+        "Bytes": 70212,
+        "Version": 70,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/cfe2ba0327fc09388a8e1024b072932a4ecccbc9163670ba82182b70bf37d7e3a475204984a756cc4b2045a36e13db75.bin",
+        "Root": "cfe2ba0327fc09388a8e1024b072932a4ecccbc9163670ba82182b70bf37d7e3a475204984a756cc4b2045a36e13db75",
+        "Bytes": 8773,
+        "Version": 71,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e7b2ae9f5d224f72c1d8feb20a31437d1f01b520e1da1c9c2a63e0c1c7b3f3f77c4939c94e9451b067fe3c60f8b50a10.bin",
+        "Root": "e7b2ae9f5d224f72c1d8feb20a31437d1f01b520e1da1c9c2a63e0c1c7b3f3f77c4939c94e9451b067fe3c60f8b50a10",
+        "Bytes": 12912,
+        "Version": 72,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/3c8e10fb22c923d38e1aca4f2224d3edef09c0780fab46834fc25e395ab02931b379a2d11c7b1bbee2400596ebee66a9.bin",
+        "Root": "3c8e10fb22c923d38e1aca4f2224d3edef09c0780fab46834fc25e395ab02931b379a2d11c7b1bbee2400596ebee66a9",
+        "Bytes": 12912,
+        "Version": 73,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/1db6c0b43fa420d2dafa3df17c781d601698ef2c4fe5120686665088701a3c4eef064bf05d00913cc3c29d5efb69202b.bin",
+        "Root": "1db6c0b43fa420d2dafa3df17c781d601698ef2c4fe5120686665088701a3c4eef064bf05d00913cc3c29d5efb69202b",
+        "Bytes": 26692,
+        "Version": 74,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/df3f8add2875e5b5de8668a083a3ca72b80044f63ea50c47ae2b13e0d0053803eac35d82b72eb979e392cf5a3c28ccfd.bin",
+        "Root": "df3f8add2875e5b5de8668a083a3ca72b80044f63ea50c47ae2b13e0d0053803eac35d82b72eb979e392cf5a3c28ccfd",
+        "Bytes": 50971,
+        "Version": 75,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/f036499875cb5fb58d95ef05fb3ab338920d2cdb64bfb284469d93eb769c1edb1541f72d651888ead7ff106357552aa0.bin",
+        "Root": "f036499875cb5fb58d95ef05fb3ab338920d2cdb64bfb284469d93eb769c1edb1541f72d651888ead7ff106357552aa0",
+        "Bytes": 12907,
+        "Version": 76,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/779c7c3ad120c876f1e3431982bd6b3e0b944657604ce2b91a40c8f050e8c8b83385267a4bf7f3c75ef0a019b970b104.bin",
+        "Root": "779c7c3ad120c876f1e3431982bd6b3e0b944657604ce2b91a40c8f050e8c8b83385267a4bf7f3c75ef0a019b970b104",
+        "Bytes": 12932,
+        "Version": 77,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/2061046022315ca285d91440b8bb8776142893b29eaa26d96c6f2134f4c567fe4b27ddc3a05d935da90b30c9fcecbbdc.bin",
+        "Root": "2061046022315ca285d91440b8bb8776142893b29eaa26d96c6f2134f4c567fe4b27ddc3a05d935da90b30c9fcecbbdc",
+        "Bytes": 25225,
+        "Version": 78,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/419f8d2feebc0dec5dc56e35cc50f1f42bb537ff91158637a7b53e777ca8a199acdea9ac7b9eba29651bc8230a21de93.bin",
+        "Root": "419f8d2feebc0dec5dc56e35cc50f1f42bb537ff91158637a7b53e777ca8a199acdea9ac7b9eba29651bc8230a21de93",
+        "Bytes": 17007,
+        "Version": 79,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/ce437cf595479916212f6c973e9cb6cb9e711ca2cf8e80ac16802b080393701010da2c3b39411bb2b0331b92b8d78f7d.bin",
+        "Root": "ce437cf595479916212f6c973e9cb6cb9e711ca2cf8e80ac16802b080393701010da2c3b39411bb2b0331b92b8d78f7d",
+        "Bytes": 12740,
+        "Version": 80,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/af5750597fc2b6e587bf0e465f4f1ed4c5ccb278af3098adb2a8aa0ae130ff21d96bc16dbd266aaa6e575c7b7eef6ffa.bin",
+        "Root": "af5750597fc2b6e587bf0e465f4f1ed4c5ccb278af3098adb2a8aa0ae130ff21d96bc16dbd266aaa6e575c7b7eef6ffa",
+        "Bytes": 12819,
+        "Version": 81,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/a2fe13931a7eeda81055d2842074a7f24ee5aa5281e7df2a4ee9af8b87352e46c0e3ae58cdf9ac690f3b267bf248befd.bin",
+        "Root": "a2fe13931a7eeda81055d2842074a7f24ee5aa5281e7df2a4ee9af8b87352e46c0e3ae58cdf9ac690f3b267bf248befd",
+        "Bytes": 40618,
+        "Version": 82,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/7b5a2f113e92081c402c709687c0d82e187ce6d983da42244c7be05b2a4606eca6600ab78548cc0fbd0bc9dbf60066b0.bin",
+        "Root": "7b5a2f113e92081c402c709687c0d82e187ce6d983da42244c7be05b2a4606eca6600ab78548cc0fbd0bc9dbf60066b0",
+        "Bytes": 34043,
+        "Version": 83,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/a7cef2dceab85207ea897301310878f1fea3dead7f0961f4734d04e13afc030bd28ea10cb018a0453fda86cd5a91e8b3.bin",
+        "Root": "a7cef2dceab85207ea897301310878f1fea3dead7f0961f4734d04e13afc030bd28ea10cb018a0453fda86cd5a91e8b3",
+        "Bytes": 17092,
+        "Version": 84,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/0386b12863300b25c777a8d0e131410e5130dc39c9ecb8b80e80cc68fa0528b9ec6ec1c0d5fb28e086cc991603c16c92.bin",
+        "Root": "0386b12863300b25c777a8d0e131410e5130dc39c9ecb8b80e80cc68fa0528b9ec6ec1c0d5fb28e086cc991603c16c92",
+        "Bytes": 21651,
+        "Version": 85,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/090cbb141d3fc78b1ee8df00ccd8aa1e296af4c2f78d123dbaf59e619b697b929edffc1eb2ae7d89ac386e79ca6491e6.bin",
+        "Root": "090cbb141d3fc78b1ee8df00ccd8aa1e296af4c2f78d123dbaf59e619b697b929edffc1eb2ae7d89ac386e79ca6491e6",
+        "Bytes": 8758,
+        "Version": 86,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/ef2a35608298a46bf39d468774db507c1ad213b753251efdd0902539eceaf7e911ea7e42f856595f5d0fc23173d1ed1e.bin",
+        "Root": "ef2a35608298a46bf39d468774db507c1ad213b753251efdd0902539eceaf7e911ea7e42f856595f5d0fc23173d1ed1e",
+        "Bytes": 22482,
+        "Version": 87,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/d711b0c37f9b7365b0b03108a80ce880fea263f2c7f4a1789ba24646129ed491b185e9b228b7b429f43c9ab7c37fc187.bin",
+        "Root": "d711b0c37f9b7365b0b03108a80ce880fea263f2c7f4a1789ba24646129ed491b185e9b228b7b429f43c9ab7c37fc187",
+        "Bytes": 25251,
+        "Version": 88,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/983a13a4cfd25232ac7a7090fb6b8ce70ddf46943f68b9621a2c3521f778a0855d44f04947ed0f4ad35c29006c20fc3e.bin",
+        "Root": "983a13a4cfd25232ac7a7090fb6b8ce70ddf46943f68b9621a2c3521f778a0855d44f04947ed0f4ad35c29006c20fc3e",
+        "Bytes": 8772,
+        "Version": 89,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/2816fb7978ef6cb5a6776989a282fc9dfe18f3c17e5265258fa06593d404f584fa52d48007628c7ac2601bb6edfd0ab3.bin",
+        "Root": "2816fb7978ef6cb5a6776989a282fc9dfe18f3c17e5265258fa06593d404f584fa52d48007628c7ac2601bb6edfd0ab3",
+        "Bytes": 12885,
+        "Version": 90,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/79370c541bd8e920806605a1154829bdeb424edd1fadb2bfcb0f5bde58a49b4c6f5176de9f803fe0e8ba6c538f66e882.bin",
+        "Root": "79370c541bd8e920806605a1154829bdeb424edd1fadb2bfcb0f5bde58a49b4c6f5176de9f803fe0e8ba6c538f66e882",
+        "Bytes": 25251,
+        "Version": 91,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/cd8566ccaa0aaa109b47472609973cddf8e5f6b8b5eee8cc70ea9d2e0ed30911871a46781663a27fc4af5ea44dd61c7c.bin",
+        "Root": "cd8566ccaa0aaa109b47472609973cddf8e5f6b8b5eee8cc70ea9d2e0ed30911871a46781663a27fc4af5ea44dd61c7c",
+        "Bytes": 17084,
+        "Version": 92,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/cbf77ba038df6985346652362d388f78a48f5357cb0b0ced99759e397437195ee3eee7cdad78b49dce0ec5748251d8af.bin",
+        "Root": "cbf77ba038df6985346652362d388f78a48f5357cb0b0ced99759e397437195ee3eee7cdad78b49dce0ec5748251d8af",
+        "Bytes": 25225,
+        "Version": 93,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/90c54d017aacef4636d070a0e4d4b06eeda5df686f1c8e2171e268413b5f0463be65a9403bcc629a372cf729b87e18a0.bin",
+        "Root": "90c54d017aacef4636d070a0e4d4b06eeda5df686f1c8e2171e268413b5f0463be65a9403bcc629a372cf729b87e18a0",
+        "Bytes": 25251,
+        "Version": 94,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e9e940686e451dbb65f45e9beac3f8ce2574633832d57648d5b233c46e76e453f499b554609a9af0b1ccec0141c38e55.bin",
+        "Root": "e9e940686e451dbb65f45e9beac3f8ce2574633832d57648d5b233c46e76e453f499b554609a9af0b1ccec0141c38e55",
+        "Bytes": 21492,
+        "Version": 95,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/8c43ea378c6f5500254a4c9972390aaaff2ce7baf0e6397d49a48b865ed2d9f30d8c44db5d4873b879bfdc97e6ea8f21.bin",
+        "Root": "8c43ea378c6f5500254a4c9972390aaaff2ce7baf0e6397d49a48b865ed2d9f30d8c44db5d4873b879bfdc97e6ea8f21",
+        "Bytes": 12885,
+        "Version": 96,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/6e477585edf8815d64a721e4b6d427859adfed22872e719b4dc02e69082b9148b44621e3b572dc2f56b4499261e54003.bin",
+        "Root": "6e477585edf8815d64a721e4b6d427859adfed22872e719b4dc02e69082b9148b44621e3b572dc2f56b4499261e54003",
+        "Bytes": 17007,
+        "Version": 97,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b961af953a03cea97329e7320d8ae362a0d2e8b4e99552f5542860e1c04aab25d15546d95c6f58a3fc7b2764212314b1.bin",
+        "Root": "b961af953a03cea97329e7320d8ae362a0d2e8b4e99552f5542860e1c04aab25d15546d95c6f58a3fc7b2764212314b1",
+        "Bytes": 12885,
+        "Version": 98,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/95a7e41e9190faa2323b13437280bddf96fdaedaecaaf111af91cc3f2d48ddbcbcd2529e9d674e4692cd27c4c147449e.bin",
+        "Root": "95a7e41e9190faa2323b13437280bddf96fdaedaecaaf111af91cc3f2d48ddbcbcd2529e9d674e4692cd27c4c147449e",
+        "Bytes": 25251,
+        "Version": 99,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/96f99d29f44f7b897c3d58f3c3fb0c340be8192e4c5e22b8714573e328975e7fb03d320a0d072f8042d2a92174a4e453.bin",
+        "Root": "96f99d29f44f7b897c3d58f3c3fb0c340be8192e4c5e22b8714573e328975e7fb03d320a0d072f8042d2a92174a4e453",
+        "Bytes": 8772,
+        "Version": 100,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/31950de9202804ac1317df7ceea5d9a3d791a72f7f8c0278e4b0b8a5b43ee3fbfebc2f8014f910cf5257881716de42b7.bin",
+        "Root": "31950de9202804ac1317df7ceea5d9a3d791a72f7f8c0278e4b0b8a5b43ee3fbfebc2f8014f910cf5257881716de42b7",
+        "Bytes": 29106,
+        "Version": 101,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/548fd36d08b59aba80ccfc617c0347a8a80fb8f86a45f5f40163e151a3584eb5bc0cb369043b3e1407e3625a9ace4bbe.bin",
+        "Root": "548fd36d08b59aba80ccfc617c0347a8a80fb8f86a45f5f40163e151a3584eb5bc0cb369043b3e1407e3625a9ace4bbe",
+        "Bytes": 13871,
+        "Version": 102,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e2870de834f53d65df20cb6e15657ffad94d9b2b18096c7b5611895406cd085c5649ea4379156d6295793caec40ed3f7.bin",
+        "Root": "e2870de834f53d65df20cb6e15657ffad94d9b2b18096c7b5611895406cd085c5649ea4379156d6295793caec40ed3f7",
+        "Bytes": 55746,
+        "Version": 103,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/68bf2c167c8b875187c8c6945b3979f7d18fc45bee2f221558ba73ccecb97a74d6b9790af77671c5bbd5c73c1a09dfca.bin",
+        "Root": "68bf2c167c8b875187c8c6945b3979f7d18fc45bee2f221558ba73ccecb97a74d6b9790af77671c5bbd5c73c1a09dfca",
+        "Bytes": 8755,
+        "Version": 104,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/e7c221511792fd8290415d3729a71b940d342399bd7073e83b18286023676ec55175c80d295b908a28973f086aea31d8.bin",
+        "Root": "e7c221511792fd8290415d3729a71b940d342399bd7073e83b18286023676ec55175c80d295b908a28973f086aea31d8",
+        "Bytes": 12868,
+        "Version": 105,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/87f5feb8ab2ebf5299f90db7ba153463694057e9ee9e5e04cd30612f9cd501195141625253f64492382c1c4a28dfd7b7.bin",
+        "Root": "87f5feb8ab2ebf5299f90db7ba153463694057e9ee9e5e04cd30612f9cd501195141625253f64492382c1c4a28dfd7b7",
+        "Bytes": 70195,
+        "Version": 106,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/2206b9e9ca28454fcdc1e003020743742fcfd4b171b4b95af30a6296e7edf700c61af1296108f74234db4c215ba42be5.bin",
+        "Root": "2206b9e9ca28454fcdc1e003020743742fcfd4b171b4b95af30a6296e7edf700c61af1296108f74234db4c215ba42be5",
+        "Bytes": 19630,
+        "Version": 107,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/5437b61696d9eb4a0a0dbab377add4bfc2949f92a8be072e362db5cfbe73e885eea387ad2ec9456a3e406a36b45ec086.bin",
+        "Root": "5437b61696d9eb4a0a0dbab377add4bfc2949f92a8be072e362db5cfbe73e885eea387ad2ec9456a3e406a36b45ec086",
+        "Bytes": 119961,
+        "Version": 108,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/7ad9fea01baf74a293668c875d6c2d487a118d29f0aac9ec31980dc2cfa522e7d2b792eb0c3a5d35f7c250a52fb4c9b2.bin",
+        "Root": "7ad9fea01baf74a293668c875d6c2d487a118d29f0aac9ec31980dc2cfa522e7d2b792eb0c3a5d35f7c250a52fb4c9b2",
+        "Bytes": 59137,
+        "Version": 109,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/d60c4d15158edf6b7ecf53d688040230cf55afd7ff04809ac070ba8335656b72f37760ec6ab2cd658c5cacfd9d69855f.bin",
+        "Root": "d60c4d15158edf6b7ecf53d688040230cf55afd7ff04809ac070ba8335656b72f37760ec6ab2cd658c5cacfd9d69855f",
+        "Bytes": 159321,
+        "Version": 110,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/41bfa4a6b3d73bacb75663e226096e61a0b0e2ecc2310f91b6584e26f1561d8fa8654e009b8a185b8f8e052673b8412c.bin",
+        "Root": "41bfa4a6b3d73bacb75663e226096e61a0b0e2ecc2310f91b6584e26f1561d8fa8654e009b8a185b8f8e052673b8412c",
+        "Bytes": 14330,
+        "Version": 111,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b639a7ccc1178bed07d706338ab998474c898acb10e882d9022bf64b36bca39fbc718b6816ee39063d682da6506e0712.bin",
+        "Root": "b639a7ccc1178bed07d706338ab998474c898acb10e882d9022bf64b36bca39fbc718b6816ee39063d682da6506e0712",
+        "Bytes": 17081,
+        "Version": 112,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/0ec7391adcd4d395c34bab65fdfd51b27f932b5d97c908c4bdf6c545f8c86dacc8691a515b2c5d2625f01e724034d4ea.bin",
+        "Root": "0ec7391adcd4d395c34bab65fdfd51b27f932b5d97c908c4bdf6c545f8c86dacc8691a515b2c5d2625f01e724034d4ea",
+        "Bytes": 16909,
+        "Version": 113,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/7f693cdfc90dee5be9c4e3f93d02fc8c4a9b18d685e3542e707ff04606ae1aa5140ae65a87aef17542ef60cc021b7d31.bin",
+        "Root": "7f693cdfc90dee5be9c4e3f93d02fc8c4a9b18d685e3542e707ff04606ae1aa5140ae65a87aef17542ef60cc021b7d31",
+        "Bytes": 8772,
+        "Version": 114,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/66cc59604918b147f683007366d6a49082166204a5254e28f2fef17cb0a29dc3ff7b86c5300be0bb94b362130ab314cf.bin",
+        "Root": "66cc59604918b147f683007366d6a49082166204a5254e28f2fef17cb0a29dc3ff7b86c5300be0bb94b362130ab314cf",
+        "Bytes": 13150,
+        "Version": 115,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/b54166bdd339759c9aa8801607c8312235f0250fca660848b86c3e8b214e0279ab480c400278ca9563981007c0ace47a.bin",
+        "Root": "b54166bdd339759c9aa8801607c8312235f0250fca660848b86c3e8b214e0279ab480c400278ca9563981007c0ace47a",
+        "Bytes": 12921,
+        "Version": 116,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/7c46e240da70ed3983768593072bff5447ca548620a74e69c0ac0697a68aaa48b62b08346f3ae3663167a08cf777f950.bin",
+        "Root": "7c46e240da70ed3983768593072bff5447ca548620a74e69c0ac0697a68aaa48b62b08346f3ae3663167a08cf777f950",
+        "Bytes": 23749,
+        "Version": 117,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/07f77c58604cc292d9fae9dc7074ce9a469f7197ddf7507de72178c1b8ac1e3d14f748cd0d27f9ef3c3b4968a5f1d902.bin",
+        "Root": "07f77c58604cc292d9fae9dc7074ce9a469f7197ddf7507de72178c1b8ac1e3d14f748cd0d27f9ef3c3b4968a5f1d902",
+        "Bytes": 8772,
+        "Version": 118,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/cb76cd385bc56b0282df1ee1ef7de77c4c6db2fa5ae54fd04d3895c05f933c31f4c786ad4a990c7703afdcdef8b729e6.bin",
+        "Root": "cb76cd385bc56b0282df1ee1ef7de77c4c6db2fa5ae54fd04d3895c05f933c31f4c786ad4a990c7703afdcdef8b729e6",
+        "Bytes": 51268,
+        "Version": 119,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd120-b00-v3/experiment2-20261108T125821Z-4bffb648/r01-natural_zstd-read_heavy-fixed-2/objects/21641aa5c91c10c0225e2808866d1ca8c688746e4424b332e444e1542a6782e9f63f4a2f4ad14419e12d1111ed9d2ab0.bin",
+        "Root": "21641aa5c91c10c0225e2808866d1ca8c688746e4424b332e444e1542a6782e9f63f4a2f4ad14419e12d1111ed9d2ab0",
+        "Bytes": 8789,
+        "Version": 120,
+        "Kind": "Delta"
+      }
+    ]
+  }
+}

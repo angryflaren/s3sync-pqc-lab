@@ -1,0 +1,102 @@
+diff --git a/lib/common/entropy_common.c b/lib/common/entropy_common.c
+index e2173afb0a8b0c8c070033ac404f830157c27c6a..d73c8f00baeb80418582b3483449fa0c9a359510 100644
+--- a/lib/common/entropy_common.c
++++ b/lib/common/entropy_common.c
+@@ -201,6 +201,8 @@ BMI2_TARGET_ATTRIBUTE static size_t FSE_readNCount_body_bmi2(
+ {
+     return FSE_readNCount_body(normalizedCounter, maxSVPtr, tableLogPtr, headerBuffer, hbSize);
+ }
++#else
++#define FSE_readNCount_body_bmi2 FSE_readNCount_body_default
+ #endif
+ 
+ size_t FSE_readNCount_bmi2(
+@@ -322,6 +324,8 @@ static BMI2_TARGET_ATTRIBUTE size_t HUF_readStats_body_bmi2(BYTE* huffWeight, si
+ {
+     return HUF_readStats_body(huffWeight, hwSize, rankStats, nbSymbolsPtr, tableLogPtr, src, srcSize, workSpace, wkspSize, 1);
+ }
++#else
++#define HUF_readStats_body_bmi2 HUF_readStats_body_default
+ #endif
+ 
+ size_t HUF_readStats_wksp(BYTE* huffWeight, size_t hwSize, U32* rankStats,
+diff --git a/lib/common/fse_decompress.c b/lib/common/fse_decompress.c
+index c8f1bb0cf23363354af1cf3b33bb46e1993cbe0a..0da22a25bbf4ccb3bbb9941bab91d6550e9b4eab 100644
+--- a/lib/common/fse_decompress.c
++++ b/lib/common/fse_decompress.c
+@@ -299,6 +299,8 @@ BMI2_TARGET_ATTRIBUTE static size_t FSE_decompress_wksp_body_bmi2(void* dst, siz
+ {
+     return FSE_decompress_wksp_body(dst, dstCapacity, cSrc, cSrcSize, maxLog, workSpace, wkspSize, 1);
+ }
++#else
++#define FSE_decompress_wksp_body_bmi2 FSE_decompress_wksp_body_default
+ #endif
+ 
+ size_t FSE_decompress_wksp_bmi2(void* dst, size_t dstCapacity, const void* cSrc, size_t cSrcSize, unsigned maxLog, void* workSpace, size_t wkspSize, int bmi2)
+diff --git a/lib/compress/zstd_compress_sequences.c b/lib/compress/zstd_compress_sequences.c
+index 7beb9daa603993aebc4add3dd81a0dcbedab57f1..2968a9109964205d876348bd7e76fc51e4ea82ad 100644
+--- a/lib/compress/zstd_compress_sequences.c
++++ b/lib/compress/zstd_compress_sequences.c
+@@ -414,6 +414,10 @@ ZSTD_encodeSequences_bmi2(
+                                     sequences, nbSeq, longOffsets);
+ }
+ 
++#else
++
++#define ZSTD_encodeSequences_bmi2 ZSTD_encodeSequences_default
++
+ #endif
+ 
+ size_t ZSTD_encodeSequences(
+diff --git a/lib/decompress/huf_decompress.c b/lib/decompress/huf_decompress.c
+index 920206178247ac50f0dc010e016a3ebaca8be555..ae86ba18b8f77f9239d292201e81502935fb12e2 100644
+--- a/lib/decompress/huf_decompress.c
++++ b/lib/decompress/huf_decompress.c
+@@ -704,6 +704,8 @@ size_t HUF_decompress4X1_usingDTable_internal_bmi2(void* dst, size_t dstSize, vo
+                     size_t cSrcSize, HUF_DTable const* DTable) {
+     return HUF_decompress4X1_usingDTable_internal_body(dst, dstSize, cSrc, cSrcSize, DTable);
+ }
++#else
++#define HUF_decompress4X1_usingDTable_internal_bmi2 HUF_decompress4X1_usingDTable_internal_default
+ #endif
+ 
+ static
+@@ -1507,6 +1509,8 @@ size_t HUF_decompress4X2_usingDTable_internal_bmi2(void* dst, size_t dstSize, vo
+                     size_t cSrcSize, HUF_DTable const* DTable) {
+     return HUF_decompress4X2_usingDTable_internal_body(dst, dstSize, cSrc, cSrcSize, DTable);
+ }
++#else
++#define HUF_decompress4X2_usingDTable_internal_bmi2 HUF_decompress4X2_usingDTable_internal_default
+ #endif
+ 
+ static
+diff --git a/lib/decompress/zstd_decompress_block.c b/lib/decompress/zstd_decompress_block.c
+index 56e1f9eda28cc00f2efa138940ce213b460ea222..4087ab7ebc7c074263cfeed2c7eb3370994e6b92 100644
+--- a/lib/decompress/zstd_decompress_block.c
++++ b/lib/decompress/zstd_decompress_block.c
+@@ -620,6 +620,8 @@ BMI2_TARGET_ATTRIBUTE static void ZSTD_buildFSETable_body_bmi2(ZSTD_seqSymbol* d
+     ZSTD_buildFSETable_body(dt, normalizedCounter, maxSymbolValue,
+             baseValue, nbAdditionalBits, tableLog, wksp, wkspSize);
+ }
++#else
++#define ZSTD_buildFSETable_body_bmi2 ZSTD_buildFSETable_body_default
+ #endif
+ 
+ void ZSTD_buildFSETable(ZSTD_seqSymbol* dt,
+@@ -2035,6 +2037,16 @@ ZSTD_decompressSequencesLong_bmi2(ZSTD_DCtx* dctx,
+ }
+ #endif /* ZSTD_FORCE_DECOMPRESS_SEQUENCES_SHORT */
+ 
++#else
++
++#ifndef ZSTD_FORCE_DECOMPRESS_SEQUENCES_LONG
++#define ZSTD_decompressSequences_bmi2 ZSTD_decompressSequences_default
++#define ZSTD_decompressSequencesSplitLitBuffer_bmi2 ZSTD_decompressSequencesSplitLitBuffer_default
++#endif
++#ifndef ZSTD_FORCE_DECOMPRESS_SEQUENCES_SHORT
++#define ZSTD_decompressSequencesLong_bmi2 ZSTD_decompressSequencesLong_default
++#endif
++
+ #endif /* DYNAMIC_BMI2 */
+ 
+ #ifndef ZSTD_FORCE_DECOMPRESS_SEQUENCES_LONG

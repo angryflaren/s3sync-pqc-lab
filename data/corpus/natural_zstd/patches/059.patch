@@ -1,0 +1,32 @@
+diff --git a/lib/module.modulemap b/lib/module.modulemap
+index eff98dfaceab06288aeeb72c8ca1d59d4c6ef49d..e66a210d06b468093c3b7d70182987151ab72a5e 100644
+--- a/lib/module.modulemap
++++ b/lib/module.modulemap
+@@ -1,27 +1,6 @@
+ module libzstd [extern_c] {
+     header "zstd.h"
+     export *
+-    config_macros [exhaustive] \
+-        /* zstd.h */ \
+-        ZSTD_STATIC_LINKING_ONLY, \
+-        ZSTDLIB_VISIBILITY, \
+-        ZSTDLIB_VISIBLE, \
+-        ZSTDLIB_HIDDEN, \
+-        ZSTD_DLL_EXPORT, \
+-        ZSTDLIB_STATIC_API, \
+-        ZSTD_DISABLE_DEPRECATE_WARNINGS, \
+-        ZSTD_CLEVEL_DEFAULT, \
+-        /* zdict.h */ \
+-        ZDICT_STATIC_LINKING_ONLY, \
+-        ZDICTLIB_VISIBLE, \
+-        ZDICTLIB_HIDDEN, \
+-        ZDICTLIB_VISIBILITY, \
+-        ZDICTLIB_STATIC_API, \
+-        ZDICT_DISABLE_DEPRECATE_WARNINGS, \
+-        /* zstd_errors.h */ \
+-        ZSTDERRORLIB_VISIBLE, \
+-        ZSTDERRORLIB_HIDDEN, \
+-        ZSTDERRORLIB_VISIBILITY
+ 
+     module dictbuilder [extern_c] {
+         header "zdict.h"

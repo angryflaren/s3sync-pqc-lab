@@ -1,0 +1,13 @@
+diff --git a/programs/README.md b/programs/README.md
+index 2c2e94dc612e09c8eae0245533c7ca7ae3ccabd8..2a6978ac4560dd8997c2497212a8a131205f5191 100644
+--- a/programs/README.md
++++ b/programs/README.md
+@@ -224,7 +224,7 @@ Advanced compression options:
+   --format=gzip                 Compress files to the `.gz` format.
+   --format=xz                   Compress files to the `.xz` format.
+   --format=lzma                 Compress files to the `.lzma` format.
+-  --format=lz4                 Compress files to the `.lz4` format.
++  --format=lz4                  Compress files to the `.lz4` format.
+ 
+ Advanced decompression options:
+   -l                            Print information about Zstandard-compressed files.

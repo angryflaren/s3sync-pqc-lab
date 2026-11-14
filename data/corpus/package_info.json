@@ -1,0 +1,12 @@
+{
+  "dataset": "S3SYNC Corpus v1",
+  "base_bytes": 500178823,
+  "base_files": 264,
+  "controlled_updates": 840,
+  "natural_transitions": 120,
+  "checks": "All controlled updates replayed; data formats checked at checkpoints. All 120 natural transitions matched their original Git trees. Repeat replay and independent ZIP reader checks passed.",
+  "scripts_sha256": {
+    "corpus_tool.py": "13da734f4666795779615ca10b65e897787e6ac1788eb232c87249cb934a5dd5",
+    "natural_tool.py": "bd46b74d81c59a7a9bca626fd520f5bf6d4efe357b5487f8dc70343116d2dd69"
+  }
+}

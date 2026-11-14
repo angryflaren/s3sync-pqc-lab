@@ -1,0 +1,22 @@
+diff --git a/lib/legacy/zstd_v05.c b/lib/legacy/zstd_v05.c
+index e1efca597ce71b71b2af6cadb670677f9c864d94..ee180487e942af2dafa84c2d7718f2037088017b 100644
+--- a/lib/legacy/zstd_v05.c
++++ b/lib/legacy/zstd_v05.c
+@@ -3972,8 +3972,15 @@ size_t ZBUFFv05_decompressContinue(ZBUFFv05_DCtx* zbc, void* dst, size_t* maxDst
+                 zbc->outStart += flushedSize;
+                 if (flushedSize == toFlushSize) {
+                     zbc->stage = ZBUFFv05ds_read;
+-                    if (zbc->outStart + BLOCKSIZE > zbc->outBuffSize)
+-                        zbc->outStart = zbc->outEnd = 0;
++                    if (zbc->outStart + BLOCKSIZE > zbc->outBuffSize) {
++                        /* Not enough room for next block - need to wrap buffer.
++                         * Preserve history: copy the last windowSize bytes to the
++                         * beginning so that back-references can still find valid data. */
++                        size_t const windowSize = (size_t)1 << zbc->params.windowLog;
++                        size_t const preserveSize = MIN(zbc->outEnd, windowSize);
++                        memmove(zbc->outBuff, zbc->outBuff + zbc->outEnd - preserveSize, preserveSize);
++                        zbc->outStart = zbc->outEnd = preserveSize;
++                    }
+                     break;
+                 }
+                 /* cannot flush everything */

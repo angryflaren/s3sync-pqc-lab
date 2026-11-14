@@ -1,0 +1,248 @@
+diff --git a/programs/zstdcli.c b/programs/zstdcli.c
+index 34db7bf51a0058d3378cb23de9eec05492077f56..e0d7faa435b801023bba625411e8666c61caf736 100644
+--- a/programs/zstdcli.c
++++ b/programs/zstdcli.c
+@@ -347,7 +347,7 @@ static void errorOut(const char* msg)
+ 
+ /*! readU32FromCharChecked() :
+  * @return 0 if success, and store the result in *value.
+- *  allows and interprets K, KB, KiB, M, MB and MiB suffix.
++ *  allows and interprets K, KB, KiB, M, MB, MiB, G, GB and GiB suffix.
+  *  Will also modify `*stringPtr`, advancing it to position where it stopped reading.
+  * @return 1 if an overflow error occurs */
+ static int readU32FromCharChecked(const char** stringPtr, unsigned* value)
+@@ -362,15 +362,22 @@ static int readU32FromCharChecked(const char** stringPtr, unsigned* value)
+         if (result < last) return 1; /* overflow error */
+         (*stringPtr)++ ;
+     }
+-    if ((**stringPtr=='K') || (**stringPtr=='M')) {
+-        unsigned const maxK = ((unsigned)(-1)) >> 10;
+-        if (result > maxK) return 1; /* overflow error */
+-        result <<= 10;
+-        if (**stringPtr=='M') {
+-            if (result > maxK) return 1; /* overflow error */
+-            result <<= 10;
++    if ((**stringPtr=='K') || (**stringPtr=='M') || (**stringPtr=='G')) {
++        switch (**stringPtr) {
++            case 'K':
++                if (result > (((unsigned)-1) >> 10)) return 1; /* overflow error */
++                result <<= 10;
++                break;
++            case 'M':
++                if (result > (((unsigned)-1) >> 20)) return 1; /* overflow error */
++                result <<= 20;
++                break;
++            case 'G':
++                if (result > (((unsigned)-1) >> 30)) return 1; /* overflow error */
++                result <<= 30;
++                break;
+         }
+-        (*stringPtr)++;  /* skip `K` or `M` */
++        (*stringPtr)++;  /* skip `K`, `M` or `G` */
+         if (**stringPtr=='i') (*stringPtr)++;
+         if (**stringPtr=='B') (*stringPtr)++;
+     }
+@@ -380,7 +387,7 @@ static int readU32FromCharChecked(const char** stringPtr, unsigned* value)
+ 
+ /*! readU32FromChar() :
+  * @return : unsigned integer value read from input in `char` format.
+- *  allows and interprets K, KB, KiB, M, MB and MiB suffix.
++ *  allows and interprets K, KB, KiB, M, MB, MiB, G, GB and GiB suffix.
+  *  Will also modify `*stringPtr`, advancing it to position where it stopped reading.
+  *  Note : function will exit() program if digit sequence overflows */
+ static unsigned readU32FromChar(const char** stringPtr) {
+@@ -392,7 +399,7 @@ static unsigned readU32FromChar(const char** stringPtr) {
+ 
+ /*! readIntFromChar() :
+  * @return : signed integer value read from input in `char` format.
+- *  allows and interprets K, KB, KiB, M, MB and MiB suffix.
++ *  allows and interprets K, KB, KiB, M, MB, MiB, G, GB and GiB suffix.
+  *  Will also modify `*stringPtr`, advancing it to position where it stopped reading.
+  *  Note : function will exit() program if digit sequence overflows */
+ static int readIntFromChar(const char** stringPtr) {
+@@ -409,7 +416,7 @@ static int readIntFromChar(const char** stringPtr) {
+ 
+ /*! readSizeTFromCharChecked() :
+  * @return 0 if success, and store the result in *value.
+- *  allows and interprets K, KB, KiB, M, MB and MiB suffix.
++ *  allows and interprets K, KB, KiB, M, MB, MiB, G, GB and GiB suffix.
+  *  Will also modify `*stringPtr`, advancing it to position where it stopped reading.
+  * @return 1 if an overflow error occurs */
+ static int readSizeTFromCharChecked(const char** stringPtr, size_t* value)
+@@ -424,15 +431,22 @@ static int readSizeTFromCharChecked(const char** stringPtr, size_t* value)
+         if (result < last) return 1; /* overflow error */
+         (*stringPtr)++ ;
+     }
+-    if ((**stringPtr=='K') || (**stringPtr=='M')) {
+-        size_t const maxK = ((size_t)(-1)) >> 10;
+-        if (result > maxK) return 1; /* overflow error */
+-        result <<= 10;
+-        if (**stringPtr=='M') {
+-            if (result > maxK) return 1; /* overflow error */
+-            result <<= 10;
++    if ((**stringPtr=='K') || (**stringPtr=='M') || (**stringPtr=='G')) {
++        switch (**stringPtr) {
++            case 'K':
++                if (result > (((size_t)-1) >> 10)) return 1; /* overflow error */
++                result <<= 10;
++                break;
++            case 'M':
++                if (result > (((size_t)-1) >> 20)) return 1; /* overflow error */
++                result <<= 20;
++                break;
++            case 'G':
++                if (result > (((size_t)-1) >> 30)) return 1; /* overflow error */
++                result <<= 30;
++                break;
+         }
+-        (*stringPtr)++;  /* skip `K` or `M` */
++        (*stringPtr)++;  /* skip `K`, `M` or `G` */
+         if (**stringPtr=='i') (*stringPtr)++;
+         if (**stringPtr=='B') (*stringPtr)++;
+     }
+@@ -442,7 +456,7 @@ static int readSizeTFromCharChecked(const char** stringPtr, size_t* value)
+ 
+ /*! readSizeTFromChar() :
+  * @return : size_t value read from input in `char` format.
+- *  allows and interprets K, KB, KiB, M, MB and MiB suffix.
++ *  allows and interprets K, KB, KiB, M, MB, MiB, G, GB and GiB suffix.
+  *  Will also modify `*stringPtr`, advancing it to position where it stopped reading.
+  *  Note : function will exit() program if digit sequence overflows */
+ static size_t readSizeTFromChar(const char** stringPtr) {
+@@ -830,7 +844,7 @@ static unsigned init_nbWorkers(unsigned defaultNbWorkers) {
+     NEXT_FIELD(__nb);                 \
+     _varu32 = readU32FromChar(&__nb); \
+     if(*__nb != 0) {                  \
+-        errorOut("error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed"); \
++        errorOut("error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed"); \
+     }                                 \
+ }
+ 
+@@ -839,7 +853,7 @@ static unsigned init_nbWorkers(unsigned defaultNbWorkers) {
+     NEXT_FIELD(__nb);                     \
+     _varTsize = readSizeTFromChar(&__nb); \
+     if(*__nb != 0) {                      \
+-        errorOut("error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed"); \
++        errorOut("error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed"); \
+     }                                     \
+ }
+ 
+diff --git a/tests/cli-tests/basic/memlimit.sh b/tests/cli-tests/basic/memlimit.sh
+index 88d734d0d9d55599e89ab5a1620fe47c80f1afd8..ec7f93a106bd55210d9715cc3effce7d265cf51c 100755
+--- a/tests/cli-tests/basic/memlimit.sh
++++ b/tests/cli-tests/basic/memlimit.sh
+@@ -35,6 +35,30 @@ rm file.zst
+ println "+ zstd --memory=1MiB file"
+ zstd -q --memory=1MiB file && die "Should allow numeric parameter with expected suffix"
+ rm file.zst
++println "+ zstd --memory=1G file"
++zstd -q --memory=1G file && die "Should allow numeric parameter with expected suffix"
++rm file.zst
++println "+ zstd --memory=1GB file"
++zstd -q --memory=1GB file && die "Should allow numeric parameter with expected suffix"
++rm file.zst
++println "+ zstd --memory=1GiB file"
++zstd -q --memory=1GiB file && die "Should allow numeric parameter with expected suffix"
++rm file.zst
++println "+ zstd --memory=3G file"
++zstd -q --memory=3G file && die "Should allow numeric parameter with expected suffix"
++rm file.zst
++println "+ zstd --memory=3GB file"
++zstd -q --memory=3GB file && die "Should allow numeric parameter with expected suffix"
++rm file.zst
++println "+ zstd --memory=3GiB file"
++zstd -q --memory=3GiB file && die "Should allow numeric parameter with expected suffix"
++rm file.zst
++println "+ zstd --memory=4G file"
++zstd --memory=4G file && die "Should not allow out-of-bound numeric parameter"
++println "+ zstd --memory=4GB file"
++zstd --memory=4GB file && die "Should not allow out-of-bound numeric parameter"
++println "+ zstd --memory=4GiB file"
++zstd --memory=4GiB file && die "Should not allow out-of-bound numeric parameter"
+ 
+ rm file
+ exit 0
+diff --git a/tests/cli-tests/basic/memlimit.sh.stderr.exact b/tests/cli-tests/basic/memlimit.sh.stderr.exact
+index 3785b0f92f31f92dd3ea589de73ff65cfc7ece65..28784a1e629627a43d97f74769fe3fed55bf7b7d 100644
+--- a/tests/cli-tests/basic/memlimit.sh.stderr.exact
++++ b/tests/cli-tests/basic/memlimit.sh.stderr.exact
+@@ -1,9 +1,9 @@
+-error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed 
+-error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed 
+-error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed 
+-error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed 
+-error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed 
+-error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB are allowed 
++error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed 
++error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed 
++error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed 
++error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed 
++error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed 
++error: only numeric values with optional suffixes K, KB, KiB, M, MB, MiB, G, GB, GiB are allowed 
+ Should allow numeric parameter without suffix
+ Should allow numeric parameter with expected suffix
+ Should allow numeric parameter with expected suffix
+@@ -11,3 +11,12 @@ Should allow numeric parameter with expected suffix
+ Should allow numeric parameter with expected suffix
+ Should allow numeric parameter with expected suffix
+ Should allow numeric parameter with expected suffix
++Should allow numeric parameter with expected suffix
++Should allow numeric parameter with expected suffix
++Should allow numeric parameter with expected suffix
++Should allow numeric parameter with expected suffix
++Should allow numeric parameter with expected suffix
++Should allow numeric parameter with expected suffix
++error: numeric value overflows 32-bit unsigned int 
++error: numeric value overflows 32-bit unsigned int 
++error: numeric value overflows 32-bit unsigned int 
+diff --git a/tests/cli-tests/basic/memlimit.sh.stdout.exact b/tests/cli-tests/basic/memlimit.sh.stdout.exact
+index 1821648e4065a5306b91811b97e494edb20bc543..a1a5520e74b3c161e314e0c735319a2cbfeba82e 100644
+--- a/tests/cli-tests/basic/memlimit.sh.stdout.exact
++++ b/tests/cli-tests/basic/memlimit.sh.stdout.exact
+@@ -11,3 +11,12 @@
+ + zstd --memory=1M file
+ + zstd --memory=1MB file
+ + zstd --memory=1MiB file
+++ zstd --memory=1G file
+++ zstd --memory=1GB file
+++ zstd --memory=1GiB file
+++ zstd --memory=3G file
+++ zstd --memory=3GB file
+++ zstd --memory=3GiB file
+++ zstd --memory=4G file
+++ zstd --memory=4GB file
+++ zstd --memory=4GiB file
+diff --git a/tests/playTests.sh b/tests/playTests.sh
+index d3ce39846ce2053fdb91d08aa5865873565c07af..d8ea0c3dad39b43e6081b14efa6d340282428e83 100755
+--- a/tests/playTests.sh
++++ b/tests/playTests.sh
+@@ -1075,13 +1075,19 @@ cat tmp | zstd -14 -f --size-hint=11050 | zstd -t  # slightly too high
+ cat tmp | zstd -14 -f --size-hint=10950 | zstd -t  # slightly too low
+ cat tmp | zstd -14 -f --size-hint=22000 | zstd -t  # considerably too high
+ cat tmp | zstd -14 -f --size-hint=5500  | zstd -t  # considerably too low
+-println "test : allows and interprets K,KB,KiB,M,MB and MiB suffix"
++println "test : allows and interprets K,KB,KiB,M,MB,MiB,G,GB and GiB suffix"
+ cat tmp | zstd -14 -f --size-hint=11K | zstd -t
+ cat tmp | zstd -14 -f --size-hint=11KB | zstd -t
+ cat tmp | zstd -14 -f --size-hint=11KiB | zstd -t
+ cat tmp | zstd -14 -f --size-hint=1M  | zstd -t
+ cat tmp | zstd -14 -f --size-hint=1MB  | zstd -t
+ cat tmp | zstd -14 -f --size-hint=1MiB  | zstd -t
++cat tmp | zstd -14 -f --size-hint=1G  | zstd -t
++cat tmp | zstd -14 -f --size-hint=1GB  | zstd -t
++cat tmp | zstd -14 -f --size-hint=1GiB  | zstd -t
++cat tmp | zstd -14 -f --size-hint=3G  | zstd -t
++cat tmp | zstd -14 -f --size-hint=3GB  | zstd -t
++cat tmp | zstd -14 -f --size-hint=3GiB  | zstd -t
+ 
+ 
+ println "\n===>  dictionary tests "
+@@ -1684,6 +1690,8 @@ roundTripTest -g1M -P50 "1 --single-thread --long=29" " --memory=512MB"
+ roundTripTest -g1M -P50 "1 --single-thread --long=29 --zstd=wlog=28" " --memory=256MB"
+ roundTripTest -g1M -P50 "1 --single-thread --long=29" " --long=28 --memory=512MB"
+ roundTripTest -g1M -P50 "1 --single-thread --long=29" " --zstd=wlog=28 --memory=512MB"
++roundTripTest -g1M -P50 "1 --single-thread --long=30" " --memory=1GB"
++roundTripTest -g1M -P50 "1 --single-thread --long=30" " --zstd=wlog=29 --memory=1GB"
+ 
+ 
+ if [ "$ZSTD_LIB_EXCLUDE_COMPRESSORS_DFAST_AND_UP" -ne "1" ]; then

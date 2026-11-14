@@ -1,0 +1,45 @@
+{
+  "purpose": "Configuration for the future C# comparison. This file contains no performance results.",
+  "units": "bytes; F and D must include the actual encrypted/signed packet overhead",
+  "common": {
+    "first_update": "full",
+    "full_if_delta_not_smaller": true,
+    "max_delta_chain": 128,
+    "full_when_chain_would_exceed_limit": true,
+    "threshold_condition": "S_previous + D >= theta * F"
+  },
+  "variants": [
+    {
+      "id": "fixed_2",
+      "theta": 2
+    },
+    {
+      "id": "fixed_4",
+      "theta": 4
+    },
+    {
+      "id": "adaptive_2_4",
+      "theta_min": 2,
+      "theta_max": 4,
+      "theta_expression": "2 + (4 - 2) * (1 - b_decision / B)",
+      "budget_constraint": "0 <= b_decision <= B; B > 0"
+    }
+  ],
+  "comparison": {
+    "input": "working.sqlite; same 240 updates for every variant",
+    "cold_restore_every_updates": 20,
+    "metrics": [
+      "uploaded_bytes",
+      "downloaded_bytes",
+      "sync_elapsed_seconds",
+      "restore_elapsed_seconds",
+      "request_count",
+      "delta_chain_length"
+    ],
+    "requirements": [
+      "identical crypto and delta encoder",
+      "identical initial network budget and network settings",
+      "actual S3 timings, not substituted analytical times"
+    ]
+  }
+}

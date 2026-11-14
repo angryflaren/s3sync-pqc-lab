@@ -1,0 +1,14 @@
+{
+  "dataset": "single-file-v1",
+  "file": "initial.sqlite",
+  "bytes": 500375552,
+  "sha256": "477b691d8e490056c7a863e4860deee78dfde6eccbd6492afdcf70569a14fe76",
+  "rows": 243712,
+  "updates": 240,
+  "data_seed": "S3SYNC-SINGLE-FILE-V1-20261101",
+  "preparation_runtime": {
+    "python": "3.12.14",
+    "sqlite": "3.53.1"
+  },
+  "history_type": "controlled synthetic SQL updates, not a real user trace"
+}

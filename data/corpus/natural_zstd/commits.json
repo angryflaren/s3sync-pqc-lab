@@ -1,0 +1,861 @@
+{
+  "source": "https://github.com/meta/zstd",
+  "branch_at_collection": "dev",
+  "history": "121 consecutive first-parent snapshots; 120 exact transitions",
+  "latest_commit": "49cf51799ea051457f57243527aa2058f999f005",
+  "initial_commit": "e23d0a96164ed0da410c7a3a334b70e56c7ed022",
+  "initial_tar_bytes": 8949760,
+  "initial_tar_sha256": "9ae17a7bba1e9dbc03b3d68f5bca03e33aa1173e4264f6cd123d0b4bed39a6d1",
+  "initial_file_count": 652,
+  "initial_payload_bytes": 8427969,
+  "verification": "Every patch applied with git apply --index; each resulting Git tree exactly matches the pinned source commit.",
+  "versions": [
+    {
+      "step": 0,
+      "commit": "e23d0a96164ed0da410c7a3a334b70e56c7ed022",
+      "tree": "6377d92f4648b7495f280daeb6860945d298d7a1",
+      "patch": null,
+      "patch_sha256": null
+    },
+    {
+      "step": 1,
+      "commit": "5b6fbf5f9679f4aff1470e6135cf22e8e7aee3fd",
+      "tree": "09b76fe41c962204a6f097bb5e15c5ab7d8100dc",
+      "patch": "patches/001.patch",
+      "patch_sha256": "ad6adda75acda6edd1f3f74299fc9d3f208719688e64d23e9ac51c9e0dfa94f8"
+    },
+    {
+      "step": 2,
+      "commit": "ec8ad2e5527d7a11171aeba6492b44c21de86005",
+      "tree": "54489cad66464f91d561e2903a4202d65b138797",
+      "patch": "patches/002.patch",
+      "patch_sha256": "abc17e09c6838498556b2c323cd807c25a3c2635d11ade0fd299b9aac5d2038c"
+    },
+    {
+      "step": 3,
+      "commit": "39c091bc9e16d428407d3205364bce117afcb3aa",
+      "tree": "b00911880a8942932f5044b62f2ee9329551b4e6",
+      "patch": "patches/003.patch",
+      "patch_sha256": "fe7a85cbf9d8d4a0289d7381fe664098270305c1fec5ed4f032c16487bbedb43"
+    },
+    {
+      "step": 4,
+      "commit": "88bea95d11b8e5fbe5d43cd8ca691e2a53ea6c24",
+      "tree": "d66430526a5d60ad82eb1ed2b82de915f115ed23",
+      "patch": "patches/004.patch",
+      "patch_sha256": "933a5152fedcb259785980e43382a4107aa62ee8b3e6736d8f68bcba85f68b3b"
+    },
+    {
+      "step": 5,
+      "commit": "5e6bdf5e3dee6d977ea87b2c50c3bcb14fed3603",
+      "tree": "43b5117ec3c4a92982c43aac9fd80540a6dab54e",
+      "patch": "patches/005.patch",
+      "patch_sha256": "afee633a76773bbd3aecbed7fbaf9ab297322ced09ed6815c98dd91fe5ac2357"
+    },
+    {
+      "step": 6,
+      "commit": "4255c5ea899ceaa96821278b69b94254a7c5a025",
+      "tree": "34d460f7520c147d9fac1da348a19a4fce54bb23",
+      "patch": "patches/006.patch",
+      "patch_sha256": "5c0c024acb7380d419a4296d222da0e464f0457ab51bf273c0ef78bd5d8d2311"
+    },
+    {
+      "step": 7,
+      "commit": "2082749775a3359319e85b5041a5bdc8a923c438",
+      "tree": "f15ff003317273d20c96788d1ee026597e4992f2",
+      "patch": "patches/007.patch",
+      "patch_sha256": "d5fdf1500a7df25a572ab8e5ff6a9a86d4f5e6037f38207a9fe1215bf70a5b11"
+    },
+    {
+      "step": 8,
+      "commit": "429dc891b27b0bec28266542285f3591a4ed7acd",
+      "tree": "1f62245fb2c9125b083911b11a541e2b1af3626d",
+      "patch": "patches/008.patch",
+      "patch_sha256": "4da73727f43aa34f8dfb190125d64cbdb3149f9be88de615ebe7de8d135e8b96"
+    },
+    {
+      "step": 9,
+      "commit": "354cede369e26c262c3befa6dcdac5d86d1d5f80",
+      "tree": "8ef41a1c28b8951e3c4c14f7129ba290c7dfce0e",
+      "patch": "patches/009.patch",
+      "patch_sha256": "669ac0836dbbf1ec877037853bd855b8fc65b9f47fbe3affb5f4b4fc080c0278"
+    },
+    {
+      "step": 10,
+      "commit": "7eefc221696aff82e934dcf2d6e1e795d80e7b20",
+      "tree": "71d7521d0d048119e23e3e1db5f415f0a222d14c",
+      "patch": "patches/010.patch",
+      "patch_sha256": "ba8058d5bdfdbe0275c69ef4998218ac81f228e905a604df79eddf238054a5bb"
+    },
+    {
+      "step": 11,
+      "commit": "528132e9a06f5d376f4d8e20ca89218d27b75d1e",
+      "tree": "2c789471290709c61eb0664507ef0e3801227dcf",
+      "patch": "patches/011.patch",
+      "patch_sha256": "01acc513e792a57d5d528aa9d36aff0fd8d25bc900056f8a4772958fc03d3106"
+    },
+    {
+      "step": 12,
+      "commit": "2e8ec28b3018a296b640414fc027833efb343c5c",
+      "tree": "63c498dfd755e725b60bae8ad68c5745819cbdc7",
+      "patch": "patches/012.patch",
+      "patch_sha256": "fdb47b7270269de36199369fe6e77b60d3112654bbd2865043a9b32aac6143e2"
+    },
+    {
+      "step": 13,
+      "commit": "bdceb8127174659b14be3fc2c38750abb19508c7",
+      "tree": "086c75becd8423052f9405195bead3132896d0e1",
+      "patch": "patches/013.patch",
+      "patch_sha256": "2ee29c82890f62ea98e7eb5780ad3d3796b3618d114773fe328c5e3cda14780f"
+    },
+    {
+      "step": 14,
+      "commit": "3c3b8274c517727952927c705940eb90c10c736f",
+      "tree": "5a811fb5668ac28bd2fa814e6ea499f4bf1c7df3",
+      "patch": "patches/014.patch",
+      "patch_sha256": "9448e96ba1d3ecee6accc997bb632913b9b94a12353ffc5d9970b9d2257b535d"
+    },
+    {
+      "step": 15,
+      "commit": "1dbc2e09084e843f6c0dcc2d0791610015c50979",
+      "tree": "b62f8f3f8c325a0005d46a805df37f004b36dd20",
+      "patch": "patches/015.patch",
+      "patch_sha256": "3407549994701e459bb2659e14ec28d423b312ed6ede113c857417c0e47652d2"
+    },
+    {
+      "step": 16,
+      "commit": "9a41990883e3d58356e7bffc95a3c5a5ca189acb",
+      "tree": "cba2e60f574b70c0ccfa9a054a0e26f2894e7444",
+      "patch": "patches/016.patch",
+      "patch_sha256": "fc09ba60dfdedef1f114fa86dec6b08a14bd2016f0bef2d885392eef6ccb56b8"
+    },
+    {
+      "step": 17,
+      "commit": "c768d7b94b7b612e040420fe2057a2e3bf9a3f82",
+      "tree": "bd76a0c0621dd2848ecb603449109cdba79344c1",
+      "patch": "patches/017.patch",
+      "patch_sha256": "063d22d77a5488ad9a93caa4f1b8e1b3cdd837f16c2480130f3de5b29f9408ae"
+    },
+    {
+      "step": 18,
+      "commit": "afa96bbf254ba63529fa14aa7f14d82f748e90d7",
+      "tree": "b542160ada894704a7b93001262204225cb77639",
+      "patch": "patches/018.patch",
+      "patch_sha256": "9497f569663f6381cd99426a8acd8979a2ba01626cde2ffecb7a20a50103a153"
+    },
+    {
+      "step": 19,
+      "commit": "a1e11db08a290a1833e75dc764732fec9015e462",
+      "tree": "09f4a5a1ada815bc766bbc67293265d1b6715cee",
+      "patch": "patches/019.patch",
+      "patch_sha256": "078f5f7a4c9ebfccd59b21da143115a04899c631cb180a143f02c72de3cb687c"
+    },
+    {
+      "step": 20,
+      "commit": "8c651868ff7971fb762a68643d0748b8ae2898e9",
+      "tree": "5ab7cc8471b1ee0e1018fb738bb07394978124d2",
+      "patch": "patches/020.patch",
+      "patch_sha256": "eb88385983bced81aee6fbdff4a7f03581283b7725cbbf378e01a0ec8a542a88"
+    },
+    {
+      "step": 21,
+      "commit": "f9e26bb42bf2f2cd640829ea9deafbd398e6106f",
+      "tree": "953d4bc9801b7d8be39ed7e6839db2fdda565219",
+      "patch": "patches/021.patch",
+      "patch_sha256": "05af942c3261b364863fa7d30486fc1e900eb32a9a1c256b2f73b433fd85e2c1"
+    },
+    {
+      "step": 22,
+      "commit": "6f1cb87ade9fe89b128f461fd411c05e1f9922ba",
+      "tree": "5adcfd89e6ae5225a3f91752edefe9fd526840b7",
+      "patch": "patches/022.patch",
+      "patch_sha256": "e0146ddbd5a303ef9f26efedcb2285f87d91bc5e34b15e958b6e45722216373e"
+    },
+    {
+      "step": 23,
+      "commit": "34f3a0ab1181611903172b50985b3111a30694b6",
+      "tree": "baa3fc19782319a326cb846729cf2f024298d8cb",
+      "patch": "patches/023.patch",
+      "patch_sha256": "42e453a470fe9984dfebc15599afd3619334160bd77f842247ccc9cd41b9e30e"
+    },
+    {
+      "step": 24,
+      "commit": "9bf5d340aec9713123f7f637294848ecfafe806d",
+      "tree": "d141d5234cacff42093a15f59a9fca66aa8cee0c",
+      "patch": "patches/024.patch",
+      "patch_sha256": "07f4107e60589640fd737441470cde8a9b01bd56af55e73fa6d3c6b598ca038d"
+    },
+    {
+      "step": 25,
+      "commit": "5b89189741cd04957a9d06b8eabdd31534d122b9",
+      "tree": "296e357c46933991800354ab1d87320547d46043",
+      "patch": "patches/025.patch",
+      "patch_sha256": "02429eb2c10e17c71f995aba93c35fc9a03fdaa7e58ce45b5bcae9a791fd0517"
+    },
+    {
+      "step": 26,
+      "commit": "e128976193546dceb24249206a02ff8f444f7120",
+      "tree": "6cb4219d870df7f511da65417d7e97174b0a0b7e",
+      "patch": "patches/026.patch",
+      "patch_sha256": "e1c3fc3794838d4c6cbb1043f6cd151e3262b7da660e8dfda5280a827e1629d0"
+    },
+    {
+      "step": 27,
+      "commit": "3991e8ac84201323b28f4df07f12a313aa48adfb",
+      "tree": "b32815352ffe35b7dd72b83a6f2f2932c8b86ecc",
+      "patch": "patches/027.patch",
+      "patch_sha256": "0aa1fc7dd053606f69d09de8a0867a36510e06dff01c8b69f9f1865b8968db91"
+    },
+    {
+      "step": 28,
+      "commit": "cfeb29e39713dadcb5f6735a129289ac06b3de73",
+      "tree": "0c1cc7042ff65b1bdbb41382298287ef569ab56b",
+      "patch": "patches/028.patch",
+      "patch_sha256": "8af79bcbc4aa73a6125b04eb0256ddfdde37b140497b323a940aafa72efb1f4a"
+    },
+    {
+      "step": 29,
+      "commit": "40c285e0ba2a02fc93fc34de3fb2341f5e95a11d",
+      "tree": "c95dc8b9f1eb4b35e746ec1fba3131ecf5e49aea",
+      "patch": "patches/029.patch",
+      "patch_sha256": "7864beebceaff5668afb57192a42c307e5fbe48b1022a5231a0cfb7361e390e1"
+    },
+    {
+      "step": 30,
+      "commit": "0551eaa85160d1a70eb9bd3169c6120af95e329d",
+      "tree": "1685d826c9dbd8f4a2963e943904bbc17c755a1d",
+      "patch": "patches/030.patch",
+      "patch_sha256": "168199a65f880458f78e24eda960d2e79da7084509c2eb5aa50175d2b8815bb7"
+    },
+    {
+      "step": 31,
+      "commit": "b3f134bfd42e0dcbe62b4d6d2752629c8e0ce02d",
+      "tree": "f4a357dabb72ab5be60ae9f89178f02ce6272859",
+      "patch": "patches/031.patch",
+      "patch_sha256": "f839f7e4858ceba79148a9612276ac2e8b5075757247a5122896fcff9578b918"
+    },
+    {
+      "step": 32,
+      "commit": "290e692ef8d4b427e8e6af3b40c1713b65ad8368",
+      "tree": "eb114811a58ab44ebffa07c88602e6e2665862a8",
+      "patch": "patches/032.patch",
+      "patch_sha256": "e54b00ff6e5c0f23b26f6115fe3b27ef2e3dfe13c7788249af085bf62d70f51a"
+    },
+    {
+      "step": 33,
+      "commit": "b5c294ea0163dc812aa9ba837442c3b2c1f84af4",
+      "tree": "a26821b3768c23a717a5f350a1631ac26cb06c76",
+      "patch": "patches/033.patch",
+      "patch_sha256": "c8ffa9472168332a00a31b616ecefa5138e3a50241a909e342ac17aeea35a054"
+    },
+    {
+      "step": 34,
+      "commit": "22b44831637be02bff6a63f85e88671e4cb70460",
+      "tree": "757843c90830091444a3c8e3953625d3be1f31c4",
+      "patch": "patches/034.patch",
+      "patch_sha256": "ab74abdb21374f6c4a623d08e2c5058410316783f7ab491861435047f9802ddb"
+    },
+    {
+      "step": 35,
+      "commit": "fc551317fbd9662fed7ae37494602dc57bda8aef",
+      "tree": "3b23b64c7927a423c936016e6fec52f668a63c0b",
+      "patch": "patches/035.patch",
+      "patch_sha256": "967d03158873877d99f2278b7c06ecfd955d2a8c562ee938d078dae9282a397d"
+    },
+    {
+      "step": 36,
+      "commit": "6936bc84e7eddec7184f935373d837057991693a",
+      "tree": "a4e06c5d96b42ed70615b6bf1c5c79ada7735ccb",
+      "patch": "patches/036.patch",
+      "patch_sha256": "ceaa82ad4dc41038571177981d9cc45c8be2ef219a0f29eaab8ab1f59e07732b"
+    },
+    {
+      "step": 37,
+      "commit": "3580aa28e61cea2e849c460ab6f4f5c672655773",
+      "tree": "e6cfd523a0cca965ac258e6ed9df2529f381bd0d",
+      "patch": "patches/037.patch",
+      "patch_sha256": "6dabd28cf809d1c6681c09ed66a39a5dc017d6ce408bf0c72ff5bbfa3c261877"
+    },
+    {
+      "step": 38,
+      "commit": "683c91fca8362f253d4ff3f85537eed6bc23412d",
+      "tree": "7c0ad2de4bc55902541c47adae539e743d4426ec",
+      "patch": "patches/038.patch",
+      "patch_sha256": "41531c25c36f2b7d4bb2d536d72a767e11f0f1a4f32ef372e85970cd922418c3"
+    },
+    {
+      "step": 39,
+      "commit": "98d2b90e82e5188968368d952ad6b371772e78e5",
+      "tree": "2540b9e5d4c349ec4fe9a948230d1258b0f00442",
+      "patch": "patches/039.patch",
+      "patch_sha256": "24af0e20ca61cfe200bc119fc9a5ce282598358565b48cfc41d2096e5532034d"
+    },
+    {
+      "step": 40,
+      "commit": "d190b3886305f0fb894cd648da6a6d9ecda56f64",
+      "tree": "9c0760f5cb079549b07e1e85f73f49385924f1b1",
+      "patch": "patches/040.patch",
+      "patch_sha256": "e4ccfdfd3ff134e52a49e822ad611851c60a048b4cf8f7f433fc6e212bdd9752"
+    },
+    {
+      "step": 41,
+      "commit": "e6e5a95c15e1586dee66220c557b9772b4a5d135",
+      "tree": "5898e59fc0d83e0a85e8ea17f1f5e4d473d90013",
+      "patch": "patches/041.patch",
+      "patch_sha256": "80e2a118aeccb02f303c5eafbef7426e7cc846bbfd3ae33936c7a1759bfcc909"
+    },
+    {
+      "step": 42,
+      "commit": "085cc9319a6f014b4c0f39c7f2c7c39f3dc8d4b9",
+      "tree": "1b90eed80c61aa046f7906105271d67aa1a99ae9",
+      "patch": "patches/042.patch",
+      "patch_sha256": "16f10ee0323d41611e95c1a303c0e19661f15f239321bf40a2f5b70a4bbaa44d"
+    },
+    {
+      "step": 43,
+      "commit": "f9b0c4fd0d824e095dc382daea4f6cb58c5587df",
+      "tree": "7840a4a590878617422ccb8c9a848df677b7f180",
+      "patch": "patches/043.patch",
+      "patch_sha256": "56e2607a13fb87397f500348f8b42e272a01eea619383fab3ea296f413dac764"
+    },
+    {
+      "step": 44,
+      "commit": "ee9b5f4371fc7c2216141180f91575cf62a24e3a",
+      "tree": "76c54771a4b852579e44a39040756698fad15054",
+      "patch": "patches/044.patch",
+      "patch_sha256": "2b6bb601e7397fc72182e907d18a2c9c991c18d8edb31b703b9aaf161a18b5a8"
+    },
+    {
+      "step": 45,
+      "commit": "89d685e42dbcf815a16ed0fcd7d050ef74ccad96",
+      "tree": "d07c8d08849d0beb13464d81a0ce0b0a466c6f9c",
+      "patch": "patches/045.patch",
+      "patch_sha256": "45e5235d2ec682ae5273d8f493a4abc9c29817083f796dd28001f009ee85bdc6"
+    },
+    {
+      "step": 46,
+      "commit": "a8f732e50fd5a492ea8f3d87169580f2cf2d55b7",
+      "tree": "58fefd104f8cc62d492da5b6bda594d318872671",
+      "patch": "patches/046.patch",
+      "patch_sha256": "a66a08b3cbf0ac51ee9275dd6d21c3259ab2182225301ef0ec249b1e92019722"
+    },
+    {
+      "step": 47,
+      "commit": "f42dee27b6635ea7a78833c436e42703aa12533a",
+      "tree": "fa8a6cd39c2ace993c4b4910db79f726bd1eac61",
+      "patch": "patches/047.patch",
+      "patch_sha256": "6e7e78bbfa39c8cd25ac4c964b38d3797bd5983e7fd4da39836dc79ab81550f5"
+    },
+    {
+      "step": 48,
+      "commit": "b8d6101fbabdc1526f71a08a136406089a9f4ff0",
+      "tree": "8c2c1f1f32900e010d7130b0e57d38740dd7191b",
+      "patch": "patches/048.patch",
+      "patch_sha256": "27a66f78b7793740a10f453f5ee37e033f8c80bc48abcaced3ed619b81a3d354"
+    },
+    {
+      "step": 49,
+      "commit": "23dae4bf49a8b36ab88509c85137b49f74bbc76d",
+      "tree": "7f32a6f8b383c86807a9c9d75e2de77ff7c426f5",
+      "patch": "patches/049.patch",
+      "patch_sha256": "822a197273e8fd211d9ae612cad65c94d3615631bada05e47a84b85f60dd3057"
+    },
+    {
+      "step": 50,
+      "commit": "6e58e9a2c42ea344708b72a14052b3bd4581e118",
+      "tree": "6a7dc15848ea286e1eaf85eb0df583388fb2bbe4",
+      "patch": "patches/050.patch",
+      "patch_sha256": "cbe30c67ba4f5ebafd29ef03a6f702292c1e45afa3480a972de12532fa966f3f"
+    },
+    {
+      "step": 51,
+      "commit": "442fa2f2d5c6f512538d7208b25563f35d16ec04",
+      "tree": "2176e90f2f0cd45e5bc2c133face9ebeaaecaac5",
+      "patch": "patches/051.patch",
+      "patch_sha256": "c8eb822849401926c462b12b6654f49b17fbd41687f5e77f6a0fea04af766c4f"
+    },
+    {
+      "step": 52,
+      "commit": "4944d2c4613cf891880aa2a3a3045f24110ba0e8",
+      "tree": "2700315bb7e219bab0adef58e6cc494a20d54631",
+      "patch": "patches/052.patch",
+      "patch_sha256": "f57422679df0465027023aaed9826d83e49d8b4f8b4f6678d8edf80fd33d38d3"
+    },
+    {
+      "step": 53,
+      "commit": "57d494909858d19fdcb42f215850a5e04b83de8f",
+      "tree": "51997122d1512a693d76a4e4c83b9d921769539f",
+      "patch": "patches/053.patch",
+      "patch_sha256": "fc87fc6aecf6954f01e9fbc7e96ce6fef2d15b34f2c33af9fd10106006a6c707"
+    },
+    {
+      "step": 54,
+      "commit": "711e17da98510a3567bf47f85a08a76f64811474",
+      "tree": "0769bb000e7fddc150c46cec89233bc2cc1b251a",
+      "patch": "patches/054.patch",
+      "patch_sha256": "1cf5fa27f580346bd0a7761cae240c66ddb470b5ab7cc1472d425f1949072d34"
+    },
+    {
+      "step": 55,
+      "commit": "a25c1fc96f431e69abea38f52cb31e6bc074e9f1",
+      "tree": "d820ac0032f8681c543fd4ca96f040043a51b88a",
+      "patch": "patches/055.patch",
+      "patch_sha256": "f92c4b052c044e652c825c152c7b0a704c6d4e0c968907ac354d8f5bac736763"
+    },
+    {
+      "step": 56,
+      "commit": "448cd340879adc0ffe36ed1e26823ee2dcb3217b",
+      "tree": "213c437ba7d5e71b5453b833f950a37932dfcf12",
+      "patch": "patches/056.patch",
+      "patch_sha256": "305356d5bc7b1de849edeaf4735c728685521950624d74bcaa604fec57c7f74f"
+    },
+    {
+      "step": 57,
+      "commit": "d462f691ba6a53bd17de492656af7878c73288c8",
+      "tree": "545c573d6cbdea47f3ff61c29cc5756f0c8d98a1",
+      "patch": "patches/057.patch",
+      "patch_sha256": "fde58a53c5e3a0cefd3372990996c655f7a7ddcf09ad67cd34b336aedc86dae9"
+    },
+    {
+      "step": 58,
+      "commit": "9e23edcf1e622d1be90d3ba226f8d88d724848aa",
+      "tree": "16eb9ff8bd3655ea9c1824ba1f73eedb0b87cb6f",
+      "patch": "patches/058.patch",
+      "patch_sha256": "374d5d511567f7f3b89066e85f9a866538e23db4fd55dfd159379b319e000c2d"
+    },
+    {
+      "step": 59,
+      "commit": "f567f38b738d12243f36897a37c7082516fb6f3e",
+      "tree": "a3f86ab672dd6a3545d3475accd954b7b65ac774",
+      "patch": "patches/059.patch",
+      "patch_sha256": "fab4ca36a488719bec2898cdbb014b33e5c8b6b452028a0e0f32a01a8d7aad23"
+    },
+    {
+      "step": 60,
+      "commit": "92505deb29bc17fe014ed918e67f15a84d70b230",
+      "tree": "2f83ecde10f21d354eee4a869e2f9052b5d73de8",
+      "patch": "patches/060.patch",
+      "patch_sha256": "bd9061d6247b294ba2c611f5c86eb5cd1a89050e55c7c4596bbd624c98aae5e6"
+    },
+    {
+      "step": 61,
+      "commit": "94117e39ca2499fabfc301964136d1aa2baa4bf8",
+      "tree": "9aefe902f7fc85b1171882fb1691c41e49bd77ab",
+      "patch": "patches/061.patch",
+      "patch_sha256": "62bcd8babb7abf3f1fac0e2ce799027d1567a44fd04dbd253e15747dbec4648d"
+    },
+    {
+      "step": 62,
+      "commit": "bfd8ad886f2948a8a0159a28e0aa6153611cd1c1",
+      "tree": "639f181517a6949a42c67ce2151ed0af8c024b24",
+      "patch": "patches/062.patch",
+      "patch_sha256": "16173da78747d1b3f4698041290185be18a359639690b1c8fa411b0ce4fb7dab"
+    },
+    {
+      "step": 63,
+      "commit": "9873a013686e31465905a51e7189d68988c995b2",
+      "tree": "a53b2cb896b0f38818667e8c31df9692b822a534",
+      "patch": "patches/063.patch",
+      "patch_sha256": "337489b594457553342118446f6ced507a158e411b5482305d8600fdf0cce0e5"
+    },
+    {
+      "step": 64,
+      "commit": "5b5144773407996c3499b6396463e987cbd786c7",
+      "tree": "7a7900d6c05019e18a3eba3b552bafa3e206931f",
+      "patch": "patches/064.patch",
+      "patch_sha256": "4c759e520707a528c4eceaade83d362c1a954f98894e2023a80039580f83656a"
+    },
+    {
+      "step": 65,
+      "commit": "af850cd44ebd9166d15e344966c6a07d7a2b6980",
+      "tree": "8d84b11c8cd77041b8581683364ff99143aa4ef2",
+      "patch": "patches/065.patch",
+      "patch_sha256": "f7dd5b782e31446484b9de9cf1aa907c324c540aa57056402f844a90e9fa94c4"
+    },
+    {
+      "step": 66,
+      "commit": "ebc93b0c9162861d0195e81c757d5cf40ec626e3",
+      "tree": "6d675357044178d45e07da763bb49d29054d16b1",
+      "patch": "patches/066.patch",
+      "patch_sha256": "2084ed1d843b46f6395aeed27491c673361ed0e7b0e026d2d61f6d7e3df60f19"
+    },
+    {
+      "step": 67,
+      "commit": "e00ddf63b2a2ae0f42ce787c82eaceb5a7da34fc",
+      "tree": "f8c11151bad1c71761da307b1dc6d8ef2fe8bead",
+      "patch": "patches/067.patch",
+      "patch_sha256": "d41f4b6c7d03c8dba9b3b42b2b0a715f0f36406b9bdcf52ac69b268d17074464"
+    },
+    {
+      "step": 68,
+      "commit": "ae9f20ca2716f2605822ca375995b7d876389b64",
+      "tree": "0c87deb36db8b32d47be10a64c2bc923ec0d8f80",
+      "patch": "patches/068.patch",
+      "patch_sha256": "2cc367cf818f29d8c6e3ab6ab76700bdc436b8a77f973b3155a9a572acb0d1e1"
+    },
+    {
+      "step": 69,
+      "commit": "deb898b541a801bd5f11bd5e1a24e8ab98a410fd",
+      "tree": "f70e871731ad9f5daf5f498642381fbfc51ed298",
+      "patch": "patches/069.patch",
+      "patch_sha256": "fc99ed48fea5ea2bc4783624a8273e9fb35a560f3256cbdcf8b75f3b065a8283"
+    },
+    {
+      "step": 70,
+      "commit": "4b8d87a8c38fdcaccc71f0e8e6d0a8c1b2ad25d7",
+      "tree": "2893094ec7545f0c2a2ab4e33753a92697e631a6",
+      "patch": "patches/070.patch",
+      "patch_sha256": "f61f303a1b945ed7479dccd70ff9f5854677fa4bcb4df509bdae5bc8b67c3a1c"
+    },
+    {
+      "step": 71,
+      "commit": "1168da0e567960d50cba1b58c9b0ba047ece4733",
+      "tree": "83fa86f359938937e760384d2f5c3bb357911b7d",
+      "patch": "patches/071.patch",
+      "patch_sha256": "04b12915942a873fa7a2ed9c4a2a0ab85ad0283eb86b0ca66f96a57e3f0a2fa8"
+    },
+    {
+      "step": 72,
+      "commit": "a90d7e7689a4468e36247c8afe7c2643ad5c57a2",
+      "tree": "c04a4725d36d07fa6d619cdc3ff150a41c334090",
+      "patch": "patches/072.patch",
+      "patch_sha256": "9299fc4e9c43c52d2ab0ef159ce2c1d95b94414dc574f284fc684f46872c4706"
+    },
+    {
+      "step": 73,
+      "commit": "117b0edfaee4d1a4af98a3074ea3b23833d47877",
+      "tree": "ac222c8eee4e5efcc84c12490d6725cdc30d17c8",
+      "patch": "patches/073.patch",
+      "patch_sha256": "974e969b2093563b34aab294ff785f26500766d94d69f39ce255f2b15dfb2fe0"
+    },
+    {
+      "step": 74,
+      "commit": "81cf153bce7c0ab41aeef574a70e32eaea7a8ba7",
+      "tree": "ebfa2b6b7bee5714ad76aeda55ed9e14fc39761c",
+      "patch": "patches/074.patch",
+      "patch_sha256": "479e2b3de9def652d9da7309cc127f2c395bb8b8f3d3758aae7468b87183bb19"
+    },
+    {
+      "step": 75,
+      "commit": "bce1ec6b0703c1b91c68daa13c763f46bf8d5199",
+      "tree": "8117fc58764985255860c8870642efdbe47630e0",
+      "patch": "patches/075.patch",
+      "patch_sha256": "bf93600bf47ca47fbdd5bb47457eec9cc4697ea6e8081e1e8cb80113a3b187ea"
+    },
+    {
+      "step": 76,
+      "commit": "2107c8f189e8496b2c561cd15d3c90a7d1d82479",
+      "tree": "f687717143ab07ae8d2d4570f8f4d6844d334fbd",
+      "patch": "patches/076.patch",
+      "patch_sha256": "c846d08cc2c541de3d4164306f76960baf563205f6ee66165c9469fd82311ad0"
+    },
+    {
+      "step": 77,
+      "commit": "bb1eedcf866e0abdd34b157d83e19d76eb82a6f7",
+      "tree": "338d4bf0b42f5e396948b9c1c1afef61259a955d",
+      "patch": "patches/077.patch",
+      "patch_sha256": "540566d4ebf4b23749dd12386c2641f4498c06d96654bfb927395a8a8c1b1ae9"
+    },
+    {
+      "step": 78,
+      "commit": "9468cace38ac14c799c183ccd87ce9094215a34b",
+      "tree": "35415747a74ac043fc6c71ec77ea4facce64d629",
+      "patch": "patches/078.patch",
+      "patch_sha256": "1b85c7f22af040ffa2d5973cef8bab3a6703d6d842bec6e2a77a8ee0299c0acb"
+    },
+    {
+      "step": 79,
+      "commit": "0532fe3e8ac1caf48f11603847ac3176064189d1",
+      "tree": "b83dea830e346b1d93cec1a9a28efb019100b723",
+      "patch": "patches/079.patch",
+      "patch_sha256": "99fad701cfbf49ddd333e0fb956213b19d6d53bc10eb0ef85f2681cdd05735a4"
+    },
+    {
+      "step": 80,
+      "commit": "6e1e545916eff6457e4b264f8813a7417510a57e",
+      "tree": "d4b3628145488f3e370758abd551652c03cb3ab3",
+      "patch": "patches/080.patch",
+      "patch_sha256": "01e6886d919192928e2652036aa12482539dfc6696b119885ae90b99718c9143"
+    },
+    {
+      "step": 81,
+      "commit": "d7ee3207cc0db53f78fc6a69babc80747b1b7658",
+      "tree": "fbc01ac1d59e00b6728fd414cea50549299da7b5",
+      "patch": "patches/081.patch",
+      "patch_sha256": "67659b86ea6bb4844b72c03f69e47c9bf2c8cec397a06592702e18c130c86c3d"
+    },
+    {
+      "step": 82,
+      "commit": "ee0af93e1cbd457e55083f0816b4baf84a1d3e0e",
+      "tree": "5de40408a66b7c8afe71e18a49fe8c95876799bb",
+      "patch": "patches/082.patch",
+      "patch_sha256": "8eec50dc5f2c0f63ef33d7ec4be274d384e1b2dd9488f2ff2adda323d0e545f8"
+    },
+    {
+      "step": 83,
+      "commit": "155046f3accbb9798b1790b56daee145455e925d",
+      "tree": "b82c49de811520c0a93c6bcb5f752880b1adfd08",
+      "patch": "patches/083.patch",
+      "patch_sha256": "9b643257c450185a71afc3d9f36c56bdac0049990b18f9166d30e676002fe7ba"
+    },
+    {
+      "step": 84,
+      "commit": "ff25783fcb38d95a5d42c9996eea02236c20a3cf",
+      "tree": "901f50ab89f32335bb42f2a536472f01fa518282",
+      "patch": "patches/084.patch",
+      "patch_sha256": "0e5ba918cbb69b020656580b69efba157e4ef8d46c797e5f48734cb16835ae2b"
+    },
+    {
+      "step": 85,
+      "commit": "c84c8fb47fd3658aa497be9d55803c1b23bf034c",
+      "tree": "a1a56eb8429699f133dd41ffd200ffa590027d14",
+      "patch": "patches/085.patch",
+      "patch_sha256": "2e34be7ea65db362c486db3cbce4ee1b2c46476a500ebe80b715ea373b7eef16"
+    },
+    {
+      "step": 86,
+      "commit": "e56865641ea90c9187bd7860f73d32a00f778ee9",
+      "tree": "f13a01b37068398e0681883d0b95db7c2d241972",
+      "patch": "patches/086.patch",
+      "patch_sha256": "12cce55084cf776aa60bd322ce1caf6911434583a3ecbfecfa6e77556053de65"
+    },
+    {
+      "step": 87,
+      "commit": "3ae099b48dfcfe02b1b3ba81ab85457f8a922e9f",
+      "tree": "2ef63e5820694d8d4cd236886382e44deca663ec",
+      "patch": "patches/087.patch",
+      "patch_sha256": "72dff5056fd14e5951110cd64676a7b24601d41ad124e8c22f407f57e261bc6c"
+    },
+    {
+      "step": 88,
+      "commit": "c0ec909bde57babcef8f7fa8060fdd42681dc2be",
+      "tree": "ac93de87d46d8951cf8c5a67d39e4eb33e361663",
+      "patch": "patches/088.patch",
+      "patch_sha256": "6ef2787d97c4c782c6736d7093c5439f4b962f94dc52c33d467cb31c83ec2282"
+    },
+    {
+      "step": 89,
+      "commit": "6d6eff1008d04389ab430932dcc916cffcf63ec9",
+      "tree": "08a4f3eae163d62fc7a2516b297b781062b24de5",
+      "patch": "patches/089.patch",
+      "patch_sha256": "81537b9ee22aed79aacdf42f5000f6dd70dfd24f35efc43f6c69c05a49225f6f"
+    },
+    {
+      "step": 90,
+      "commit": "b3a648a20447051595c9b18c0fca305ee0dbcf07",
+      "tree": "d895bf52986915614dae42715cb6a47aea07f319",
+      "patch": "patches/090.patch",
+      "patch_sha256": "7c5e2334c9503920b269cbd2414cb10d18f139668521a0f8888820adf87110ff"
+    },
+    {
+      "step": 91,
+      "commit": "48c0ed73625272cb7445183b5e256b5d0a130316",
+      "tree": "6ad2430dd6d531e1aced908fcd36feb8778252e8",
+      "patch": "patches/091.patch",
+      "patch_sha256": "fbe483ed4a3486490899b775a20b805790c61e6be15b596bbb3446794182123d"
+    },
+    {
+      "step": 92,
+      "commit": "0cdce55f2fbf02990df8681eedb76e32f804fcc8",
+      "tree": "338ed0fea998e2c5ac4baed272882d89d610b0e3",
+      "patch": "patches/092.patch",
+      "patch_sha256": "11ddabc27b32dda2ce42edfa3f3917faaf3b4cfb54987a42b5dd83c278fa6a05"
+    },
+    {
+      "step": 93,
+      "commit": "885c79ba4ae8345e006f61bc97b270d4cf7ff076",
+      "tree": "fb299289a710f073c0c596e04145be02f198b9c1",
+      "patch": "patches/093.patch",
+      "patch_sha256": "a5515fe69079c18dd81dc744e873ed9c7f821b574c870d07a171dd71062ef6ae"
+    },
+    {
+      "step": 94,
+      "commit": "c367e0c149de8a71d7c8c22f79b700b498733c38",
+      "tree": "dd36044609029abfdba55c50b60f1c0c2f8ca8a6",
+      "patch": "patches/094.patch",
+      "patch_sha256": "526dd30076932527a041b28b91ec4a5357f8b8144972014e2b52d20c68f466ad"
+    },
+    {
+      "step": 95,
+      "commit": "5233c58e6ca0b1c4c6b353ad79649191ed195bdc",
+      "tree": "336d9076c71e9e664b12d1262efed8affb93adf6",
+      "patch": "patches/095.patch",
+      "patch_sha256": "6a49c3452dae989730c6e212f631bf97131f5657daaa36c1310c72052dec6649"
+    },
+    {
+      "step": 96,
+      "commit": "b1796e458031686a766f7f8426b317701eaaa26a",
+      "tree": "05fe5a99f96c9647dec4fdfda9cb5a28327b352c",
+      "patch": "patches/096.patch",
+      "patch_sha256": "e611a7afe4c00b7b3fc87e8610fd92a348b7aa49da3c5db6640abaac32abd30a"
+    },
+    {
+      "step": 97,
+      "commit": "5c7b7bad26808e6b40ac3b3d0075466e27738a9d",
+      "tree": "1c4cf1887cbc64f38f27f625727b502dab1d3905",
+      "patch": "patches/097.patch",
+      "patch_sha256": "a628d6be5acb8f9ccde5d54f116c1bac84ef7c2e43ff68f9e3e3dec8c94658bc"
+    },
+    {
+      "step": 98,
+      "commit": "8223abf92f0b44cedb57d7ab95091037cb5f1c06",
+      "tree": "13cf45e30e15a674c5bb03ae94554aad6fbffb98",
+      "patch": "patches/098.patch",
+      "patch_sha256": "40c9137b3bd84490f448e3e7af03dde1c3ebcb589dbba962e608643a2fec8b65"
+    },
+    {
+      "step": 99,
+      "commit": "1345d2008daf1f4a2109ac6be1c122420df0d1eb",
+      "tree": "1fb57fa8262c9375f61fd171ffd4929569632b8b",
+      "patch": "patches/099.patch",
+      "patch_sha256": "d4caf7b872d70e0365f78d9002d7493bb5fe9139fd281997a36f5e734b8ebe63"
+    },
+    {
+      "step": 100,
+      "commit": "82d322c4973d9e2968d94047a40892bc6d9a9bdf",
+      "tree": "928f7daf9115af48d3f2e35351b7a9681add8c5e",
+      "patch": "patches/100.patch",
+      "patch_sha256": "9206fed84d62a4e3aef441c766999c0db7d70861d1bb5a821f300201ad525f0f"
+    },
+    {
+      "step": 101,
+      "commit": "0716f554df4262cf8530e006bfcc3d9d71e4314e",
+      "tree": "47d3555ba307a65ef78b241f74ef0041530830e1",
+      "patch": "patches/101.patch",
+      "patch_sha256": "fc10ded6aa6a2b0f828d2c39d7c48a25be11772b7336ee1b690df922427b3a85"
+    },
+    {
+      "step": 102,
+      "commit": "c6d9b57d7d6fb9005b074743cf48d2d39ad650d4",
+      "tree": "e3c98307202229e2664d83cbac89fc1afffd1998",
+      "patch": "patches/102.patch",
+      "patch_sha256": "fa810df23a1d0a3ee0f0aad72a29f47ed2faab6d0108824218700f97808c44bc"
+    },
+    {
+      "step": 103,
+      "commit": "10da6ba6de05e29169261fa4b68eb99239f770dd",
+      "tree": "56c90e128bb222bcfb2d68d892f90636e45dacd5",
+      "patch": "patches/103.patch",
+      "patch_sha256": "e6077a2b2febcc1f3de977b7946f6f0758f42b7c3c25b8f8d8f5d1d6a35dcc8b"
+    },
+    {
+      "step": 104,
+      "commit": "8fb492e8436fa2f0dc91e9a0a74d7dc36f9eb029",
+      "tree": "95f56c0181057a8af7db3a3f797b16b610c34007",
+      "patch": "patches/104.patch",
+      "patch_sha256": "8d2de984361898415449debdf256f15fa79cdd2eb31ae3e36312878ea185d1ec"
+    },
+    {
+      "step": 105,
+      "commit": "7f929ae3f9139c0ce5127e75a9c519356fe1f1a2",
+      "tree": "566a04c9d85bc001247e7bbcc64bde499adf851a",
+      "patch": "patches/105.patch",
+      "patch_sha256": "44e0db3695f40c2a0b5299fe779695b4e62064885a24075eb5d0e1ffca181dfb"
+    },
+    {
+      "step": 106,
+      "commit": "d9c0c7e2cf8a8bf9fb98d3bee546dcf8dc9ac59a",
+      "tree": "31913ba8da9099e7c6b43b9950ad2e2f28d43dd6",
+      "patch": "patches/106.patch",
+      "patch_sha256": "9b2f09a1e2537bcf91d6051ad20482d3439e467d3d52eec044b94fbb24b70ff2"
+    },
+    {
+      "step": 107,
+      "commit": "25218bd00aab91859e6b0d8c11bd4c25a674839b",
+      "tree": "7805a290c196b97e389351722c44a22c4bccfa47",
+      "patch": "patches/107.patch",
+      "patch_sha256": "1da73af179000062c1247703d004c2b82b5c7d6b16cccdff453b86d4f48cda6f"
+    },
+    {
+      "step": 108,
+      "commit": "d79e72359582d2326c63e9669fe05c2f6580fec5",
+      "tree": "e66f324ddc47b7b7f7a535d8ac5ad540fb202870",
+      "patch": "patches/108.patch",
+      "patch_sha256": "54cdadb3a7853b2c7a0571b51a52bff74e2406c8cdfd824996729aeaa472936c"
+    },
+    {
+      "step": 109,
+      "commit": "942937f39c93bfcf12ed105832fc8a2be6e43b83",
+      "tree": "3c21030b475fdea2672b2362dbc39883ac99247b",
+      "patch": "patches/109.patch",
+      "patch_sha256": "04c8694393e83115e515d36692e02ca8695f661a2a2f00ff37a947394dc6c52c"
+    },
+    {
+      "step": 110,
+      "commit": "cbbc114e5db96a14b2bdee19ce48b8e6f2aa18b1",
+      "tree": "8f1e01c3cbf1a81f1de38cafed7aa65c7718e27e",
+      "patch": "patches/110.patch",
+      "patch_sha256": "bebfc0ab02b1100bddb3758a56473974a5370c06a87d97d6aa70ab6aefd908cd"
+    },
+    {
+      "step": 111,
+      "commit": "ee650ef23636145c97ded0440ca743a54362a3ab",
+      "tree": "47f7a8cbbed7fc11c99eae3624d8e922366fc2f5",
+      "patch": "patches/111.patch",
+      "patch_sha256": "6948757e1b559f40023dc3617a1d345683bf93be50573f7ddabf66994e621b1d"
+    },
+    {
+      "step": 112,
+      "commit": "fdfa3b802540c2a80600a7d6570efeedab00f98e",
+      "tree": "b5a73c9e2ad79e4750070dfdba93590016ddacbf",
+      "patch": "patches/112.patch",
+      "patch_sha256": "e18d866ed37c1c2b2897a6d57fc9527a858f56babe817e8b26017dfe183f5b05"
+    },
+    {
+      "step": 113,
+      "commit": "01b7154f1172432f8abe9b3bb9909e14a1176b7d",
+      "tree": "7973821daa75236c9247c12881c39053a3a7cd47",
+      "patch": "patches/113.patch",
+      "patch_sha256": "f7c23d35e267bcbf1efb33ee47d90db7d076473135766cd40f3ff3d03637c18f"
+    },
+    {
+      "step": 114,
+      "commit": "0ce6c80836bf8cbd5a73e1538e4d1c874f9c3600",
+      "tree": "75ce22f39ae5f17dd7ad692f634da0a6848a698a",
+      "patch": "patches/114.patch",
+      "patch_sha256": "f98ca9819034e04a5945fa8f45fe8496b3e7c758f86df8438e2dcc65ed226131"
+    },
+    {
+      "step": 115,
+      "commit": "7ab1ac9d0800bf3400b819e8e1987cc69e8f4286",
+      "tree": "ac4e572c3dade695dbb008a546398a585331c89d",
+      "patch": "patches/115.patch",
+      "patch_sha256": "40049be1ff1fe7c2b8e175054894fe06aea36b7f74a36f3779fcf5d2d94b7f81"
+    },
+    {
+      "step": 116,
+      "commit": "7fd435a03683f6bbeae478463ec3964dffbffd6e",
+      "tree": "03de091564e2b2b349929ef8c4d88fbc4ade8035",
+      "patch": "patches/116.patch",
+      "patch_sha256": "dce5ad3dc21cb786301e407925bce75e690b113ce9b5a7afe6c32712fcecd41a"
+    },
+    {
+      "step": 117,
+      "commit": "8643ef3f6094727c2def0f61de7a72739cd978ee",
+      "tree": "9d266b4d8ab6cc6eedc13fc302a097322281098d",
+      "patch": "patches/117.patch",
+      "patch_sha256": "7819720a29bd070f3edb97ac7d83e0f0737899b1539d2818696703edf4fda940"
+    },
+    {
+      "step": 118,
+      "commit": "37829594dd19675568d8fada642e42c14678459d",
+      "tree": "f147d6209d0e44a960abb80e74d3f51868ad88b6",
+      "patch": "patches/118.patch",
+      "patch_sha256": "66bf0367401d16f5e7ec5602c0ddb460029532bf2c24fc67b064c50ea06bdbcf"
+    },
+    {
+      "step": 119,
+      "commit": "e4fc5f97ce125ea0eb2331b715544d4a9e189263",
+      "tree": "73723de2c07b3679614a3b1ef2436ae1acec66f8",
+      "patch": "patches/119.patch",
+      "patch_sha256": "d973f89e4161bf6b380de3da6cc7c521765714662ea049d824765a697a189b52"
+    },
+    {
+      "step": 120,
+      "commit": "49cf51799ea051457f57243527aa2058f999f005",
+      "tree": "4ed2f7cb9a1d87ce2cf7adb5fa74a8e5a474cecd",
+      "patch": "patches/120.patch",
+      "patch_sha256": "427e18422ddc97f9718341ce6ae375c05e9d99a87438fc74dacd33f8c011496c"
+    }
+  ]
+}

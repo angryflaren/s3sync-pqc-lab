@@ -1,0 +1,13 @@
+diff --git a/contrib/largeNbDicts/largeNbDicts.c b/contrib/largeNbDicts/largeNbDicts.c
+index 6502f12275bd28e12da52cf960f5ff9d60f8947d..6b6cc34ca1137f676ad67e089e2c66a6780e8e3a 100644
+--- a/contrib/largeNbDicts/largeNbDicts.c
++++ b/contrib/largeNbDicts/largeNbDicts.c
+@@ -739,6 +739,8 @@ static int benchMem(slice_collection_t dstBlocks, slice_collection_t srcBlocks,
+     /* BMK_benchTimedFn may not run exactly nbRounds iterations */
+     double speedAggregated =
+         aggregateData(speedPerRound, roundNb + 1, metricAggregatePref);
++    free(speedPerRound);
++    
+     if (metricAggregatePref == fastest)
+       DISPLAY("Fastest Speed : %.1f MB/s \n", speedAggregated);
+     else

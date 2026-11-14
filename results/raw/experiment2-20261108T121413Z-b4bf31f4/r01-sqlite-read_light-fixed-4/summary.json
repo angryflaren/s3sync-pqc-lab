@@ -1,0 +1,23 @@
+{
+  "Run": "r01-sqlite-read_light-fixed-4",
+  "Policy": "fixed-4",
+  "Repetition": 1,
+  "Updates": 240,
+  "FullUpdates": 5,
+  "DeltaUpdates": 235,
+  "InitialUploadBytes": 134559285,
+  "UpdateUploadBytes": 2863319104,
+  "TotalUploadBytes": 2997878389,
+  "MaximumChainBytes": 536691619,
+  "MaximumDeltaCount": 43,
+  "UpdateWriteP50Ms": 1702.3020999999999,
+  "UpdateWriteP95Ms": 1887.2814099999998,
+  "UpdateWriteMeanMs": 1751.731857083334,
+  "UpdateModelTransferSeconds": 54.613477783203116,
+  "RestoreCount": 13,
+  "RestoreP50Ms": 12571.4108,
+  "RestoreP95Ms": 21675.030939999997,
+  "TotalBudgetExcessBytes": 0,
+  "FinalFileBytes": 134553678,
+  "FinalSha256": "13d168873e83444805471092a4b3c93acabf5073ce6f2a49c2665648bd4f3002"
+}

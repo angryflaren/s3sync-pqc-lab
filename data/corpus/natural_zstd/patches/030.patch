@@ -1,0 +1,15 @@
+diff --git a/programs/zstdcli_trace.c b/programs/zstdcli_trace.c
+index 35075a52c4d0694519b7e72f516db5e5becf59f9..f73071a5cf4bbc47c88a6f0281a4c83766b581b9 100644
+--- a/programs/zstdcli_trace.c
++++ b/programs/zstdcli_trace.c
+@@ -81,8 +81,9 @@ static void TRACE_log(char const* method, PTime duration, ZSTD_Trace const* trac
+ {
+     int level = 0;
+     int workers = 0;
++    double const durationAsDouble = duration ? (double)duration : .1;
+     double const ratio = (double)trace->uncompressedSize / (double)trace->compressedSize;
+-    double const speed = ((double)trace->uncompressedSize * 1000) / (double)duration;
++    double const speed = ((double)trace->uncompressedSize * 1000) / durationAsDouble;
+     if (trace->params) {
+         ZSTD_CCtxParams_getParameter(trace->params, ZSTD_c_compressionLevel, &level);
+         ZSTD_CCtxParams_getParameter(trace->params, ZSTD_c_nbWorkers, &workers);

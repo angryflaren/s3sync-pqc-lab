@@ -1,0 +1,13 @@
+diff --git a/.github/workflows/commit.yml b/.github/workflows/commit.yml
+index 3aeffdf365d94e9457259743168905430a0f1b11..4bbfe6b9fd9c0bcaddf54fa96c2800df91b7cdfa 100644
+--- a/.github/workflows/commit.yml
++++ b/.github/workflows/commit.yml
+@@ -75,7 +75,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v6.0.1
+     - name: restore_cache
+-      uses: actions/cache@v4
++      uses: actions/cache@v5
+       with:
+         key: regression-cache-{{ checksum "tests/regression/data.c" }}-v0
+         path: tests/regression/cache

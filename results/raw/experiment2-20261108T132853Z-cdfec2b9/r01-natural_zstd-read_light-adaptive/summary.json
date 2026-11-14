@@ -1,0 +1,23 @@
+{
+  "Run": "r01-natural_zstd-read_light-adaptive",
+  "Policy": "adaptive",
+  "Repetition": 1,
+  "Updates": 120,
+  "FullUpdates": 0,
+  "DeltaUpdates": 120,
+  "InitialUploadBytes": 8483586,
+  "UpdateUploadBytes": 6297456,
+  "TotalUploadBytes": 14781042,
+  "MaximumChainBytes": 11635319,
+  "MaximumDeltaCount": 120,
+  "UpdateWriteP50Ms": 178.8602,
+  "UpdateWriteP95Ms": 211.678695,
+  "UpdateWriteMeanMs": 180.81302833333342,
+  "UpdateModelTransferSeconds": 0.12011444091796879,
+  "RestoreCount": 7,
+  "RestoreP50Ms": 2844.3609,
+  "RestoreP95Ms": 5422.683079999999,
+  "TotalBudgetExcessBytes": 0,
+  "FinalFileBytes": 8575125,
+  "FinalSha256": "b1f4ac05f0c22ff945266b68cbf8a4fab5019e7bd293d5b823c0559b281bd9dd"
+}

@@ -1,0 +1,49 @@
+{
+  "Format": 1,
+  "Status": "completed",
+  "Group": "78054b35cbf74a5a8c7765e66d8ccd7d",
+  "ObjectPrefix": "s3sync-lab/20261107T134939Z-b0a38c13/r01-adaptive",
+  "HeadKey": "s3sync-lab/20261107T134939Z-b0a38c13/r01-adaptive/HEAD.json",
+  "Version": 3,
+  "Root": "69a2bdb4887117ed8a3de5f5dd9b4f72d6490ba2c9790675198195111a7476c61dff173c74042528e5343f47da4335bb",
+  "File": {
+    "Length": 500375552,
+    "Sha256": "2872c7dce701e56c75ce6507f43728eb11ad52f3a65562f60eba2e7d5eee29ec"
+  },
+  "Head": {
+    "Format": 1,
+    "Group": "78054b35cbf74a5a8c7765e66d8ccd7d",
+    "Version": 3,
+    "Root": "69a2bdb4887117ed8a3de5f5dd9b4f72d6490ba2c9790675198195111a7476c61dff173c74042528e5343f47da4335bb",
+    "Objects": [
+      {
+        "Key": "s3sync-lab/20261107T134939Z-b0a38c13/r01-adaptive/objects/7df8fcfe9f6b02b35de40e36a3de1454a7f9abc44fcb58de0b929c98dea65cbb783c3190bb3b794a7d853c2faac7ccf1.bin",
+        "Root": "7df8fcfe9f6b02b35de40e36a3de1454a7f9abc44fcb58de0b929c98dea65cbb783c3190bb3b794a7d853c2faac7ccf1",
+        "Bytes": 500380530,
+        "Version": 0,
+        "Kind": "Full"
+      },
+      {
+        "Key": "s3sync-lab/20261107T134939Z-b0a38c13/r01-adaptive/objects/bda2920c10810f75e37ad81773e7772e00a5fd41a0101f4bc4abd3246c18986085f06b968090df7d201a4105cf56a64f.bin",
+        "Root": "bda2920c10810f75e37ad81773e7772e00a5fd41a0101f4bc4abd3246c18986085f06b968090df7d201a4105cf56a64f",
+        "Bytes": 33775414,
+        "Version": 1,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T134939Z-b0a38c13/r01-adaptive/objects/19a79523bad20e478cac3ddff0bc027a7ddbdec52b61d651202ef22f9eb85d99efe52de51b4ee4dab5ecf5480e034ad7.bin",
+        "Root": "19a79523bad20e478cac3ddff0bc027a7ddbdec52b61d651202ef22f9eb85d99efe52de51b4ee4dab5ecf5480e034ad7",
+        "Bytes": 33775414,
+        "Version": 2,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T134939Z-b0a38c13/r01-adaptive/objects/69a2bdb4887117ed8a3de5f5dd9b4f72d6490ba2c9790675198195111a7476c61dff173c74042528e5343f47da4335bb.bin",
+        "Root": "69a2bdb4887117ed8a3de5f5dd9b4f72d6490ba2c9790675198195111a7476c61dff173c74042528e5343f47da4335bb",
+        "Bytes": 33775414,
+        "Version": 3,
+        "Kind": "Delta"
+      }
+    ]
+  }
+}

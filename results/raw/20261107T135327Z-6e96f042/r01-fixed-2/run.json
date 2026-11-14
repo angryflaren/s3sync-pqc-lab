@@ -1,0 +1,28 @@
+{
+  "Format": 1,
+  "Status": "completed",
+  "Group": "fba4b26dc63645378b4d64f205e0f7da",
+  "ObjectPrefix": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-2",
+  "HeadKey": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-2/HEAD.json",
+  "Version": 240,
+  "Root": "26af3eb4895f3c1b6d833be1ffdf22da3ba7440f2206f99670a83725ed9735d1cbc9e3e1e735e2082c57b87883af0609",
+  "File": {
+    "Length": 500375552,
+    "Sha256": "2ca9c7d9ad74e2eb3cd1f49afe1e0e302ca94020130930c2118bd24dbf42cdca"
+  },
+  "Head": {
+    "Format": 1,
+    "Group": "fba4b26dc63645378b4d64f205e0f7da",
+    "Version": 240,
+    "Root": "26af3eb4895f3c1b6d833be1ffdf22da3ba7440f2206f99670a83725ed9735d1cbc9e3e1e735e2082c57b87883af0609",
+    "Objects": [
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-2/objects/26af3eb4895f3c1b6d833be1ffdf22da3ba7440f2206f99670a83725ed9735d1cbc9e3e1e735e2082c57b87883af0609.bin",
+        "Root": "26af3eb4895f3c1b6d833be1ffdf22da3ba7440f2206f99670a83725ed9735d1cbc9e3e1e735e2082c57b87883af0609",
+        "Bytes": 500380530,
+        "Version": 240,
+        "Kind": "Full"
+      }
+    ]
+  }
+}

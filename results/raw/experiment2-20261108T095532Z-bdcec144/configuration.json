@@ -1,0 +1,39 @@
+{
+  "DatasetDirectory": "/home/lab/s3sync-lab/project/data/corpus",
+  "CorpusScript": "/home/lab/s3sync-lab/project/data/corpus/corpus_tool.py",
+  "NaturalScript": "/home/lab/s3sync-lab/project/data/corpus/natural_tool.py",
+  "PythonExecutable": "python3",
+  "OutputDirectory": "/home/lab/s3sync-lab/project/results-experiment2-b00-s60",
+  "Groups": [
+    "sqlite"
+  ],
+  "ReadProfiles": [
+    "read_light"
+  ],
+  "UpdateLimit": 60,
+  "Repetitions": 1,
+  "MaximumDeltas": 128,
+  "ChunkBytes": 4096,
+  "ProcessTimeoutSeconds": 600,
+  "MaximumGroupBytes": 268435456,
+  "MinimumThreshold": 2,
+  "MaximumThreshold": 4,
+  "InterTrialIdleSeconds": 0,
+  "PruneReplacedChains": true,
+  "Storage": {
+    "Provider": "s3",
+    "LocalDirectory": "/home/lab/s3sync-lab/project/objects-test-only",
+    "ServiceUrl": "http://127.0.0.1:8333",
+    "Bucket": "s3sync-lab",
+    "Region": "us-east-1",
+    "Prefix": "s3sync-lab/exp2-b00-s60",
+    "TimeoutSeconds": 1800
+  },
+  "Network": {
+    "DecisionBudgetMode": "virtual",
+    "CapacityBytes": 536870912,
+    "RefillBytesPerSecond": 5242880,
+    "PeakBytesPerSecond": 52428800,
+    "IdleSecondsPerUpdate": 0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "Run": "r01-natural_zstd-read_heavy-fixed-3",
+  "Policy": "fixed-3",
+  "Repetition": 1,
+  "Updates": 120,
+  "FullUpdates": 0,
+  "DeltaUpdates": 120,
+  "InitialUploadBytes": 8483585,
+  "UpdateUploadBytes": 6290076,
+  "TotalUploadBytes": 14773661,
+  "MaximumChainBytes": 11635319,
+  "MaximumDeltaCount": 120,
+  "UpdateWriteP50Ms": 176.53085,
+  "UpdateWriteP95Ms": 207.72517,
+  "UpdateWriteMeanMs": 182.52798583333336,
+  "UpdateModelTransferSeconds": 0.1199736785888672,
+  "RestoreCount": 121,
+  "RestoreP50Ms": 2802.4998,
+  "RestoreP95Ms": 5153.9851,
+  "TotalBudgetExcessBytes": 0,
+  "FinalFileBytes": 8575125,
+  "FinalSha256": "b1f4ac05f0c22ff945266b68cbf8a4fab5019e7bd293d5b823c0559b281bd9dd"
+}

@@ -1,0 +1,40 @@
+{
+  "DatasetDirectory": "../data/corpus",
+  "CorpusScript": "../data/corpus/corpus_tool.py",
+  "NaturalScript": "../data/corpus/natural_tool.py",
+  "PythonExecutable": "python3",
+  "OutputDirectory": "../work/results/results-experiment2-zstd120-b00-v3",
+  "Groups": [
+    "natural_zstd"
+  ],
+  "ReadProfiles": [
+    "read_light",
+    "read_heavy"
+  ],
+  "UpdateLimit": 120,
+  "Repetitions": 1,
+  "MaximumDeltas": 128,
+  "ChunkBytes": 4096,
+  "ProcessTimeoutSeconds": 600,
+  "MaximumGroupBytes": 268435456,
+  "MinimumThreshold": 2,
+  "MaximumThreshold": 4,
+  "InterTrialIdleSeconds": 0,
+  "PruneReplacedChains": true,
+  "Storage": {
+    "Provider": "s3",
+    "LocalDirectory": "../work/objects",
+    "ServiceUrl": "http://127.0.0.1:8333",
+    "Bucket": "s3sync-lab",
+    "Region": "us-east-1",
+    "Prefix": "s3sync-lab/exp2-zstd120-b00-v3",
+    "TimeoutSeconds": 1800
+  },
+  "Network": {
+    "DecisionBudgetMode": "virtual",
+    "CapacityBytes": 536870912,
+    "RefillBytesPerSecond": 5242880,
+    "PeakBytesPerSecond": 52428800,
+    "IdleSecondsPerUpdate": 0
+  }
+}

@@ -1,0 +1,31 @@
+diff --git a/tests/fuzz/fuzz_helpers.c b/tests/fuzz/fuzz_helpers.c
+index f47ff2eb4ff39c52a8242fff9fadf42ab3d04293..5c530f0e9767a70ad3074ebd608685cc48999a33 100644
+--- a/tests/fuzz/fuzz_helpers.c
++++ b/tests/fuzz/fuzz_helpers.c
+@@ -31,12 +31,11 @@ void* FUZZ_malloc_rand(size_t size, FUZZ_dataProducer_t *producer)
+         return mem;
+     } else {
+         uintptr_t ptr = 0;
+-        /* Add +- 1M 50% of the time */
++        /* Return junk pointer 50% of the time */
+         if (FUZZ_dataProducer_uint32Range(producer, 0, 1))
+-            FUZZ_dataProducer_int32Range(producer, -1000000, 1000000);
++            ptr += FUZZ_dataProducer_int32Range(producer, -1000000, 1000000);
+         return (void*)ptr;
+     }
+-
+ }
+ 
+ int FUZZ_memcmp(void const* lhs, void const* rhs, size_t size)
+diff --git a/tests/fuzz/fuzz_helpers.h b/tests/fuzz/fuzz_helpers.h
+index f21ec47516e721e01b954a0bb1fb871456d1d6ab..c5d75b402a841e3e790047f2d454170b8e621cea 100644
+--- a/tests/fuzz/fuzz_helpers.h
++++ b/tests/fuzz/fuzz_helpers.h
+@@ -66,6 +66,7 @@ void* FUZZ_malloc(size_t size);
+ /**
+  * malloc except returns random pointer for zero sized data and FUZZ_ASSERT
+  * that malloc doesn't fail.
++ * WARNING: Only free the returned pointer if size > 0!
+  */
+ void* FUZZ_malloc_rand(size_t size,  FUZZ_dataProducer_t *producer);
+ 

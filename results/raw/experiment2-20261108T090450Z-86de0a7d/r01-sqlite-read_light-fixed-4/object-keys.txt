@@ -1,0 +1,5 @@
+s3sync-lab/exp2-b08-pilot/experiment2-20261108T090450Z-86de0a7d/r01-sqlite-read_light-fixed-4/HEAD.json
+s3sync-lab/exp2-b08-pilot/experiment2-20261108T090450Z-86de0a7d/r01-sqlite-read_light-fixed-4/objects/76a36ac88f7e09c3d91b56516c68980b6b4d594ea86779cc22c0eb6ce3fdab2926ce01f9ed61fec8e56957c21dec9be2.bin
+s3sync-lab/exp2-b08-pilot/experiment2-20261108T090450Z-86de0a7d/r01-sqlite-read_light-fixed-4/objects/7d9335be67a96a1e1b751b5f6131ac696dc40522a36a5d97ead7ebc5803b7932062d9a50f5f6d4befe823a9538e06267.bin
+s3sync-lab/exp2-b08-pilot/experiment2-20261108T090450Z-86de0a7d/r01-sqlite-read_light-fixed-4/objects/b6430a5135aa4c7dd438b3c9e901c85adfadfc7f07da7b0f96fcac1bb0b079cf324c25298366466ebe9585b86be5804c.bin
+s3sync-lab/exp2-b08-pilot/experiment2-20261108T090450Z-86de0a7d/r01-sqlite-read_light-fixed-4/objects/e816955b413a71524ec37b60cd2f2fbfe7c14fe34dd87985a5535f29d34195f2dbde68a0ab06d021fc66a510dedac271.bin

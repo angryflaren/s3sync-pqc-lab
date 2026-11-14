@@ -1,0 +1,49 @@
+{
+  "Format": 1,
+  "Status": "completed",
+  "Group": "2736f7de32e74c5f8a15e6d27ebae42c",
+  "ObjectPrefix": "s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-2",
+  "HeadKey": "s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-2/HEAD.json",
+  "Version": 3,
+  "Root": "48bc683ab4754eec506d49c5c680a8797a53741dce2580a08b636b84f54762c76d4943a0097053b65282b89d24f6d646",
+  "File": {
+    "Length": 8479974,
+    "Sha256": "42473cf173e3bfa14b1cf02a0c0e0e1b983c8989ef3863d0b64969be5ad7ee1f"
+  },
+  "Head": {
+    "Format": 1,
+    "Group": "2736f7de32e74c5f8a15e6d27ebae42c",
+    "Version": 3,
+    "Root": "48bc683ab4754eec506d49c5c680a8797a53741dce2580a08b636b84f54762c76d4943a0097053b65282b89d24f6d646",
+    "Objects": [
+      {
+        "Key": "s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-2/objects/da40222f710b3106d6ed74a7604f3e0a0a1771ea95021058ad9e811d4b73c134eeb40a209ab445ec0b1d255cf74db22f.bin",
+        "Root": "da40222f710b3106d6ed74a7604f3e0a0a1771ea95021058ad9e811d4b73c134eeb40a209ab445ec0b1d255cf74db22f",
+        "Bytes": 8482954,
+        "Version": 0,
+        "Kind": "Full"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-2/objects/b63a0a1f8217bbec289afae103496005c79cfdd0484e86aa441584a15fce196f1c3b8aa94ace8894ea18358f10dda7d9.bin",
+        "Root": "b63a0a1f8217bbec289afae103496005c79cfdd0484e86aa441584a15fce196f1c3b8aa94ace8894ea18358f10dda7d9",
+        "Bytes": 12941,
+        "Version": 1,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-2/objects/9c5433ad29e6e19dbf2ab45f99e82febada3029b5fb295f5bf62909d90d3a7c8c1ad5e8b1f4d175a9de7c3fdeb753d0b.bin",
+        "Root": "9c5433ad29e6e19dbf2ab45f99e82febada3029b5fb295f5bf62909d90d3a7c8c1ad5e8b1f4d175a9de7c3fdeb753d0b",
+        "Bytes": 29371,
+        "Version": 2,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-2/objects/48bc683ab4754eec506d49c5c680a8797a53741dce2580a08b636b84f54762c76d4943a0097053b65282b89d24f6d646.bin",
+        "Root": "48bc683ab4754eec506d49c5c680a8797a53741dce2580a08b636b84f54762c76d4943a0097053b65282b89d24f6d646",
+        "Bytes": 47753,
+        "Version": 3,
+        "Kind": "Delta"
+      }
+    ]
+  }
+}

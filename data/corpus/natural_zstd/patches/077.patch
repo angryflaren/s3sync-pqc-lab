@@ -1,0 +1,15 @@
+diff --git a/programs/fileio.c b/programs/fileio.c
+index 4000c5b62f49ad8bd3ef228f8f56ccdf3afaac8f..a0dcad817458e140e16589e34ef31f94db6f2571 100644
+--- a/programs/fileio.c
++++ b/programs/fileio.c
+@@ -1050,7 +1050,9 @@ static size_t FIO_setDictBufferMMap(FIO_Dict_t* dict, const char* fileName, FIO_
+     }
+ 
+     *bufferPtr = mmap(NULL, (size_t)fileSize, PROT_READ, MAP_PRIVATE, fileHandle, 0);
+-    if (*bufferPtr==NULL) EXM_THROW(34, "%s", strerror(errno));
++    if (*bufferPtr == MAP_FAILED) {
++      EXM_THROW(34, "%s", strerror(errno))
++    }
+ 
+     close(fileHandle);
+     return (size_t)fileSize;

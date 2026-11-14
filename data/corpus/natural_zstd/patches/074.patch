@@ -1,0 +1,76 @@
+diff --git a/lib/compress/zstd_compress.c b/lib/compress/zstd_compress.c
+index 1d6f0fcae0eacd5b086939aa749bb8962b3089cf..c06f2e1bb9863016a0cb8bc92b34395f4b4759b7 100644
+--- a/lib/compress/zstd_compress.c
++++ b/lib/compress/zstd_compress.c
+@@ -1771,15 +1771,19 @@ size_t ZSTD_estimateCCtxSize_usingCCtxParams(const ZSTD_CCtx_params* params)
+ {
+     ZSTD_compressionParameters const cParams =
+                 ZSTD_getCParamsFromCCtxParams(params, ZSTD_CONTENTSIZE_UNKNOWN, 0, ZSTD_cpm_noAttachDict);
++    ldmParams_t ldmParams = params->ldmParams;
+     ZSTD_ParamSwitch_e const useRowMatchFinder = ZSTD_resolveRowMatchFinderMode(params->useRowMatchFinder,
+                                                                                &cParams);
+ 
+     RETURN_ERROR_IF(params->nbWorkers > 0, GENERIC, "Estimate CCtx size is supported for single-threaded compression only.");
++    if (ldmParams.enableLdm == ZSTD_ps_enable) {
++        ZSTD_ldm_adjustParameters(&ldmParams, &cParams);
++    }
+     /* estimateCCtxSize is for one-shot compression. So no buffers should
+      * be needed. However, we still allocate two 0-sized buffers, which can
+      * take space under ASAN. */
+     return ZSTD_estimateCCtxSize_usingCCtxParams_internal(
+-        &cParams, &params->ldmParams, 1, useRowMatchFinder, 0, 0, ZSTD_CONTENTSIZE_UNKNOWN, ZSTD_hasExtSeqProd(params), params->maxBlockSize);
++        &cParams, &ldmParams, 1, useRowMatchFinder, 0, 0, ZSTD_CONTENTSIZE_UNKNOWN, ZSTD_hasExtSeqProd(params), params->maxBlockSize);
+ }
+ 
+ size_t ZSTD_estimateCCtxSize_usingCParams(ZSTD_compressionParameters cParams)
+@@ -1829,6 +1833,7 @@ size_t ZSTD_estimateCStreamSize_usingCCtxParams(const ZSTD_CCtx_params* params)
+     RETURN_ERROR_IF(params->nbWorkers > 0, GENERIC, "Estimate CCtx size is supported for single-threaded compression only.");
+     {   ZSTD_compressionParameters const cParams =
+                 ZSTD_getCParamsFromCCtxParams(params, ZSTD_CONTENTSIZE_UNKNOWN, 0, ZSTD_cpm_noAttachDict);
++        ldmParams_t ldmParams = params->ldmParams;
+         size_t const blockSize = MIN(ZSTD_resolveMaxBlockSize(params->maxBlockSize), (size_t)1 << cParams.windowLog);
+         size_t const inBuffSize = (params->inBufferMode == ZSTD_bm_buffered)
+                 ? ((size_t)1 << cParams.windowLog) + blockSize
+@@ -1838,8 +1843,11 @@ size_t ZSTD_estimateCStreamSize_usingCCtxParams(const ZSTD_CCtx_params* params)
+                 : 0;
+         ZSTD_ParamSwitch_e const useRowMatchFinder = ZSTD_resolveRowMatchFinderMode(params->useRowMatchFinder, &params->cParams);
+ 
++        if (ldmParams.enableLdm == ZSTD_ps_enable) {
++            ZSTD_ldm_adjustParameters(&ldmParams, &cParams);
++        }
+         return ZSTD_estimateCCtxSize_usingCCtxParams_internal(
+-            &cParams, &params->ldmParams, 1, useRowMatchFinder, inBuffSize, outBuffSize,
++            &cParams, &ldmParams, 1, useRowMatchFinder, inBuffSize, outBuffSize,
+             ZSTD_CONTENTSIZE_UNKNOWN, ZSTD_hasExtSeqProd(params), params->maxBlockSize);
+     }
+ }
+diff --git a/tests/fuzzer.c b/tests/fuzzer.c
+index 0bc160efa392c01c585fec9f7aa99f21497e3693..472f8c8b308cd593e87bfb0fd9b0419c4d62a150 100644
+--- a/tests/fuzzer.c
++++ b/tests/fuzzer.c
+@@ -2515,6 +2515,25 @@ static int basicUnitTests(U32 const seed, double compressibility)
+                 }
+             }
+             DISPLAYLEVEL(3, "OK \n");
++
++            DISPLAYLEVEL(3, "test%3i : estimation functions with LDM enabled (issue #4590) : ", testNb++);
++            {
++                /* ZSTD_estimateCCtxSize_usingCCtxParams must adjust zeroed-out
++                 * LDM parameters when LDM is enabled, to avoid division by zero
++                 * in ZSTD_ldm_getMaxNbSeq. */
++                ZSTD_CCtx_params* params = ZSTD_createCCtxParams();
++                size_t cctxSize;
++                CHECK_Z(ZSTD_CCtxParams_setParameter(params, ZSTD_c_compressionLevel, 22));
++                CHECK_Z(ZSTD_CCtxParams_setParameter(params, ZSTD_c_enableLongDistanceMatching, ZSTD_ps_enable));
++                cctxSize = ZSTD_estimateCCtxSize_usingCCtxParams(params);
++                if (ZSTD_isError(cctxSize)) goto _output_error;
++                if (cctxSize == 0) goto _output_error;
++                cctxSize = ZSTD_estimateCStreamSize_usingCCtxParams(params);
++                if (ZSTD_isError(cctxSize)) goto _output_error;
++                if (cctxSize == 0) goto _output_error;
++                ZSTD_freeCCtxParams(params);
++            }
++            DISPLAYLEVEL(3, "OK \n");
+         }
+         free(staticCCtxBuffer);
+         free(staticDCtxBuffer);

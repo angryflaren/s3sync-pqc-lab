@@ -1,0 +1,11 @@
+{
+  "Name": "s3sync-corpus-v1/natural_zstd",
+  "Updates": 120,
+  "Initial": {
+    "Length": 8477976,
+    "Sha256": "cd6ebb788608b0c7e44baf271dfd8267401c8ae77691bd5a6cb3f62b4a216bd5"
+  },
+  "ManifestSha256": "03042f4d31f07048c672c611f6191b713ebf25cfbf55bd4fec483a18b1b4315c",
+  "HistorySha256": "03042f4d31f07048c672c611f6191b713ebf25cfbf55bd4fec483a18b1b4315c",
+  "Runtime": "{\u0022python\u0022: \u00223.14.4\u0022, \u0022sqlite\u0022: \u00223.46.1\u0022, \u0022zlib\u0022: \u00221.3.1\u0022}; corpus-script=; natural-script=168d3c2528aa402b0a4c999755a20c97a6758e8914263c003b098ca67b833274"
+}

@@ -1,0 +1,80 @@
+diff --git a/contrib/linux-kernel/test/Makefile b/contrib/linux-kernel/test/Makefile
+index 67b55e6650445f1b087c60b274a460b7d92e9b57..f7a48773912eeb15f196d355e8cac29e095a2a8b 100644
+--- a/contrib/linux-kernel/test/Makefile
++++ b/contrib/linux-kernel/test/Makefile
+@@ -23,27 +23,51 @@ LINUX_ZSTD_FILES      := $(LINUX_ZSTD_MODULE) $(LINUX_ZSTD_COMMON) $(LINUX_ZSTD_
+ LINUX_ZSTD_OBJECTS0   := $(LINUX_ZSTD_FILES:.c=.o)
+ LINUX_ZSTD_OBJECTS    := $(LINUX_ZSTD_OBJECTS0:.S=.o)
+ 
++X86_BUILD_DIR              := x86
++X86_LINUX_ZSTD_FILES       := $(patsubst $(LINUX_ZSTDLIB)/%,%,$(LINUX_ZSTD_FILES))
++X86_LINUX_ZSTD_OBJECTS0    := $(patsubst %.c,$(X86_BUILD_DIR)/%.o,$(X86_LINUX_ZSTD_FILES))
++X86_LINUX_ZSTD_OBJECTS     := $(patsubst %.S,$(X86_BUILD_DIR)/%.o,$(X86_LINUX_ZSTD_OBJECTS0))
++X86_LINUX_ZSTD_CPPFLAGS    := -D__KERNEL__ -DCONFIG_X86
++
+ %.o: %.S
+ 	$(COMPILE.S) $(OUTPUT_OPTION) $<
+ 
++$(X86_LINUX_ZSTD_OBJECTS): CPPFLAGS += $(X86_LINUX_ZSTD_CPPFLAGS)
++
++$(X86_BUILD_DIR)/%.o: $(LINUX_ZSTDLIB)/%.c
++	@mkdir -p $(@D)
++	$(COMPILE.c) $(OUTPUT_OPTION) $<
++
++$(X86_BUILD_DIR)/%.o: $(LINUX_ZSTDLIB)/%.S
++	@mkdir -p $(@D)
++	$(COMPILE.S) $(OUTPUT_OPTION) $<
++
+ liblinuxzstd.a: $(LINUX_ZSTD_OBJECTS)
+ 	$(AR) $(ARFLAGS) $@ $^
+ 
++liblinuxzstd_x86.a: $(X86_LINUX_ZSTD_OBJECTS)
++	$(AR) $(ARFLAGS) $@ $^
++
+ test: test.c liblinuxzstd.a
+ 	$(CC) $(LDFLAGS) $(CPPFLAGS) $(CFLAGS) $^ -o $@
+ 
++test_x86: test.c liblinuxzstd_x86.a
++	$(CC) $(LDFLAGS) $(CPPFLAGS) $(CFLAGS) $^ -o $@
++
+ static_test: static_test.c
+ 	$(CC) $(LDFLAGS) $(CPPFLAGS) $(CFLAGS) $^ -o $@
+ 
+-run-test: test static_test
++run-test: test test_x86 static_test
+ 	./macro-test.sh
+ 	./test
++	./test_x86
+ 	./static_test
+ 
+ .PHONY:
+ clean:
+ 	$(RM) -f $(LINUX_ZSTDLIB)/*.o
+ 	$(RM) -f $(LINUX_ZSTDLIB)/**/*.o
++	$(RM) -rf $(X86_BUILD_DIR)
+ 	$(RM) -f *.o *.a
+ 	$(RM) -f static_test
+-	$(RM) -f test
++	$(RM) -f test test_x86
+diff --git a/contrib/linux-kernel/test/include/asm/cpufeature.h b/contrib/linux-kernel/test/include/asm/cpufeature.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..7ac74137710ba8cf41248273d5aaa766bc22a727
+--- /dev/null
++++ b/contrib/linux-kernel/test/include/asm/cpufeature.h
+@@ -0,0 +1,16 @@
++/*
++ * Copyright (c) Meta Platforms, Inc. and affiliates.
++ * All rights reserved.
++ *
++ * This source code is licensed under both the BSD-style license (found in the
++ * LICENSE file in the root directory of this source tree) and the GPLv2 (found
++ * in the COPYING file in the root directory of this source tree).
++ * You may select, at your option, one of the above-listed licenses.
++ */
++#ifndef ASM_CPUFEATURE_H
++#define ASM_CPUFEATURE_H
++
++#define X86_FEATURE_BMI2 0
++#define cpu_feature_enabled(feature) ((void)(feature), 0)
++
++#endif

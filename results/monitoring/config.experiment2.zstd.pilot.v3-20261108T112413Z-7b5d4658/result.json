@@ -1,0 +1,9 @@
+{
+  "finished_utc": "2026-11-08T11:24:27.564382+00:00",
+  "status": "completed",
+  "exit_code": 0,
+  "error": null,
+  "monitor_failure": null,
+  "application_exit_code": 0,
+  "free_disk_bytes_after": 86105456640
+}

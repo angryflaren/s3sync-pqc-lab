@@ -1,0 +1,138 @@
+diff --git a/build/cmake/CMakeModules/ZstdPackage.cmake b/build/cmake/CMakeModules/ZstdPackage.cmake
+index 5e40dd2c1fd5b3c1e536dca7610405281ad7cd68..ed20f3c9775ff4c766eaec3cc96919e359c97b42 100644
+--- a/build/cmake/CMakeModules/ZstdPackage.cmake
++++ b/build/cmake/CMakeModules/ZstdPackage.cmake
+@@ -11,21 +11,24 @@ write_basic_package_version_file(
+     COMPATIBILITY SameMajorVersion
+ )
+ 
+-# Export targets for build directory
+-export(EXPORT zstdExports
+-    FILE "${CMAKE_CURRENT_BINARY_DIR}/zstdTargets.cmake"
+-    NAMESPACE zstd::
+-)
+-
+ # Configure package for installation
+ set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/zstd)
+ 
+-# Install exported targets
+-install(EXPORT zstdExports
+-    FILE zstdTargets.cmake
+-    NAMESPACE zstd::
+-    DESTINATION ${ConfigPackageLocation}
+-)
++foreach(target_suffix IN ITEMS "_shared" "_static" "")
++    if(TARGET "libzstd${target_suffix}")
++        # Export targets for build directory
++        export(EXPORT "zstdExports${target_suffix}"
++                FILE "${CMAKE_CURRENT_BINARY_DIR}/zstdTargets${target_suffix}.cmake"
++                NAMESPACE zstd::
++        )
++        # Install exported targets
++        install(EXPORT "zstdExports${target_suffix}"
++                FILE "zstdTargets${target_suffix}.cmake"
++                NAMESPACE zstd::
++                DESTINATION ${ConfigPackageLocation}
++        )
++    endif()
++endforeach()
+ 
+ # Configure and install package config file
+ configure_package_config_file(
+diff --git a/build/cmake/lib/CMakeLists.txt b/build/cmake/lib/CMakeLists.txt
+index 0cd02d6230cabd22d5cb35ea17464c2e39a84758..82f4f50869cc5b4df75eaee787df5bfcc9f37de5 100644
+--- a/build/cmake/lib/CMakeLists.txt
++++ b/build/cmake/lib/CMakeLists.txt
+@@ -123,11 +123,9 @@ endmacro ()
+ set(PUBLIC_INCLUDE_DIRS ${LIBRARY_DIR})
+ set(CMAKE_RC_FLAGS "${CMAKE_RC_FLAGS} /I \"${LIBRARY_DIR}\"")
+ # Split project to static and shared libraries build
+-set(library_targets)
+ if (ZSTD_BUILD_SHARED)
+     add_library(libzstd_shared SHARED ${Sources} ${Headers} ${PlatformDependResources})
+     target_include_directories(libzstd_shared INTERFACE $<BUILD_INTERFACE:${PUBLIC_INCLUDE_DIRS}>)
+-    list(APPEND library_targets libzstd_shared)
+     if (ZSTD_MULTITHREAD_SUPPORT)
+         target_compile_definitions(libzstd_shared PUBLIC ZSTD_MULTITHREAD)
+         if (UNIX)
+@@ -141,7 +139,6 @@ endif ()
+ if (ZSTD_BUILD_STATIC)
+     add_library(libzstd_static STATIC ${Sources} ${Headers})
+     target_include_directories(libzstd_static INTERFACE $<BUILD_INTERFACE:${PUBLIC_INCLUDE_DIRS}>)
+-    list(APPEND library_targets libzstd_static)
+     if (ZSTD_MULTITHREAD_SUPPORT)
+         target_compile_definitions(libzstd_static PUBLIC ZSTD_MULTITHREAD)
+         if (UNIX)
+@@ -160,7 +157,6 @@ if (ZSTD_BUILD_SHARED AND NOT ZSTD_BUILD_STATIC)
+     endif ()
+     add_library(libzstd INTERFACE)
+     target_link_libraries(libzstd INTERFACE libzstd_shared)
+-    list(APPEND library_targets libzstd)
+ endif ()
+ if (ZSTD_BUILD_STATIC AND NOT ZSTD_BUILD_SHARED)
+     if (BUILD_SHARED_LIBS)
+@@ -168,7 +164,6 @@ if (ZSTD_BUILD_STATIC AND NOT ZSTD_BUILD_SHARED)
+     endif ()
+     add_library(libzstd INTERFACE)
+     target_link_libraries(libzstd INTERFACE libzstd_static)
+-    list(APPEND library_targets libzstd)
+ endif ()
+ if (ZSTD_BUILD_SHARED AND ZSTD_BUILD_STATIC)
+     # If both ZSTD_BUILD_SHARED and ZSTD_BUILD_STATIC are set, which is the
+@@ -177,11 +172,9 @@ if (ZSTD_BUILD_SHARED AND ZSTD_BUILD_STATIC)
+     if (BUILD_SHARED_LIBS)
+         add_library(libzstd INTERFACE)
+         target_link_libraries(libzstd INTERFACE libzstd_shared)
+-        list(APPEND library_targets libzstd)
+     else ()
+         add_library(libzstd INTERFACE)
+         target_link_libraries(libzstd INTERFACE libzstd_static)
+-        list(APPEND library_targets libzstd)
+     endif ()
+ endif ()
+ 
+@@ -275,16 +268,20 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libzstd.pc" DESTINATION "${CMAKE_INST
+ # install target
+ install(FILES ${PublicHeaders} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+ 
+-install(TARGETS ${library_targets}
+-    EXPORT zstdExports
+-    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+-    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-    BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-    FRAMEWORK DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT runtime OPTIONAL
+-    PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+-    )
++foreach(target_suffix IN ITEMS "_shared" "_static" "")
++    if(TARGET "libzstd${target_suffix}")
++        install(TARGETS "libzstd${target_suffix}"
++            EXPORT "zstdExports${target_suffix}"
++            INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
++            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++            BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}"
++            FRAMEWORK DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT runtime OPTIONAL
++            PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
++            )
++    endif()
++endforeach()
+ 
+ # uninstall target
+ if (NOT TARGET uninstall)
+diff --git a/build/cmake/zstdConfig.cmake.in b/build/cmake/zstdConfig.cmake.in
+index f4190f989ba71dc72d850c2d19ac24038e5556d9..a719d7899737fc3794e41cf757bbc433cc59e604 100644
+--- a/build/cmake/zstdConfig.cmake.in
++++ b/build/cmake/zstdConfig.cmake.in
+@@ -5,6 +5,9 @@ if(@ZSTD_MULTITHREAD_SUPPORT@ AND "@UNIX@")
+   find_dependency(Threads)
+ endif()
+ 
++foreach(lib_suffix IN ITEMS "_shared" "_static")
++    include("${CMAKE_CURRENT_LIST_DIR}/zstdTargets${lib_suffix}.cmake" OPTIONAL)
++endforeach()
+ include("${CMAKE_CURRENT_LIST_DIR}/zstdTargets.cmake")
+ 
+ check_required_components("zstd")

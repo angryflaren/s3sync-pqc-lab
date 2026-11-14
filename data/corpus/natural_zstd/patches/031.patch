@@ -1,0 +1,254 @@
+diff --git a/.github/workflows/cmake-tests.yml b/.github/workflows/cmake-tests.yml
+index 0ce2a7d8fa99561881c7672a2a51be879cb49eb4..f1ed1f850608c8b89d9a1435d12c02e5c6547289 100644
+--- a/.github/workflows/cmake-tests.yml
++++ b/.github/workflows/cmake-tests.yml
+@@ -96,10 +96,10 @@ jobs:
+             runner: "windows-2022"
+             # Intentionally omit ZSTD_BUILD_TESTS to reproduce the CXX language configuration bug
+             cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON"
+-          # - generator: "Visual Studio 17 2022"
+-          #   flags: "-A ARM64"
+-          #   name: "MSVC ARM64"
+-          #   runner: "windows-2022-arm64"  # Disabled due to very long queue times
++          - generator: "Visual Studio 17 2022"
++            flags: "-A ARM64"
++            name: "MSVC ARM64"
++            runner: "windows-11-arm"  # githuh runner for WOA instance
+           - generator: "MinGW Makefiles"
+             flags: ""
+             name: "MinGW"
+diff --git a/.github/workflows/windows-artifacts.yml b/.github/workflows/windows-artifacts.yml
+index 2a599d447ac49d15f16edd42e3439438b69cb1b9..d097acf967dd6cb3f0cf266382b7fc03542897e2 100644
+--- a/.github/workflows/windows-artifacts.yml
++++ b/.github/workflows/windows-artifacts.yml
+@@ -13,69 +13,107 @@ jobs:
+   windows-artifacts:
+     permissions:
+       contents: write # to fetch code and upload artifacts
+-    # see https://ariya.io/2020/07/on-github-actions-with-msys2
+-    runs-on: windows-latest
+-    # see https://github.com/msys2/setup-msys2
++    # For msys2, see https://ariya.io/2020/07/on-github-actions-with-msys2
++    runs-on: ${{ matrix.shell == 'cmake' && 'windows-11-arm' || 'windows-latest' }}
+     strategy:
++      # For msys2, see https://github.com/msys2/setup-msys2
+       matrix:
+         include:
+-          - { msystem: mingw64, env: x86_64, ziparch: win64 }
+-          - { msystem: mingw32, env: i686, ziparch: win32 }
++          - { msystem: mingw64, env: x86_64, ziparch: win64, shell: msys2 }
++          - { msystem: mingw32, env: i686, ziparch: win32, shell: msys2 }
++          - { msystem: null, env: arm64, ziparch: win-arm64, shell: cmake }
++
+     defaults:
+       run:
+-        shell: msys2 {0}
++        shell: ${{ matrix.shell == 'cmake' && 'pwsh' || 'msys2 {0}' }}
++
+     steps:
+-    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
+-    - uses: msys2/setup-msys2@40677d36a502eb2cf0fb808cc9dec31bf6152638 # tag=v2.28.0
+-      with:
+-        msystem: ${{ matrix.msystem }}
+-        install: make p7zip git mingw-w64-${{matrix.env}}-gcc
+-        update: true
+-
+-    - name: display versions
+-      run: |
+-        make -v
+-        cc -v
+-
+-    - name: Building zlib to static link
+-      run: |
+-        git clone --depth 1 --branch v1.3.1 https://github.com/madler/zlib
+-        make -C zlib -f win32/Makefile.gcc libz.a
+-
+-    - name: Building lz4 to static link
+-      run: |
+-        git clone --depth 1 --branch v1.10.0 https://github.com/lz4/lz4
+-        # ensure both libraries use the same version of libxxhash
+-        cp lib/common/xxhash.* lz4/lib
+-        CPPFLAGS=-DXXH_NAMESPACE=LZ4_ make -C lz4/lib liblz4.a V=1
+-
+-    - name: Building zstd programs
+-      run: |
+-        CPPFLAGS="-I../zlib -I../lz4/lib" LDFLAGS=-static make -j allzstd V=1 HAVE_ZLIB=1 HAVE_LZ4=1 HAVE_LZMA=0 LDLIBS="../zlib/libz.a ../lz4/lib/liblz4.a"
+-
+-    - name: Create artifacts
+-      run: |
+-        ./lib/dll/example/build_package.bat || exit 1
+-        mv bin/ zstd-${{ github.ref_name }}-${{matrix.ziparch}}/
+-
+-    - name: Publish zstd-$VERSION-${{matrix.ziparch}}.zip for manual inspection
+-      uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # tag=v4.3.1
+-      with:
+-        compression-level: 9  # maximum compression
+-        if-no-files-found: error # defaults to `warn`
+-        path: ${{ github.workspace }}/zstd-${{ github.ref_name }}-${{matrix.ziparch}}/
+-        name: zstd-${{ github.ref_name }}-${{matrix.ziparch}}
+-
+-    - name: Package artifact for upload
+-      run: |
+-        7z a -tzip -mx9 "$(cygpath -u '${{ github.workspace }}/zstd-${{ github.ref_name }}-${{ matrix.ziparch }}.zip')" "$(cygpath -u '${{ github.workspace }}/zstd-${{ github.ref_name }}-${{ matrix.ziparch }}')"
+-
+-    - name: Upload release asset
+-      if: github.event_name == 'release'
+-      shell: pwsh
+-      env:
+-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-      run: |
+-        gh release upload "${{ github.ref_name }}" "$env:GITHUB_WORKSPACE/zstd-${{ github.ref_name }}-${{ matrix.ziparch }}.zip" --clobber
++      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # tag=v5.0.0
++
++      # MSYS2 setup
++      - uses: msys2/setup-msys2@40677d36a502eb2cf0fb808cc9dec31bf6152638 # tag=v2.28.0
++        if: matrix.shell == 'msys2'
++        with:
++          msystem: ${{ matrix.msystem }}
++          install: make p7zip git mingw-w64-${{matrix.env}}-gcc
++          update: true
++
++      - name: display versions (MSYS2)
++        if: matrix.shell == 'msys2'
++        run: |
++          make -v
++          cc -v
++
++      - name: display versions (CMake)
++        if: matrix.shell == 'cmake'
++        run: |
++          cmake --version
++
++      # Build dependencies (MSYS2 only)
++      - name: Building zlib to static link
++        if: matrix.shell == 'msys2'
++        run: |
++          git clone --depth 1 --branch v1.3.1 https://github.com/madler/zlib
++          make -C zlib -f win32/Makefile.gcc libz.a
++
++      - name: Building lz4 to static link
++        if: matrix.shell == 'msys2'
++        run: |
++          git clone --depth 1 --branch v1.10.0 https://github.com/lz4/lz4
++          # ensure both libraries use the same version of libxxhash
++          cp lib/common/xxhash.* lz4/lib
++          CPPFLAGS=-DXXH_NAMESPACE=LZ4_ make -C lz4/lib liblz4.a V=1
++
++      # Build zstd
++      - name: Building zstd programs
++        if: matrix.shell == 'msys2'
++        run: |
++          CPPFLAGS="-I../zlib -I../lz4/lib" LDFLAGS=-static make -j allzstd V=1 HAVE_ZLIB=1 HAVE_LZ4=1 HAVE_LZMA=0 LDLIBS="../zlib/libz.a ../lz4/lib/liblz4.a"
++
++      - name: Build zstd (CMake ARM64)
++        if: matrix.shell == 'cmake'
++        run: |
++          cd build\cmake
++          mkdir build
++          cd build
++          cmake.exe -G "Visual Studio 17 2022" -A ARM64 -DCMAKE_BUILD_TYPE=Release -DZSTD_BUILD_PROGRAMS=ON -DZSTD_BUILD_SHARED=ON -DZSTD_BUILD_STATIC=ON ..
++          cmake.exe --build . --config Release --parallel
++
++      - name: Create artifacts (MSYS2)
++        if: matrix.shell == 'msys2'
++        run: |
++          ./lib/dll/example/build_package.bat || exit 1
++          mv bin/ zstd-${{ github.ref_name }}-${{matrix.ziparch}}/
++
++      - name: Create artifacts (CMake)
++        if: matrix.shell == 'cmake'
++        run: |
++          .\lib\dll\example\build_package.bat
++          if ($LASTEXITCODE -ne 0) { exit 1 }
++          mv bin/ zstd-${{ github.ref_name }}-${{matrix.ziparch}}/
++
++      - name: Publish zstd-$VERSION-${{matrix.ziparch}}.zip for manual inspection
++        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # tag=v4.3.1
++        with:
++          compression-level: 9  # maximum compression
++          if-no-files-found: error # defaults to `warn`
++          path: ${{ github.workspace }}/zstd-${{ github.ref_name }}-${{matrix.ziparch}}/
++          name: zstd-${{ github.ref_name }}-${{matrix.ziparch}}
++
++      - name: Package artifact for upload (MSYS2)
++        if: matrix.shell == 'msys2'
++        run: |
++          7z a -tzip -mx9 "$(cygpath -u '${{ github.workspace }}/zstd-${{ github.ref_name }}-${{ matrix.ziparch }}.zip')" "$(cygpath -u '${{ github.workspace }}/zstd-${{ github.ref_name }}-${{ matrix.ziparch }}')"
+ 
++      - name: Package artifact for upload (CMake)
++        if: matrix.shell == 'cmake'
++        run: |
++          Compress-Archive -Path "zstd-${{ github.ref_name }}-${{ matrix.ziparch }}" -DestinationPath "zstd-${{ github.ref_name }}-${{ matrix.ziparch }}.zip" -CompressionLevel Optimal
+ 
++      - name: Upload release asset
++        if: github.event_name == 'release'
++        shell: pwsh
++        env:
++          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++        run: |
++          gh release upload "${{ github.ref_name }}" "$env:GITHUB_WORKSPACE/zstd-${{ github.ref_name }}-${{ matrix.ziparch }}.zip" --clobber
+\ No newline at end of file
+diff --git a/lib/dll/example/build_package.bat b/lib/dll/example/build_package.bat
+index 5a03bdf25acee989eb8d9a86d9472ac84ad4de71..bd3103de5bd70e68489f85d7dff9a3538743514a 100644
+--- a/lib/dll/example/build_package.bat
++++ b/lib/dll/example/build_package.bat
+@@ -1,10 +1,16 @@
+ @echo off
+ setlocal
+ 
+-rem Create required directories.
++rem Detect build type based on available files
++set BUILD_TYPE=make
++if exist "build\cmake\build\lib\Release\zstd_static.lib" set BUILD_TYPE=cmake
++
++echo Detected build type: %BUILD_TYPE%
++
++rem Create required directories
+ mkdir bin\dll bin\static bin\example bin\include
+ 
+-rem Copy files using a subroutine. Exits immediately on failure.
++rem Copy common files using a subroutine. Exits immediately on failure.
+ call :copyFile "tests\fullbench.c" "bin\example\"
+ call :copyFile "programs\datagen.c" "bin\example\"
+ call :copyFile "programs\datagen.h" "bin\example\"
+@@ -14,16 +20,29 @@ call :copyFile "lib\common\mem.h" "bin\example\"
+ call :copyFile "lib\common\zstd_internal.h" "bin\example\"
+ call :copyFile "lib\common\error_private.h" "bin\example\"
+ call :copyFile "lib\common\xxhash.h" "bin\example\"
+-call :copyFile "lib\libzstd.a" "bin\static\libzstd_static.lib"
+-call :copyFile "lib\dll\libzstd.*" "bin\dll\"
+ call :copyFile "lib\dll\example\Makefile" "bin\example\"
+ call :copyFile "lib\dll\example\fullbench-dll.*" "bin\example\"
+-call :copyFile "lib\dll\example\README.md" "bin\"
+ call :copyFile "lib\zstd.h" "bin\include\"
+ call :copyFile "lib\zstd_errors.h" "bin\include\"
+ call :copyFile "lib\zdict.h" "bin\include\"
+-call :copyFile "programs\zstd.exe" "bin\zstd.exe"
+ 
++rem Copy build-specific files
++if "%BUILD_TYPE%"=="cmake" (
++    echo Copying CMake build artifacts...
++    call :copyFile "build\cmake\build\lib\Release\zstd_static.lib" "bin\static\libzstd_static.lib"
++    call :copyFile "build\cmake\build\lib\Release\zstd.dll" "bin\dll\libzstd.dll"
++    call :copyFile "build\cmake\build\lib\Release\zstd.lib" "bin\dll\zstd.lib"
++    call :copyFile "build\cmake\build\programs\Release\zstd.exe" "bin\zstd.exe"
++    call :copyFile "lib\dll\example\README.md" "bin\README.md"
++) else (
++    echo Copying Make build artifacts...
++    call :copyFile "lib\libzstd.a" "bin\static\libzstd_static.lib"
++    call :copyFile "lib\dll\libzstd.*" "bin\dll\"
++    call :copyFile "programs\zstd.exe" "bin\zstd.exe"
++    call :copyFile "lib\dll\example\README.md" "bin\"
++)
++
++echo Build package created successfully for %BUILD_TYPE% build!
+ endlocal
+ exit /b 0
+ 
+@@ -33,4 +52,4 @@ if errorlevel 1 (
+     echo Failed to copy "%~1"
+     exit 1
+ )
+-exit /b
++exit /b
+\ No newline at end of file

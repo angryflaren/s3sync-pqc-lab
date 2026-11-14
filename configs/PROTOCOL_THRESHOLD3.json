@@ -1,0 +1,76 @@
+{
+  "format": 1,
+  "frozen_date": "2026-11-08",
+  "purpose": "Validate the four-policy comparison on SQLite versions 61..240 and a separate pinned real-source history.",
+  "policies": [
+    "fixed-2",
+    "fixed-3",
+    "fixed-4",
+    "adaptive"
+  ],
+  "adaptive_range": [
+    2,
+    4
+  ],
+  "primary_metric": "Sum of uploaded and downloaded object-body bytes, including HEAD; not HTTP/TCP bytes or monetary cost.",
+  "network": {
+    "DecisionBudgetMode": "virtual",
+    "CapacityBytes": 536870912,
+    "RefillBytesPerSecond": 5242880,
+    "PeakBytesPerSecond": 52428800
+  },
+  "model_idle_seconds": [
+    0,
+    8
+  ],
+  "repetitions": 1,
+  "timing_interpretation": "Descriptive timings only; repeated measurements are required for small timing differences.",
+  "sqlite": {
+    "updates": 240,
+    "run_from_version": 0,
+    "diagnostic_window": [
+      0,
+      60
+    ],
+    "primary_validation_window": [
+      61,
+      240
+    ],
+    "read_profile": "read_light",
+    "regular_read_period": 20,
+    "initial_and_final_reads": true,
+    "state_at_boundary": "Keep chain and model-budget state across version 60; derive the validation window from full logs.",
+    "initial_bytes": 134553600,
+    "initial_sha256": "a6008780ed732949bb5a49d1f23e937e0164cc6900b2104def0196a7e16c573f",
+    "history_sha256": "5d833ddb273c1ba4025eb499a4ae82374c617d838684f6fe0a859103e4793a5e",
+    "read_trace_sha256": "f3a931496f3720116d8496fce8af4baabcf10a391b127e9551e0cdc0f8eae256"
+  },
+  "natural_zstd": {
+    "updates": 120,
+    "primary_validation_window": [
+      0,
+      120
+    ],
+    "source": "https://github.com/meta/zstd",
+    "branch_at_collection": "dev",
+    "initial_commit": "e23d0a96164ed0da410c7a3a334b70e56c7ed022",
+    "final_commit": "49cf51799ea051457f57243527aa2058f999f005",
+    "commits_manifest_sha256": "03042f4d31f07048c672c611f6191b713ebf25cfbf55bd4fec483a18b1b4315c",
+    "initial_files": 652,
+    "initial_payload_bytes": 8427969,
+    "read_profiles": {
+      "read_light": 20,
+      "read_heavy": 1
+    },
+    "initial_and_final_reads": true,
+    "interpretation": "A different workload and size, evaluated separately; no forced or enlarged changes."
+  },
+  "configuration_files": [
+    "config.experiment2.sqlite240.b00.v3.json",
+    "config.experiment2.sqlite240.b08.v3.json",
+    "config.experiment2.zstd120.b00.v3.json",
+    "config.experiment2.zstd120.b08.v3.json"
+  ],
+  "pilot": "config.experiment2.zstd.pilot.v3.json",
+  "selection_rule": "Keep thresholds, budgets and read schedules fixed for this validation; do not choose a winning threshold or read phase after seeing these results."
+}

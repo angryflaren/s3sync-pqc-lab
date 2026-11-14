@@ -1,0 +1,32 @@
+diff --git a/programs/zstdcli.c b/programs/zstdcli.c
+index fd62a39a42e7f9d53ca0e1817cf67c7a3c199fd0..8b67f5e878a79adffffcd310d53dd1abde700da4 100644
+--- a/programs/zstdcli.c
++++ b/programs/zstdcli.c
+@@ -149,6 +149,7 @@ static void usage(FILE* f, const char* programName)
+     DISPLAY_F(f, "Usage: %s [OPTIONS...] [INPUT... | -] [-o OUTPUT]\n\n", programName);
+     DISPLAY_F(f, "Options:\n");
+     DISPLAY_F(f, "  -o OUTPUT                     Write output to a single file, OUTPUT.\n");
++    DISPLAY_F(f, "  -c, --stdout                  Write to STDOUT (even if it is a console) and keep the INPUT file(s).\n");
+     DISPLAY_F(f, "  -k, --keep                    Preserve INPUT file(s). [Default] \n");
+     DISPLAY_F(f, "  --rm                          Remove INPUT file(s) after successful (de)compression to file.\n");
+ #ifdef ZSTD_GZCOMPRESS
+@@ -183,7 +184,6 @@ static void usageAdvanced(const char* programName)
+     DISPLAYOUT("\n");
+     usage(stdout, programName);
+     DISPLAYOUT("Advanced options:\n");
+-    DISPLAYOUT("  -c, --stdout                  Write to STDOUT (even if it is a console) and keep the INPUT file(s).\n\n");
+ 
+     DISPLAYOUT("  -v, --verbose                 Enable verbose output; pass multiple times to increase verbosity.\n");
+     DISPLAYOUT("  -q, --quiet                   Suppress warnings; pass twice to suppress errors.\n");
+diff --git a/tests/cli-tests/basic/help.sh.stdout.glob b/tests/cli-tests/basic/help.sh.stdout.glob
+index 66c6906cf8fe29a42acc16363d6b12c1027a8c62..08cfdb1b348be9dbbea40287c8a603f944d4f598 100644
+--- a/tests/cli-tests/basic/help.sh.stdout.glob
++++ b/tests/cli-tests/basic/help.sh.stdout.glob
+@@ -5,6 +5,7 @@ Usage: zstd *OPTIONS...* *INPUT... | -* *-o OUTPUT*
+ 
+ Options:
+   -o OUTPUT                     Write output to a single file, OUTPUT.
++  -c, --stdout                  Write to STDOUT (even if it is a console) and keep the INPUT file(s).
+   -k, --keep                    Preserve INPUT file(s). *Default*
+   --rm                          Remove INPUT file(s) after successful (de)compression to file.
+ 

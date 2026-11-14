@@ -1,0 +1,12 @@
+diff --git a/contrib/premake/zstd.lua b/contrib/premake/zstd.lua
+index df1ace3ee8ea577f61600bb9238ff9a1864f3265..f3fd5b2935ac6a8a8106477fa0140ba50f5dadbe 100644
+--- a/contrib/premake/zstd.lua
++++ b/contrib/premake/zstd.lua
+@@ -2,6 +2,7 @@
+ -- Basic usage: project_zstd(ZSTD_DIR)
+ 
+ function project_zstd(dir, compression, decompression, deprecated, dictbuilder, legacy)
++	if string.sub(dir, -1, 1) ~= '/' then dir = dir .. '/' end
+ 	if compression == nil then compression = true end
+ 	if decompression == nil then decompression = true end
+ 	if deprecated == nil then deprecated = false end

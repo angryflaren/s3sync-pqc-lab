@@ -1,0 +1,31 @@
+{
+  "DatasetDirectory": "/home/lab/s3sync-lab/project/data/single_file_experiment",
+  "PythonExecutable": "python3",
+  "HistoryScript": "/home/lab/s3sync-lab/project/data/single_file_experiment/single_file_tool.py",
+  "OutputDirectory": "/home/lab/s3sync-lab/project/results-experiment1-pilot",
+  "Updates": 3,
+  "Repetitions": 1,
+  "RestoreEvery": 3,
+  "MaximumDeltas": 128,
+  "ChunkBytes": 4096,
+  "ProcessTimeoutSeconds": 600,
+  "MinimumThreshold": 2,
+  "MaximumThreshold": 4,
+  "PruneReplacedChains": true,
+  "Storage": {
+    "Provider": "s3",
+    "LocalDirectory": "/home/lab/s3sync-lab/project/objects-unused",
+    "ServiceUrl": "http://127.0.0.1:8333",
+    "Bucket": "s3sync-lab",
+    "Region": "us-east-1",
+    "Prefix": "s3sync-lab",
+    "TimeoutSeconds": 1800
+  },
+  "Network": {
+    "DecisionBudgetMode": "virtual",
+    "CapacityBytes": 536870912,
+    "RefillBytesPerSecond": 5242880,
+    "PeakBytesPerSecond": 52428800,
+    "IdleSecondsPerUpdate": 0
+  }
+}

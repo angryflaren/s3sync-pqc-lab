@@ -1,0 +1,23 @@
+{
+  "Run": "r01-fixed-4",
+  "Policy": "fixed-4",
+  "Repetition": 1,
+  "Updates": 3,
+  "FullUpdates": 0,
+  "DeltaUpdates": 3,
+  "InitialUploadBytes": 500381107,
+  "UpdateUploadBytes": 101330181,
+  "TotalUploadBytes": 601711288,
+  "MaximumChainBytes": 601706772,
+  "MaximumDeltaCount": 3,
+  "UpdateWriteP50Ms": 8588.5924,
+  "UpdateWriteP95Ms": 8849.78095,
+  "UpdateWriteMeanMs": 8615.9641,
+  "UpdateModelTransferSeconds": 2.8233080482482897,
+  "RestoreCount": 2,
+  "RestoreP50Ms": 10158.51765,
+  "RestoreP95Ms": 12366.357465000001,
+  "TotalBudgetExcessBytes": 0,
+  "FinalFileBytes": 500375552,
+  "FinalSha256": "2872c7dce701e56c75ce6507f43728eb11ad52f3a65562f60eba2e7d5eee29ec"
+}

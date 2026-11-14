@@ -1,0 +1,65 @@
+diff --git a/lib/legacy/zstd_v01.c b/lib/legacy/zstd_v01.c
+index ad3c9330ef9d6624a2eeab4ea88c588cfa06e12a..29e875713351d1875ab9bf9f4db4990dc5657c35 100644
+--- a/lib/legacy/zstd_v01.c
++++ b/lib/legacy/zstd_v01.c
+@@ -430,7 +430,7 @@ static unsigned FSE_isError(size_t code) { return (code > (size_t)(-FSE_ERROR_ma
+ 
+ static short FSE_abs(short a)
+ {
+-    return a<0? -a : a;
++    return a<0? (short)-a : a;
+ }
+ 
+ 
+diff --git a/lib/legacy/zstd_v03.c b/lib/legacy/zstd_v03.c
+index 7d82db6669f256844a992fbaa99d194556361dd0..50fa87cf362a21d8b20b1366fecc04a605aee1d6 100644
+--- a/lib/legacy/zstd_v03.c
++++ b/lib/legacy/zstd_v03.c
+@@ -1111,7 +1111,7 @@ static unsigned FSE_isError(size_t code) { return ERR_isError(code); }
+ ****************************************************************/
+ static short FSE_abs(short a)
+ {
+-    return a<0 ? -a : a;
++    return a<0 ? (short)-a : a;
+ }
+ 
+ static size_t FSE_readNCount (short* normalizedCounter, unsigned* maxSVPtr, unsigned* tableLogPtr,
+diff --git a/lib/legacy/zstd_v04.c b/lib/legacy/zstd_v04.c
+index 0da316c158e442e78d26e3c0726eecf90f490891..31c2052583d7b11fe12ed61b2b86f91ac0446e4a 100644
+--- a/lib/legacy/zstd_v04.c
++++ b/lib/legacy/zstd_v04.c
+@@ -1094,7 +1094,7 @@ static unsigned FSE_isError(size_t code) { return ERR_isError(code); }
+ ****************************************************************/
+ static short FSE_abs(short a)
+ {
+-    return a<0 ? -a : a;
++    return a<0 ? (short)-a : a;
+ }
+ 
+ static size_t FSE_readNCount (short* normalizedCounter, unsigned* maxSVPtr, unsigned* tableLogPtr,
+diff --git a/lib/legacy/zstd_v05.c b/lib/legacy/zstd_v05.c
+index 7a3af4214f8bc36954f0e793a3bac08cad7fadd8..e1efca597ce71b71b2af6cadb670677f9c864d94 100644
+--- a/lib/legacy/zstd_v05.c
++++ b/lib/legacy/zstd_v05.c
+@@ -1224,7 +1224,7 @@ const char* FSEv05_getErrorName(size_t code) { return ERR_getErrorName(code); }
+ /*-**************************************************************
+ *  FSEv05 NCount encoding-decoding
+ ****************************************************************/
+-static short FSEv05_abs(short a) { return a<0 ? -a : a; }
++static short FSEv05_abs(short a) { return a<0 ? (short)-a : a; }
+ 
+ 
+ size_t FSEv05_readNCount (short* normalizedCounter, unsigned* maxSVPtr, unsigned* tableLogPtr,
+diff --git a/lib/legacy/zstd_v06.c b/lib/legacy/zstd_v06.c
+index 88a39e2a070b1741ce2dee6707d08adf5edb49ed..fb8c14df91421edd047c5e15ac93ca367580e5f1 100644
+--- a/lib/legacy/zstd_v06.c
++++ b/lib/legacy/zstd_v06.c
+@@ -1202,7 +1202,7 @@ static unsigned HUFv06_isError(size_t code) { return ERR_isError(code); }
+ /*-**************************************************************
+ *  FSE NCount encoding-decoding
+ ****************************************************************/
+-static short FSEv06_abs(short a) { return a<0 ? -a : a; }
++static short FSEv06_abs(short a) { return a<0 ? (short)-a : a; }
+ 
+ size_t FSEv06_readNCount (short* normalizedCounter, unsigned* maxSVPtr, unsigned* tableLogPtr,
+                  const void* headerBuffer, size_t hbSize)

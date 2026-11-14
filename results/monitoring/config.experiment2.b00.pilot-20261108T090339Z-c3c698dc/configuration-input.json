@@ -1,0 +1,39 @@
+{
+  "datasetDirectory": "data/corpus",
+  "corpusScript": "data/corpus/corpus_tool.py",
+  "naturalScript": "data/corpus/natural_tool.py",
+  "pythonExecutable": "python3",
+  "outputDirectory": "results-experiment2-b00-pilot",
+  "groups": [
+    "sqlite"
+  ],
+  "readProfiles": [
+    "read_light"
+  ],
+  "updateLimit": 3,
+  "repetitions": 1,
+  "maximumDeltas": 128,
+  "chunkBytes": 4096,
+  "processTimeoutSeconds": 600,
+  "maximumGroupBytes": 268435456,
+  "minimumThreshold": 2,
+  "maximumThreshold": 4,
+  "interTrialIdleSeconds": 0,
+  "pruneReplacedChains": true,
+  "storage": {
+    "provider": "s3",
+    "localDirectory": "objects-test-only",
+    "serviceUrl": "http://127.0.0.1:8333",
+    "bucket": "s3sync-lab",
+    "region": "us-east-1",
+    "prefix": "s3sync-lab/exp2-b00-pilot",
+    "timeoutSeconds": 1800
+  },
+  "network": {
+    "decisionBudgetMode": "virtual",
+    "capacityBytes": 536870912,
+    "refillBytesPerSecond": 5242880,
+    "peakBytesPerSecond": 52428800,
+    "idleSecondsPerUpdate": 0.0
+  }
+}

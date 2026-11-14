@@ -1,0 +1,67 @@
+diff --git a/README.md b/README.md
+index 3adacad515138b9ebd71a4d64ea772b2129eb146..5af79386f3bbf3b3f798c256c5555231e68a0c9b 100644
+--- a/README.md
++++ b/README.md
+@@ -127,19 +127,19 @@ When your system allows it, prefer using `make` to build `zstd` and `libzstd`.
+ 
+ ### Makefile
+ 
+-If your system is compatible with standard `make` (or `gmake`),
++Assuming your system supports standard `make` (or `gmake`),
+ invoking `make` in root directory will generate `zstd` cli in root directory.
+ It will also create `libzstd` into `lib/`.
+ 
+-Other available options include:
++Other standard targets include:
+ - `make install` : create and install zstd cli, library and man pages
+ - `make check` : create and run `zstd`, test its behavior on local platform
+ 
+ The `Makefile` follows the [GNU Standard Makefile conventions](https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html),
+-allowing staged install, standard flags, directory variables and command variables.
++allowing staged install, standard compilation flags, directory variables and command variables.
+ 
+-For advanced use cases, specialized compilation flags which control binary generation
+-are documented in [`lib/README.md`](lib/README.md#modular-build) for the `libzstd` library
++For advanced use cases, specialized flags which control binary generation and installation paths are documented
++in [`lib/README.md`](lib/README.md#modular-build) for the `libzstd` library
+ and in [`programs/README.md`](programs/README.md#compilation-variables) for the `zstd` CLI.
+ 
+ ### cmake
+diff --git a/lib/README.md b/lib/README.md
+index 89e53e6c85b3e2ebc5008a9a52baa75b79e3a402..3974de160ec0669fb05a267edc16d74e41bdb4f9 100644
+--- a/lib/README.md
++++ b/lib/README.md
+@@ -7,15 +7,29 @@ in order to make it easier to select or exclude features.
+ 
+ #### Building
+ 
+-`Makefile` script is provided, supporting [Makefile conventions](https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html#Makefile-Conventions),
++A `Makefile` script is provided, supporting [Makefile conventions](https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html#Makefile-Conventions),
+ including commands variables, staged install, directory variables and standard targets.
+ - `make` : generates both static and dynamic libraries
+-- `make install` : install libraries and headers in target system directories
++- `make install` : install libraries, headers and pkg-config in local system directories
+ 
+-`libzstd` default scope is pretty large, including compression, decompression, dictionary builder,
+-and support for decoding legacy formats >= v0.5.0.
++`libzstd` default scope is extensive, including compression, decompression, dictionary builder,
++and support for decoding legacy formats >= v0.5.0 by default.
+ The scope can be reduced on demand (see paragraph _modular build_).
+ 
++#### Multiarch Support
++
++For multiarch systems (like Debian/Ubuntu), libraries should be installed to architecture-specific directories.
++When creating packages for such systems, use the `LIBDIR` variable to specify the correct multiarch path:
++
++```bash
++# For x86_64 systems on Ubuntu/Debian:
++make install PREFIX=/usr LIBDIR=/usr/lib/x86_64-linux-gnu
++
++# For ARM64 systems on Ubuntu/Debian:
++make install PREFIX=/usr LIBDIR=/usr/lib/aarch64-linux-gnu
++```
++
++This will not only install the files in the correct directories, but also generate the correct paths for `pkg-config`.
+ 
+ #### Multithreading support
+ 

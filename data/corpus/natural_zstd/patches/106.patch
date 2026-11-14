@@ -1,0 +1,751 @@
+diff --git a/.github/workflows/android-ndk-build.yml b/.github/workflows/android-ndk-build.yml
+index 93abc265dff18274319f263573bd64f5d27e9864..62242971b2092b278d50da73a424f5bc4add1a2c 100644
+--- a/.github/workflows/android-ndk-build.yml
++++ b/.github/workflows/android-ndk-build.yml
+@@ -13,7 +13,7 @@ jobs:
+     runs-on: ubuntu-latest
+ 
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+ 
+     - name: Set up JDK 17
+       uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+diff --git a/.github/workflows/cmake-tests.yml b/.github/workflows/cmake-tests.yml
+index 47817a6591173bf067bf3ec0d7a185f8073b7302..262c9ac15a11d96aa134497f35bdce465dbb843e 100644
+--- a/.github/workflows/cmake-tests.yml
++++ b/.github/workflows/cmake-tests.yml
+@@ -28,7 +28,7 @@ jobs:
+     name: "CMake Root Build"
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Configure (Root)
+       run: |
+         cmake -S . -B cmake-build -DCMAKE_BUILD_TYPE=Release ${{ env.COMMON_CMAKE_FLAGS }}
+@@ -43,7 +43,7 @@ jobs:
+     name: "CMake build using make wrapper"
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Install dependencies
+       run: |
+         sudo apt install liblzma-dev  # Required for compression algorithms
+@@ -73,7 +73,7 @@ jobs:
+     env:
+       SRC_DIR: "source directory with spaces"
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       with:
+         path: "${{ env.SRC_DIR }}"
+     - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+@@ -131,7 +131,7 @@ jobs:
+             runner: "windows-2022"
+             cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS=ON"
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Add MSBuild to PATH
+       uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # tag=v3.0.0
+     - name: "Configure CMake (${{ matrix.name }})"
+@@ -156,7 +156,7 @@ jobs:
+     name: "CMake macOS ARM64 (Apple Silicon)"
+     runs-on: macos-14  # ARM64 runner
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: "CMake build and test (ARM64)"
+       run: |
+         # Configure and build with ARM64-specific optimizations
+diff --git a/.github/workflows/commit.yml b/.github/workflows/commit.yml
+index a6681840943be5af0587d11cec67b0788423f4df..9825a16b7b93267c917ecad43f1972132dbd6bc4 100644
+--- a/.github/workflows/commit.yml
++++ b/.github/workflows/commit.yml
+@@ -17,7 +17,7 @@ jobs:
+         image: fbopensource/zstd-circleci-primary:0.0.1
+         options: --entrypoint /bin/bash
+     steps:
+-    - uses: actions/checkout@v6.0.2
++    - uses: actions/checkout@v7.0.1
+     - name: Install Dependencies
+       run: |
+         sudo apt-get update
+@@ -40,7 +40,7 @@ jobs:
+         image: fbopensource/zstd-circleci-primary:0.0.1
+         options: --entrypoint /bin/bash
+     steps:
+-    - uses: actions/checkout@v6.0.2
++    - uses: actions/checkout@v7.0.1
+     - name: Install Dependencies
+       run: |
+         sudo apt-get update
+@@ -73,7 +73,7 @@ jobs:
+     env:
+       CIRCLE_ARTIFACTS: "/tmp/circleci-artifacts"
+     steps:
+-    - uses: actions/checkout@v6.0.2
++    - uses: actions/checkout@v7.0.1
+     - name: restore_cache
+       uses: actions/cache@v6
+       with:
+diff --git a/.github/workflows/dev-long-tests.yml b/.github/workflows/dev-long-tests.yml
+index c5b1e22d5bc8cef6bc311de19695b7dc07eae0e5..55eb0c5d7a9b865bff4ddb44ef2e4802b6706612 100644
+--- a/.github/workflows/dev-long-tests.yml
++++ b/.github/workflows/dev-long-tests.yml
+@@ -16,7 +16,7 @@ jobs:
+   make-all:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make all
+       run: make all
+ 
+@@ -27,7 +27,7 @@ jobs:
+       DEVNULLRIGHTS: 1
+       READFROMBLOCKDEVICE: 1
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make test
+       run: |
+         make test
+@@ -38,7 +38,7 @@ jobs:
+   make-test-macos:
+     runs-on: macos-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make test on macos
+       run: make test
+ 
+@@ -49,7 +49,7 @@ jobs:
+       DEVNULLRIGHTS: 1
+       READFROMBLOCKDEVICE: 1
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make test # note: `make -j test success` seems to require a clean state
+       run: |
+         sudo apt-get -qqq update
+@@ -61,7 +61,7 @@ jobs:
+   test-largeDictionary:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: largeDictionary
+       run: |
+         CFLAGS="-Werror -O3" make -j -C tests test-largeDictionary
+@@ -70,7 +70,7 @@ jobs:
+   no-intrinsics-fuzztest:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: no intrinsics fuzztest
+       run: MOREFLAGS="-DZSTD_NO_INTRINSICS" make -C tests fuzztest
+ 
+@@ -78,14 +78,14 @@ jobs:
+   tsan-zstreamtest:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: thread sanitizer zstreamtest
+       run: CC=clang ZSTREAM_TESTTIME=-T3mn make tsan-test-zstream
+ 
+   uasan-zstreamtest:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: ub + address sanitizer on zstreamtest
+       run: CC=clang make uasan-test-zstream
+ 
+@@ -93,14 +93,14 @@ jobs:
+   tsan-fuzztest:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: thread sanitizer fuzztest
+       run: CC=clang make tsan-fuzztest
+ 
+   big-tests-zstreamtest32:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: zstream tests in 32bit mode, with big tests
+       run: |
+         sudo apt-get -qqq update
+@@ -111,7 +111,7 @@ jobs:
+   gcc-8-asan-ubsan-testzstd:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: gcc-8 + ASan + UBSan + Test Zstd
+       # See https://askubuntu.com/a/1428822
+       run: |
+@@ -123,14 +123,14 @@ jobs:
+   clang-asan-ubsan-testzstd:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: clang + ASan + UBSan + Test Zstd
+       run: CC=clang make -j uasan-test-zstd </dev/null V=1
+ 
+   gcc-asan-ubsan-testzstd-32bit:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: ASan + UBSan + Test Zstd, 32bit mode
+       run: |
+         sudo apt-get -qqq update
+@@ -144,7 +144,7 @@ jobs:
+   gcc-8-asan-ubsan-fuzz:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: gcc-8 + ASan + UBSan + Fuzz Test
+       # See https://askubuntu.com/a/1428822
+       run: |
+@@ -156,14 +156,14 @@ jobs:
+   clang-asan-ubsan-fuzz:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: clang + ASan + UBSan + Fuzz Test
+       run: CC=clang FUZZER_FLAGS="--long-tests" make clean uasan-fuzztest
+ 
+   gcc-asan-ubsan-fuzz32:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: ASan + UBSan + Fuzz Test 32bit
+       run: |
+         sudo apt-get -qqq update
+@@ -173,7 +173,7 @@ jobs:
+   clang-asan-fuzz32:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: clang + ASan + Fuzz Test 32bit
+       run: |
+         sudo apt-get -qqq update
+@@ -188,7 +188,7 @@ jobs:
+ #  clang-asan-ubsan-fuzz32:
+ #    runs-on: ubuntu-20.04
+ #    steps:
+-#    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++#    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+ #    - name: clang + ASan + UBSan + Fuzz Test 32bit
+ #      run: |
+ #        sudo apt-get -qqq update
+@@ -198,28 +198,28 @@ jobs:
+   asan-ubsan-regression:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: ASan + UBSan + Regression Test
+       run: make -j uasanregressiontest
+ 
+   clang-asan-ubsan-regression:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: clang + ASan + UBSan + Regression Test
+       run: CC=clang make -j uasanregressiontest
+ 
+   msan-regression:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: MSan + Regression Test
+       run: make -j msanregressiontest
+ 
+   clang-msan-fuzz-unoptimized:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: clang + MSan + Fuzz Test
+         run: |
+           sudo apt-get -qqq update
+@@ -229,7 +229,7 @@ jobs:
+   clang-msan-fuzz:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: clang + MSan + Fuzz Test
+       run: |
+         sudo apt-get -qqq update
+@@ -239,7 +239,7 @@ jobs:
+   clang-msan-testzstd:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: clang + MSan + Test Zstd
+       run: |
+         CC=clang make -j msan-test-zstd HAVE_ZLIB=0 HAVE_LZ4=0 HAVE_LZMA=0 V=1
+@@ -247,7 +247,7 @@ jobs:
+   armfuzz:
+       runs-on: ubuntu-latest
+       steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: Qemu ARM emulation + Fuzz Test
+         run: |
+           sudo apt-get -qqq update
+@@ -257,7 +257,7 @@ jobs:
+   valgrind-fuzz-test:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: valgrind + fuzz test stack mode    # ~ 7mn
+       shell: 'script -q -e -c "bash {0}"'
+       run: |
+@@ -273,7 +273,7 @@ jobs:
+       run:
+         shell: msys2 {0}
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # tag=v2.32.0
+       with:
+         msystem: MINGW64
+diff --git a/.github/workflows/dev-short-tests.yml b/.github/workflows/dev-short-tests.yml
+index c0d1664112e4e43e5a83b019f17962a8b7b7d9eb..acd32363992b4d72535062aa0bfb70aa47fe81a2 100644
+--- a/.github/workflows/dev-short-tests.yml
++++ b/.github/workflows/dev-short-tests.yml
+@@ -16,21 +16,21 @@ jobs:
+   linux-kernel:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: linux kernel, library + build + test
+       run: make -C contrib/linux-kernel test CFLAGS="-Werror -Wunused-const-variable -Wunused-but-set-variable"
+ 
+   benchmarking:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make benchmarking
+       run: make benchmarking
+ 
+   check-32bit: # designed to catch https://github.com/facebook/zstd/issues/2428
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make check on 32-bit
+       run: |
+         sudo apt update
+@@ -41,7 +41,7 @@ jobs:
+   build-c89:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: ensure zstd can be built with c89/c90 compilers (+ long long support + variadic macros)
+       run: |
+         make c89build V=1
+@@ -49,7 +49,7 @@ jobs:
+   build-zstd-dll:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: build zstd bin against a dynamic lib (debuglevel for more dependencies)
+       run: |
+         make -C lib lib-mt-release
+@@ -58,7 +58,7 @@ jobs:
+   gcc-7-libzstd:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: gcc-7 + libzstdmt compilation
+       # See https://askubuntu.com/a/1428822
+       run: |
+@@ -75,7 +75,7 @@ jobs:
+   cpp-gnu90-c99-compatibility:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: C++, gnu90 and c99 compatibility
+       run: |
+         make cxxtest
+@@ -89,7 +89,7 @@ jobs:
+   mingw-cross-compilation:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: mingw cross-compilation
+       run: |
+         # sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix; (doesn't work)
+@@ -100,7 +100,7 @@ jobs:
+   armbuild:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: ARM Build Test
+       run: |
+         sudo apt-get -qqq update
+@@ -110,7 +110,7 @@ jobs:
+   bourne-shell:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Bourne shell compatibility (shellcheck)
+       run: |
+         wget https://github.com/koalaman/shellcheck/releases/download/v0.7.1/shellcheck-v0.7.1.linux.x86_64.tar.xz
+@@ -120,7 +120,7 @@ jobs:
+   zlib-wrapper:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: install valgrind
+       run: |
+         sudo apt-get -qqq update
+@@ -133,7 +133,7 @@ jobs:
+   lz4-threadpool-libs:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: LZ4, thread pool, and libs build testslib wrapper test
+       run: |
+         make -C tests test-lz4
+@@ -146,7 +146,7 @@ jobs:
+   gcc-make-all-avx2:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Make all, with AVX2
+       run: |
+         sudo apt-get -qqq update
+@@ -156,7 +156,7 @@ jobs:
+   gcc-make-all-32bit:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Make all, 32bit mode
+       run: |
+         sudo apt-get -qqq update
+@@ -166,7 +166,7 @@ jobs:
+   gcc-make-all-32bit-avx2:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Make all, 32bit + AVX2 mode
+       run: |
+         sudo apt-get -qqq update
+@@ -177,7 +177,7 @@ jobs:
+   gcc-8-make:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: gcc-8 build
+         # See https://askubuntu.com/a/1428822
+         run: |
+@@ -200,7 +200,7 @@ jobs:
+             flags: "HAVE_ZLIB=0 HAVE_LZ4=0 HAVE_LZMA=1"
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: Build with ${{matrix.name}}
+         run: |
+           sudo apt install liblzma-dev
+@@ -210,7 +210,7 @@ jobs:
+   implicit-fall-through:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: -Wimplicit-fallthrough build
+         run: |
+           make clean
+@@ -221,7 +221,7 @@ jobs:
+   meson-linux:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: Install packages
+         run: |
+           sudo apt-get update
+@@ -245,7 +245,7 @@ jobs:
+   meson-mingw-cross-compilation:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: Install packages
+         run: |
+           sudo apt-get -qqq update
+@@ -289,7 +289,7 @@ jobs:
+   meson-windows:
+     runs-on: windows-latest
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: Install packages
+         run: pip install --pre meson
+       - name: Configure with Meson
+@@ -319,7 +319,7 @@ jobs:
+         ]
+     runs-on: ${{matrix.runner}}
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Add MSBuild to PATH
+       uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # tag=v3.0.0
+     - name: Build ${{matrix.name}}
+@@ -344,7 +344,7 @@ jobs:
+   libzstd-size:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: libzstd size test
+       run: |
+         make clean && make -j -C lib libzstd && ./tests/check_size.py lib/libzstd.so 1100000
+@@ -355,7 +355,7 @@ jobs:
+   minimal-decompressor-macros:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: minimal decompressor macros
+       run: |
+         make clean && make -j all ZSTD_LIB_MINIFY=1 MOREFLAGS="-Werror"
+@@ -372,7 +372,7 @@ jobs:
+   dynamic-bmi2:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: dynamic bmi2 tests
+       run: |
+         make clean && make -j check MOREFLAGS="-O0 -Werror -mbmi2"
+@@ -384,7 +384,7 @@ jobs:
+   test-variants:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make all variants & validate
+       run: |
+         make -j -C programs allVariants MOREFLAGS=-O0
+@@ -411,7 +411,7 @@ jobs:
+       XCC: ${{ matrix.xcc }}
+       XEMU: ${{ matrix.xemu }}
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: apt update & install
+       run: |
+         sudo apt-get update
+@@ -486,7 +486,7 @@ jobs:
+       run:
+         shell: msys2 {0}
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # tag=v2.32.0
+       with:
+         msystem: ${{ matrix.msystem }}
+@@ -522,7 +522,7 @@ jobs:
+         platform: [x64, Win32]
+         configuration: [Release]
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Add MSBuild to PATH
+       uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # tag=v3.0.0
+     - name: Build and run tests
+@@ -543,7 +543,7 @@ jobs:
+     runs-on: windows-latest
+     steps:
+     - run: git config --global core.autocrlf input
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - uses: cygwin/cygwin-install-action@3f0a3f9f988f7e96b8c18098ae05eaec175f5b52 # tag=v6
+       with:
+         platform: x86_64
+@@ -575,7 +575,7 @@ jobs:
+     container:
+       image: debian:testing
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: Install dependencies
+         run: |
+           apt -y update
+@@ -590,7 +590,7 @@ jobs:
+   versions-compatibility:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Versions Compatibility Test
+       run: |
+         make -C tests versionsTest
+@@ -598,7 +598,7 @@ jobs:
+   clangbuild:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make clangbuild
+       run: |
+         make clangbuild
+@@ -606,7 +606,7 @@ jobs:
+   gcc-pgo:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Build PGO Zstd with GCC
+       env:
+         CC: gcc
+@@ -617,7 +617,7 @@ jobs:
+   clang-pgo:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Build PGO Zstd with Clang
+       env:
+         CC: clang
+@@ -630,7 +630,7 @@ jobs:
+   musl-build:
+     runs-on: ubuntu-22.04
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+       - name: Install musl-tools
+         run: |
+           sudo apt install -y musl-tools
+@@ -651,7 +651,7 @@ jobs:
+       SDE_SHA256: 94e97d623fec54385686e1e7ba65ebc9941748c05ee451423948334892bf2b50
+       SDE_DIR: sde-external-10.13.1-2026-07-28-lin
+     steps:
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: Build Zstd
+       run: |
+         make -j zstd V=1
+@@ -687,7 +687,7 @@ jobs:
+         echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+         sudo apt-get update
+         sudo apt-get install -y intel-basekit intel-hpckit
+-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+     - name: make check
+       run: |
+         source /opt/intel/oneapi/setvars.sh
+diff --git a/.github/workflows/nightly.yml b/.github/workflows/nightly.yml
+index fe296208c3b200c7b3d750035cc5b39a005e0b7e..4e22b70665f197c2a9f4cc101a2ba7c69e5779a6 100644
+--- a/.github/workflows/nightly.yml
++++ b/.github/workflows/nightly.yml
+@@ -12,7 +12,7 @@ jobs:
+   regression-test:
+     runs-on: ubuntu-latest
+     steps:
+-    - uses: actions/checkout@v6.0.2
++    - uses: actions/checkout@v7.0.1
+     - name: Install dependencies
+       run: sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
+     - name: Regression Test
+diff --git a/.github/workflows/publish-release-artifacts.yml b/.github/workflows/publish-release-artifacts.yml
+index 3ce3c0e841ef75ce91ccd7f418edb4b3829e0559..17e3a056fe360edfed5abfdca200be177db0381d 100644
+--- a/.github/workflows/publish-release-artifacts.yml
++++ b/.github/workflows/publish-release-artifacts.yml
+@@ -17,7 +17,7 @@ jobs:
+ 
+     steps:
+       - name: Checkout
+-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+ 
+       - name: Archive
+         env:
+diff --git a/.github/workflows/release_check.yml b/.github/workflows/release_check.yml
+index 674da6b9b8b087d5f35e4fc84cac7baabf5f58a4..0d4edadff482d2f989fa7d583aa17dc221d48af4 100644
+--- a/.github/workflows/release_check.yml
++++ b/.github/workflows/release_check.yml
+@@ -15,7 +15,7 @@ jobs:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Check out repository
+-        uses: actions/checkout@v6.0.2
++        uses: actions/checkout@v7.0.1
+ 
+       - name: Save current manual
+         run: mv doc/zstd_manual.html doc/zstd_manual_saved.html
+@@ -34,7 +34,7 @@ jobs:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Check out repository
+-        uses: actions/checkout@v6.0.2
++        uses: actions/checkout@v7.0.1
+ 
+       - name: Install dependencies
+         run: |
+diff --git a/.github/workflows/scorecards.yml b/.github/workflows/scorecards.yml
+index 9422173481dbefd700b15533421a55238e82b182..10ca9611459edaee4bd247ef449eda1c32ea72e0 100644
+--- a/.github/workflows/scorecards.yml
++++ b/.github/workflows/scorecards.yml
+@@ -27,7 +27,7 @@ jobs:
+ 
+     steps:
+       - name: "Checkout code"
+-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+         with:
+           persist-credentials: false
+ 
+diff --git a/.github/workflows/windows-artifacts.yml b/.github/workflows/windows-artifacts.yml
+index 97454beb2094eae50907add33242386533b8abc1..1b035966968ab556fd804798eae458381b3ce9dc 100644
+--- a/.github/workflows/windows-artifacts.yml
++++ b/.github/workflows/windows-artifacts.yml
+@@ -28,7 +28,7 @@ jobs:
+         shell: ${{ matrix.shell == 'cmake' && 'pwsh' || 'msys2 {0}' }}
+ 
+     steps:
+-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # tag=v7.0.1
+ 
+       # MSYS2 setup
+       - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # tag=v2.32.0

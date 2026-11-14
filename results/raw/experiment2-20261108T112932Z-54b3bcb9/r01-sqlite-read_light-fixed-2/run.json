@@ -1,0 +1,49 @@
+{
+  "Format": 1,
+  "Status": "completed",
+  "Group": "5133c5b572344cbd93916e0e7ac23aa9",
+  "ObjectPrefix": "s3sync-lab/exp2-sqlite240-b00-v3/experiment2-20261108T112932Z-54b3bcb9/r01-sqlite-read_light-fixed-2",
+  "HeadKey": "s3sync-lab/exp2-sqlite240-b00-v3/experiment2-20261108T112932Z-54b3bcb9/r01-sqlite-read_light-fixed-2/HEAD.json",
+  "Version": 240,
+  "Root": "1d08c37b1f33762958a252ec43e7e87fea8e55a4698bd96e7059ad1b84682bf7e08bd14d300e88d976dca0e698756f7c",
+  "File": {
+    "Length": 134553678,
+    "Sha256": "13d168873e83444805471092a4b3c93acabf5073ce6f2a49c2665648bd4f3002"
+  },
+  "Head": {
+    "Format": 1,
+    "Group": "5133c5b572344cbd93916e0e7ac23aa9",
+    "Version": 240,
+    "Root": "1d08c37b1f33762958a252ec43e7e87fea8e55a4698bd96e7059ad1b84682bf7e08bd14d300e88d976dca0e698756f7c",
+    "Objects": [
+      {
+        "Key": "s3sync-lab/exp2-sqlite240-b00-v3/experiment2-20261108T112932Z-54b3bcb9/r01-sqlite-read_light-fixed-2/objects/64696e7d35a0ad82d8436c62f10e979adf724c488f3174ca4c852b1f93f6c6132195623650edd748551c400b2b1a4a94.bin",
+        "Root": "64696e7d35a0ad82d8436c62f10e979adf724c488f3174ca4c852b1f93f6c6132195623650edd748551c400b2b1a4a94",
+        "Bytes": 134558656,
+        "Version": 237,
+        "Kind": "Full"
+      },
+      {
+        "Key": "s3sync-lab/exp2-sqlite240-b00-v3/experiment2-20261108T112932Z-54b3bcb9/r01-sqlite-read_light-fixed-2/objects/674c560b68b5efe6f0b4a454dc987ac058fc5e8ea178b28c891a89f5b62a355214d5162372b50a9838fd21d4653a82a9.bin",
+        "Root": "674c560b68b5efe6f0b4a454dc987ac058fc5e8ea178b28c891a89f5b62a355214d5162372b50a9838fd21d4653a82a9",
+        "Bytes": 9207606,
+        "Version": 238,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-sqlite240-b00-v3/experiment2-20261108T112932Z-54b3bcb9/r01-sqlite-read_light-fixed-2/objects/c544d4064ee2a42e041e0ee049435d682b797f447606094346c53cff62d872b1b50079dc0d1205f8466664b8e7606738.bin",
+        "Root": "c544d4064ee2a42e041e0ee049435d682b797f447606094346c53cff62d872b1b50079dc0d1205f8466664b8e7606738",
+        "Bytes": 9207606,
+        "Version": 239,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/exp2-sqlite240-b00-v3/experiment2-20261108T112932Z-54b3bcb9/r01-sqlite-read_light-fixed-2/objects/1d08c37b1f33762958a252ec43e7e87fea8e55a4698bd96e7059ad1b84682bf7e08bd14d300e88d976dca0e698756f7c.bin",
+        "Root": "1d08c37b1f33762958a252ec43e7e87fea8e55a4698bd96e7059ad1b84682bf7e08bd14d300e88d976dca0e698756f7c",
+        "Bytes": 9207606,
+        "Version": 240,
+        "Kind": "Delta"
+      }
+    ]
+  }
+}

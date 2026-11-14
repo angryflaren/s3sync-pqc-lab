@@ -1,0 +1,85 @@
+diff --git a/.github/ISSUE_TEMPLATE/config.yml b/.github/ISSUE_TEMPLATE/config.yml
+new file mode 100644
+index 0000000000000000000000000000000000000000..e6df46ab86b3bf875cb5fece556b06193ad4eef8
+--- /dev/null
++++ b/.github/ISSUE_TEMPLATE/config.yml
+@@ -0,0 +1,5 @@
++blank_issues_enabled: true
++contact_links:
++  - name: Security vulnerability
++    url: https://github.com/facebook/zstd/blob/dev/SECURITY.md
++    about: Do not open a public issue or pull request for a security bug.
+diff --git a/.github/PULL_REQUEST_TEMPLATE.md b/.github/PULL_REQUEST_TEMPLATE.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..edc73ff09ac2b28f4398dc8f8425163d8619762c
+--- /dev/null
++++ b/.github/PULL_REQUEST_TEMPLATE.md
+@@ -0,0 +1,20 @@
++<!--
++Thanks for contributing to zstd. Please read CONTRIBUTING.md before opening a pull request.
++Security bugs: do not open a public pull request, see SECURITY.md.
++-->
++
++**What and why**
++
++<!-- What does this change do, and why is it needed? Link the issue it addresses, if any. -->
++
++**Checklist**
++
++- [ ] I searched open pull requests and issues: this problem is not already being addressed.
++- [ ] Bug fix: it comes with a reproducer or a test that fails without the fix.
++- [ ] Performance change: numbers from repeated runs are included, with CPU, compiler, flags and data.
++  A gain in one configuration is not a general gain: see the Performance section of CONTRIBUTING.md.
++- [ ] I stated below whether AI or other automated tools were used.
++
++**Tools used**
++
++<!-- "None", or which tools were used, and for what (finding the problem, writing the code, writing the test). -->
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index a9ad99ebdabc84e02bb07fe8c8dc35ed078d9426..d8cda4cef3ffe45dd6e819ed2d9d0f865190dfda 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -19,6 +19,21 @@ We actively welcome your pull requests.
+ 4. Ensure the test suite passes.
+ 5. Make sure your code lints.
+ 6. If you haven't already, complete the Contributor License Agreement ("CLA").
++7. Search open pull requests and issues first: the same problem may already be addressed.
++8. Keep one fix, or one topic, per pull request.
++9. A bug fix must come with a reproducer, or a test that fails without the fix.
++10. If AI or other automated tools were used to find the problem or write the change, say so
++in the pull request description.
++11. Do not open a public pull request for a security bug: see [SECURITY.md](SECURITY.md).
++
++### Review bar
++Not every directory is held to the same bar.
++
++* `lib/` and `programs/`: the library and the CLI ship everywhere. Changes get a full review
++of correctness, tests, portability and performance.
++* `contrib/`: more freedom in scope and style. Contributions still have to be correct.
++* `lib/legacy/`: the legacy decoders are frozen. Only memory-safety fixes and regression fixes,
++each with a test, are accepted.
+ 
+ ## Contributor License Agreement ("CLA")
+ In order to accept your pull request, we need you to submit a CLA. You only need
+@@ -80,7 +95,7 @@ Our contribution process works in three main stages:
+         as the destination.
+         * Examine the diff presented between the two branches to make sure there is nothing unexpected.
+     * Write a good pull request description:
+-        * While there is no strict template that our contributors follow, we would like them to
++        * Beyond the checklist in the pull request template, we would like contributors to
+         sufficiently summarize and motivate the changes they are proposing. We recommend all pull requests,
+         at least indirectly, address the following points.
+             * Is this pull request important and why?
+@@ -203,6 +218,12 @@ Performance section which might be helpful for you.
+ legitimate thing to do as long as it does not harm the overall performance health of Zstd.
+ This is a hard balance to strike but please keep in mind other aspects of Zstd when
+ submitting changes that are clang-specific, windows-specific, etc.
++4. We benchmark x86-64 and AArch64 ourselves. For other architectures (RISC-V, POWER, etc.),
++we can't, so we accept performance changes only if they are small, isolated behind
++architecture-specific `#ifdef`, come with your own benchmark numbers, and pass the existing CI.
++5. State precisely what was measured: CPU, compiler and flags, data, number of runs.
++A gain measured in one configuration is a gain for that configuration only. A claim of general
++improvement needs numbers from several configurations: different CPUs, compilers, and data.
+ 
+ ## Benchmarking Performance
+ Performance microbenchmarking is a tricky subject but also essential for Zstd. We value empirical

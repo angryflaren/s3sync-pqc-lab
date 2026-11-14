@@ -1,0 +1,14 @@
+diff --git a/lib/compress/zstdmt_compress.c b/lib/compress/zstdmt_compress.c
+index 0f1fe6d74697f879c328bd3bb9283e890a4152df..6d6f8139bec36afd2f08d991dc6c0f4945fe3534 100644
+--- a/lib/compress/zstdmt_compress.c
++++ b/lib/compress/zstdmt_compress.c
+@@ -1268,8 +1268,7 @@ size_t ZSTDMT_initCStream_internal(
+ 
+     if (mtctx->allJobsCompleted == 0) {   /* previous compression not correctly finished */
+         ZSTDMT_waitForAllJobsCompleted(mtctx);
+-        ZSTDMT_releaseAllJobResources(mtctx);
+-        mtctx->allJobsCompleted = 1;
++        ZSTDMT_releaseAllJobResources(mtctx); /* Will set allJobsCompleted to 1 */
+     }
+ 
+     mtctx->params = params;

@@ -1,0 +1,13 @@
+diff --git a/lib/common/zstd_internal.h b/lib/common/zstd_internal.h
+index c1647689b945793ceef69b28c567b7762d16e0f0..791b6485d23c8c8d65a8a14ebaee48e582be03f0 100644
+--- a/lib/common/zstd_internal.h
++++ b/lib/common/zstd_internal.h
+@@ -168,7 +168,7 @@ static UNUSED_ATTR const U32 OF_defaultNormLog = OF_DEFAULTNORMLOG;
+ *  Shared functions to include for inlining
+ *********************************************/
+ static void ZSTD_copy8(void* dst, const void* src) {
+-#if defined(ZSTD_ARCH_ARM_NEON)
++#if defined(ZSTD_ARCH_ARM_NEON) && !defined(__aarch64__)
+     vst1_u8((uint8_t*)dst, vld1_u8((const uint8_t*)src));
+ #else
+     ZSTD_memcpy(dst, src, 8);

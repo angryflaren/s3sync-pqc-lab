@@ -1,0 +1,32 @@
+# Рабочее состояние
+/work/
+/project/monitoring/
+/project/.s3sync-monitor.lock
+.vs/
+bin/
+obj/
+__pycache__/
+*.pyc
+*.user
+*.suo
+*.bak
+
+/seaweed/
+/exports/
+/incoming/
+s3.env
+s3.json
+.env
+keys.private.json
+*.pfx
+*.key
+*.pem
+
+# Крупные входы поставляются отдельно
+/data/single_file_experiment/initial.sqlite
+/data/single_file_experiment/work/
+/data/single_file_experiment/working.sqlite*
+/data/single_file_experiment/run_state.json
+/data/corpus/base/
+/data/corpus/work/
+/data/corpus/natural_zstd/work/

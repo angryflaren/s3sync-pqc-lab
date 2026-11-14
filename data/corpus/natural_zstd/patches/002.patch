@@ -1,0 +1,39 @@
+diff --git a/programs/README.md b/programs/README.md
+index 43ef07a45becf6ace88ffdf8dabfa757f58d3b44..2c2e94dc612e09c8eae0245533c7ca7ae3ccabd8 100644
+--- a/programs/README.md
++++ b/programs/README.md
+@@ -153,7 +153,7 @@ Usage: zstd [OPTIONS...] [INPUT... | -] [-o OUTPUT]
+ Options:
+   -o OUTPUT                     Write output to a single file, OUTPUT.
+   -k, --keep                    Preserve INPUT file(s). [Default]
+-  --rm                          Remove INPUT file(s) after successful (de)compression.
++  --rm                          Remove INPUT file(s) after successful (de)compression to file.
+ 
+   -#                            Desired compression level, where `#` is a number between 1 and 19;
+                                 lower numbers provide faster compression, higher numbers yield
+diff --git a/programs/zstdcli.c b/programs/zstdcli.c
+index fa7ea37b3f0f252a76cced51a62fb70f77fd7e76..124ea47aabf51167aae774a9cf06f323037e4eac 100644
+--- a/programs/zstdcli.c
++++ b/programs/zstdcli.c
+@@ -147,7 +147,7 @@ static void usage(FILE* f, const char* programName)
+     DISPLAY_F(f, "Options:\n");
+     DISPLAY_F(f, "  -o OUTPUT                     Write output to a single file, OUTPUT.\n");
+     DISPLAY_F(f, "  -k, --keep                    Preserve INPUT file(s). [Default] \n");
+-    DISPLAY_F(f, "  --rm                          Remove INPUT file(s) after successful (de)compression.\n");
++    DISPLAY_F(f, "  --rm                          Remove INPUT file(s) after successful (de)compression to file.\n");
+ #ifdef ZSTD_GZCOMPRESS
+     if (exeNameMatch(programName, ZSTD_GZ)) {     /* behave like gzip */
+         DISPLAY_F(f, "  -n, --no-name                 Do not store original filename when compressing.\n\n");
+diff --git a/tests/cli-tests/basic/help.sh.stdout.glob b/tests/cli-tests/basic/help.sh.stdout.glob
+index 21bc28c3fa880e2d7dae8f25e782872ba5be20c8..66c6906cf8fe29a42acc16363d6b12c1027a8c62 100644
+--- a/tests/cli-tests/basic/help.sh.stdout.glob
++++ b/tests/cli-tests/basic/help.sh.stdout.glob
+@@ -6,7 +6,7 @@ Usage: zstd *OPTIONS...* *INPUT... | -* *-o OUTPUT*
+ Options:
+   -o OUTPUT                     Write output to a single file, OUTPUT.
+   -k, --keep                    Preserve INPUT file(s). *Default*
+-  --rm                          Remove INPUT file(s) after successful (de)compression.
++  --rm                          Remove INPUT file(s) after successful (de)compression to file.
+ 
+   -#                            Desired compression level, where `#` is a number between 1 and 19;
+                                 lower numbers provide faster compression, higher numbers yield

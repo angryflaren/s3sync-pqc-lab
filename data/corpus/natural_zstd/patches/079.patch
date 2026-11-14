@@ -1,0 +1,13 @@
+diff --git a/.github/workflows/dev-short-tests.yml b/.github/workflows/dev-short-tests.yml
+index 4423a6dca110c546fdf79e81b67e3533ffeef3ca..aef73157e481efc8efeba3b2c598014f8165f6b8 100644
+--- a/.github/workflows/dev-short-tests.yml
++++ b/.github/workflows/dev-short-tests.yml
+@@ -544,7 +544,7 @@ jobs:
+     steps:
+     - run: git config --global core.autocrlf input
+     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
+-    - uses: cygwin/cygwin-install-action@f2009323764960f80959895c7bc3bb30210afe4d # tag=v6
++    - uses: cygwin/cygwin-install-action@711d29f3da23c9f4a1798e369a6f01198c13b11a # tag=v6
+       with:
+         platform: x86_64
+         packages: >-

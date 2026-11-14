@@ -1,0 +1,791 @@
+diff --git a/.github/workflows/cmake-tests.yml b/.github/workflows/cmake-tests.yml
+new file mode 100644
+index 0000000000000000000000000000000000000000..b0238570889c84271b8058c697123eeda29cddd1
+--- /dev/null
++++ b/.github/workflows/cmake-tests.yml
+@@ -0,0 +1,153 @@
++name: cmake-tests
++# CMake-specific build and test workflows
++# This workflow validates zstd builds across different CMake configurations,
++# platforms, and edge cases to ensure broad compatibility.
++
++concurrency:
++  group: cmake-${{ github.ref }}
++  cancel-in-progress: true
++
++on:
++  pull_request:
++    branches: [ dev, release, actionsTest ]
++
++permissions: read-all
++
++env:
++  # Centralized test timeouts for consistency
++  QUICK_TEST_TIME: "30s"
++  STANDARD_TEST_TIME: "1mn"
++  # Common CMake flags
++  COMMON_CMAKE_FLAGS: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS=ON"
++
++jobs:
++  # Ubuntu-based cmake build using make wrapper
++  # This test uses the make-driven cmake build to ensure compatibility
++  # with the existing build system integration
++  cmake-ubuntu-basic:
++    name: "CMake Ubuntu Basic Build"
++    runs-on: ubuntu-latest
++    steps:
++    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
++    - name: Install dependencies
++      run: |
++        sudo apt install liblzma-dev  # Required for compression algorithms
++    - name: CMake build and test via make
++      run: |
++        # Use make wrapper for cmake build with quick test timeouts
++        FUZZERTEST=-T${{ env.STANDARD_TEST_TIME }} ZSTREAM_TESTTIME=-T${{ env.STANDARD_TEST_TIME }} make cmakebuild V=1
++
++  # Cross-platform cmake build with edge case: source paths containing spaces
++  # This test ensures cmake handles filesystem paths with spaces correctly
++  # across different operating systems and build generators
++  cmake-cross-platform-spaces:
++    name: "CMake Cross-Platform (Spaces in Path)"
++    runs-on: ${{ matrix.os }}
++    strategy:
++      matrix:
++        include:
++          - os: ubuntu-latest
++            generator: "Unix Makefiles"
++            name: "Linux"
++          - os: windows-latest
++            generator: "NMake Makefiles"
++            name: "Windows NMake"
++          - os: macos-latest
++            generator: "Unix Makefiles"
++            name: "macOS"
++    env:
++      SRC_DIR: "source directory with spaces"
++    steps:
++    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
++      with:
++        path: "${{ env.SRC_DIR }}"
++    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
++      if: ${{ matrix.generator == 'NMake Makefiles' }}
++    - name: "CMake build and install (${{ matrix.name }})"
++      run: |
++        # Test Release build with installation to verify packaging
++        cmake -S "${{ env.SRC_DIR }}/build/cmake" -B build -DBUILD_TESTING=ON -G "${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=Release --install-prefix "${{ runner.temp }}/install"
++        cmake --build build --config Release
++        cmake --install build --config Release
++
++  # Windows-specific cmake testing with Visual Studio 2022
++  # Tests multiple generators and toolchains to ensure broad Windows compatibility
++  # including MSVC (x64, Win32, ARM64), MinGW, and Clang-CL with various architectures and optimizations
++  cmake-windows-comprehensive:
++    name: "CMake Windows VS2022 (${{ matrix.name }})"
++    runs-on: ${{ matrix.runner }}
++    strategy:
++      fail-fast: false
++      matrix:
++        include:
++          - generator: "Visual Studio 17 2022"
++            flags: "-A x64"
++            name: "MSVC x64"
++            runner: "windows-2022"
++            cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS=ON"
++          - generator: "Visual Studio 17 2022"
++            flags: "-A Win32"
++            name: "MSVC Win32"
++            runner: "windows-2022"
++            cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS=ON"
++          - generator: "Visual Studio 17 2022"
++            flags: "-A x64"
++            name: "MSVC x64 (No ZSTD_BUILD_TESTS)"
++            runner: "windows-2022"
++            # Intentionally omit ZSTD_BUILD_TESTS to reproduce the CXX language configuration bug
++            cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON"
++          # - generator: "Visual Studio 17 2022"
++          #   flags: "-A ARM64"
++          #   name: "MSVC ARM64"
++          #   runner: "windows-2022-arm64"  # Disabled due to very long queue times
++          - generator: "MinGW Makefiles"
++            flags: ""
++            name: "MinGW"
++            runner: "windows-2022"
++            cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS=ON"
++          - generator: "Visual Studio 17 2022"
++            flags: "-T ClangCL"
++            name: "Clang-CL"
++            runner: "windows-2022"
++            cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS=ON"
++          - generator: "Visual Studio 17 2022"
++            flags: "-T ClangCL -A x64 -DCMAKE_C_FLAGS=/arch:AVX2"
++            name: "Clang-CL AVX2"
++            runner: "windows-2022"
++            cmake_extra_flags: "-DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS=ON"
++    steps:
++    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
++    - name: Add MSBuild to PATH
++      uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # tag=v2.0.0
++    - name: "Configure CMake (${{ matrix.name }})"
++      run: |
++        cd build\cmake
++        mkdir build
++        cd build
++        cmake.exe -G "${{matrix.generator}}" ${{matrix.flags}} -DCMAKE_BUILD_TYPE=Debug ${{ matrix.cmake_extra_flags }} -DZSTD_ZSTREAM_FLAGS=-T${{ env.QUICK_TEST_TIME }} -DZSTD_FUZZER_FLAGS=-T${{ env.QUICK_TEST_TIME }} -DZSTD_FULLBENCH_FLAGS=-i0 ..
++    - name: "Build (${{ matrix.name }})"
++      run: |
++        cd build\cmake\build
++        cmake.exe --build .
++    - name: "Test (${{ matrix.name }})"
++      run: |
++        cd build\cmake\build
++        ctest.exe -V -C Debug
++
++  # macOS ARM64 (Apple Silicon) specific cmake testing
++  # Validates zstd builds and runs correctly on Apple Silicon architecture
++  # Uses native ARM64 hardware for optimal performance and compatibility testing
++  cmake-macos-arm64:
++    name: "CMake macOS ARM64 (Apple Silicon)"
++    runs-on: macos-14  # ARM64 runner
++    steps:
++    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
++    - name: "CMake build and test (ARM64)"
++      run: |
++        # Configure and build with ARM64-specific optimizations
++        cd build/cmake
++        mkdir build
++        cd build
++        cmake -DCMAKE_BUILD_TYPE=Release ${{ env.COMMON_CMAKE_FLAGS }} -DZSTD_ZSTREAM_FLAGS=-T${{ env.QUICK_TEST_TIME }} -DZSTD_FUZZER_FLAGS=-T${{ env.QUICK_TEST_TIME }} -DZSTD_FULLBENCH_FLAGS=-i1 ..
++        make -j$(sysctl -n hw.ncpu)
++        ctest -V
+diff --git a/.github/workflows/dev-short-tests.yml b/.github/workflows/dev-short-tests.yml
+index 227b01a0cd745600d3d6e8ef0d635dba701a5881..8e8753658f4e12b82b19097e0c0b78969a852747 100644
+--- a/.github/workflows/dev-short-tests.yml
++++ b/.github/workflows/dev-short-tests.yml
+@@ -72,40 +72,6 @@ jobs:
+     # candidate test (for discussion) : underlink test
+     # LDFLAGS=-Wl,--no-undefined : will make the linker fail if dll is underlinked
+ 
+-  cmake-build-and-test-check:
+-    runs-on: ubuntu-latest
+-    steps:
+-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
+-    - name: cmake build and test
+-      run: |
+-        sudo apt install liblzma-dev
+-        FUZZERTEST=-T1mn ZSTREAM_TESTTIME=-T1mn make cmakebuild V=1
+-
+-  cmake-source-directory-with-spaces:
+-    runs-on: ${{ matrix.os }}
+-    strategy:
+-      matrix:
+-        include:
+-          - os: ubuntu-latest
+-            generator: "Unix Makefiles"
+-          - os: windows-latest
+-            generator: "NMake Makefiles"
+-          - os: macos-latest
+-            generator: "Unix Makefiles"
+-    env:
+-      SRC_DIR: "source directory with spaces"
+-    steps:
+-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
+-      with:
+-        path: "${{ env.SRC_DIR }}"
+-    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+-      if: ${{ matrix.generator == 'NMake Makefiles' }}
+-    - name: cmake build on a source directory with spaces
+-      run: |
+-        cmake -S "${{ env.SRC_DIR }}/build/cmake" -B build -DBUILD_TESTING=ON -G "${{ matrix.generator }}" -DCMAKE_BUILD_TYPE=Release --install-prefix "${{ runner.temp }}/install"
+-        cmake --build build --config Release
+-        cmake --install build --config Release
+-
+   cpp-gnu90-c99-compatibility:
+     runs-on: ubuntu-latest
+     steps:
+@@ -339,34 +305,6 @@ jobs:
+         run: |
+           meson install -C builddir --destdir staging/
+ 
+-  cmake-visual-2022:
+-    strategy:
+-      matrix:
+-        include:
+-          - generator: "Visual Studio 17 2022"
+-            flags: "-A x64"
+-          - generator: "Visual Studio 17 2022"
+-            flags: "-A Win32"
+-          - generator: "MinGW Makefiles"
+-          - generator: "Visual Studio 17 2022"
+-            flags: "-T ClangCL"
+-          - generator: "Visual Studio 17 2022"
+-            flags: "-T ClangCL -A x64 -DCMAKE_C_FLAGS=/arch:AVX2"
+-    runs-on: windows-2022
+-    steps:
+-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # tag=v4.2.2
+-    - name: Add MSBuild to PATH
+-      uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # tag=v2.0.0
+-    - name: Build & Test
+-      working-directory: ${{env.GITHUB_WORKSPACE}}
+-      run: |
+-        cd build\cmake
+-        mkdir build
+-        cd build
+-        cmake.exe -G "${{matrix.generator}}" ${{matrix.flags}} -DCMAKE_BUILD_TYPE=Debug -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DZSTD_BUILD_TESTS:BOOL=ON -DZSTD_ZSTREAM_FLAGS=-T30s -DZSTD_FUZZER_FLAGS=-T30s -DZSTD_FULLBENCH_FLAGS=-i0 ..
+-        cmake.exe --build .
+-        ctest.exe -V -C Debug
+-
+   msbuild-visual-studio:
+     strategy:
+       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix failed.
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index f08905345f3a1ab3fa5b27c55fe2d52d8db69c3f..753cf4a9e481550de2b30bfd41083ffaf4bc09df 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -9,226 +9,73 @@
+ 
+ cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+ 
+-# As of 2018-12-26 ZSTD has been validated to build with cmake version 3.13.2 new policies.
+-# Set and use the newest cmake policies that are validated to work
+-set(ZSTD_MAX_VALIDATED_CMAKE_MAJOR_VERSION "3")
+-set(ZSTD_MAX_VALIDATED_CMAKE_MINOR_VERSION "13") #Policies never changed at PATCH level
+-if("${ZSTD_MAX_VALIDATED_CMAKE_MAJOR_VERSION}" EQUAL "${CMAKE_MAJOR_VERSION}" AND
+-       "${ZSTD_MAX_VALIDATED_CMAKE_MINOR_VERSION}" GREATER "${CMAKE_MINOR_VERSION}")
+-    set(ZSTD_CMAKE_POLICY_VERSION "${CMAKE_VERSION}")
+-else()
+-    set(ZSTD_CMAKE_POLICY_VERSION "${ZSTD_MAX_VALIDATED_CMAKE_MAJOR_VERSION}.${ZSTD_MAX_VALIDATED_CMAKE_MINOR_VERSION}.0")
+-endif()
+-cmake_policy(VERSION ${ZSTD_CMAKE_POLICY_VERSION})
+-
+-set(CMAKE_BUILD_WITH_INSTALL_RPATH on)
+-
++#-----------------------------------------------------------------------------
++# Setup CMake environment
++#-----------------------------------------------------------------------------
++set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
+ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
++
++# Define project paths
+ set(ZSTD_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../..")
+ set(LIBRARY_DIR ${ZSTD_SOURCE_DIR}/lib)
+-# Parse version
+-include(GetZstdLibraryVersion)
+-GetZstdLibraryVersion(${LIBRARY_DIR}/zstd.h zstd_VERSION_MAJOR zstd_VERSION_MINOR zstd_VERSION_PATCH)
+ 
+-set(ZSTD_SHORT_VERSION "${zstd_VERSION_MAJOR}.${zstd_VERSION_MINOR}")
+-set(ZSTD_FULL_VERSION "${zstd_VERSION_MAJOR}.${zstd_VERSION_MINOR}.${zstd_VERSION_PATCH}")
++#-----------------------------------------------------------------------------
++# Configure CMake policies and version
++#-----------------------------------------------------------------------------
++include(ZstdVersion)
+ 
++#-----------------------------------------------------------------------------
++# Project declaration
++#-----------------------------------------------------------------------------
+ project(zstd
+-  VERSION "${ZSTD_FULL_VERSION}"
+-  LANGUAGES C   # Main library is in C
+-            ASM # And ASM
+-  )
+-
+-message(STATUS "ZSTD VERSION: ${zstd_VERSION}")
+-set(zstd_HOMEPAGE_URL "https://facebook.github.io/zstd")
+-set(zstd_DESCRIPTION  "Zstandard is a real-time compression algorithm, providing high compression ratios.")
++    VERSION "${ZSTD_FULL_VERSION}"
++    LANGUAGES C ASM  # Main library is in C and ASM
++    HOMEPAGE_URL "${zstd_HOMEPAGE_URL}"
++    DESCRIPTION "${zstd_DESCRIPTION}"
++)
+ 
+-# Set a default build type if none was specified
++#-----------------------------------------------------------------------------
++# Build type configuration
++#-----------------------------------------------------------------------------
+ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+-  message(STATUS "Setting build type to 'Release' as none was specified.")
+-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+-  # Set the possible values of build type for cmake-gui
+-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
++    message(STATUS "Setting build type to 'Release' as none was specified.")
++    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
++    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+ endif()
+ 
++#-----------------------------------------------------------------------------
++# Include standard modules
++#-----------------------------------------------------------------------------
+ include(GNUInstallDirs)
+ 
+-# Always hide XXHash symbols
+-add_definitions(-DXXH_NAMESPACE=ZSTD_)
+-
+ #-----------------------------------------------------------------------------
+-# Installation variables
++# Display installation information
+ #-----------------------------------------------------------------------------
+ message(STATUS "CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
+ message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")
+ 
+ #-----------------------------------------------------------------------------
+-# Options
++# Configure build options
+ #-----------------------------------------------------------------------------
+-
+-# Legacy support
+-option(ZSTD_LEGACY_SUPPORT "LEGACY SUPPORT" ON)
+-
+-if (ZSTD_LEGACY_SUPPORT)
+-    message(STATUS "ZSTD_LEGACY_SUPPORT defined!")
+-    set(ZSTD_LEGACY_LEVEL 5 CACHE STRING "")
+-    add_definitions(-DZSTD_LEGACY_SUPPORT=${ZSTD_LEGACY_LEVEL})
+-else ()
+-    message(STATUS "ZSTD_LEGACY_SUPPORT not defined!")
+-    add_definitions(-DZSTD_LEGACY_SUPPORT=0)
+-endif ()
+-
+-if (APPLE)
+-    option(ZSTD_FRAMEWORK "Build as Apple Frameworks" OFF)
+-endif ()
+-
+-if (ANDROID)
+-    set(ZSTD_MULTITHREAD_SUPPORT_DEFAULT OFF)
+-    # Old versions of bionic libc don't have fseeko/ftello
+-    if ((NOT ${ANDROID_PLATFORM_LEVEL}) OR ${ANDROID_PLATFORM_LEVEL} VERSION_LESS 24)
+-        message(STATUS "Setting compile definitions for old Android API")
+-        add_compile_definitions(LIBC_NO_FSEEKO)
+-    endif ()
+-else()
+-    set(ZSTD_MULTITHREAD_SUPPORT_DEFAULT ON)
+-endif()
+-
+-# Multi-threading support
+-option(ZSTD_MULTITHREAD_SUPPORT "MULTITHREADING SUPPORT" ${ZSTD_MULTITHREAD_SUPPORT_DEFAULT})
+-
+-if (ZSTD_MULTITHREAD_SUPPORT)
+-    message(STATUS "ZSTD_MULTITHREAD_SUPPORT is enabled")
+-else ()
+-    message(STATUS "ZSTD_MULTITHREAD_SUPPORT is disabled")
+-endif ()
+-
+-option(ZSTD_BUILD_PROGRAMS "BUILD PROGRAMS" ON)
+-option(ZSTD_BUILD_CONTRIB "BUILD CONTRIB" OFF)
+-
+-# Respect the conventional CMake option for enabling tests if it was specified on the first configure
+-if (BUILD_TESTING)
+-    set(ZSTD_BUILD_TESTS_default ON)
+-else()
+-    set(ZSTD_BUILD_TESTS_default OFF)
+-endif()
+-option(ZSTD_BUILD_TESTS "BUILD TESTS" ${ZSTD_BUILD_TESTS_default})
+-if (MSVC)
+-    option(ZSTD_USE_STATIC_RUNTIME "LINK TO STATIC RUN-TIME LIBRARIES" OFF)
+-endif ()
+-
+-# Enable C++ support for testing.
+-set(ZSTD_ENABLE_CXX ${ZSTD_BUILD_TESTS})
+-
+-if(ZSTD_ENABLE_CXX)
+-    enable_language(CXX)
+-endif()
++include(ZstdOptions)
+ 
+ #-----------------------------------------------------------------------------
+-# Add extra compilation flags
++# Configure compilation flags
+ #-----------------------------------------------------------------------------
+ include(AddZstdCompilationFlags)
+-ADD_ZSTD_COMPILATION_FLAGS(ON ZSTD_ENABLE_CXX ON) # C CXX LD
++ADD_ZSTD_COMPILATION_FLAGS(ON ZSTD_ENABLE_CXX ON)
+ 
+ #-----------------------------------------------------------------------------
+-# External dependencies
+-#-----------------------------------------------------------------------------
+-# Define a function to handle special thread settings for HP-UX
+-# See https://github.com/facebook/zstd/pull/3862 for details.
+-function(setup_hpux_threads)
+-    find_package(Threads)
+-    if (NOT Threads_FOUND)
+-        set(CMAKE_USE_PTHREADS_INIT 1 PARENT_SCOPE)
+-        set(CMAKE_THREAD_LIBS_INIT -lpthread PARENT_SCOPE)
+-        set(CMAKE_HAVE_THREADS_LIBRARY 1 PARENT_SCOPE)
+-        set(Threads_FOUND TRUE PARENT_SCOPE)
+-    endif()
+-endfunction()
+-
+-if (ZSTD_MULTITHREAD_SUPPORT AND UNIX)
+-    if (CMAKE_SYSTEM_NAME MATCHES "HP-UX")
+-        setup_hpux_threads()
+-    else()
+-        set(THREADS_PREFER_PTHREAD_FLAG ON)
+-        find_package(Threads REQUIRED)
+-    endif()
+-    if (CMAKE_USE_PTHREADS_INIT)
+-        set(THREADS_LIBS "${CMAKE_THREAD_LIBS_INIT}")
+-    else()
+-        message(SEND_ERROR "ZSTD currently does not support thread libraries other than pthreads")
+-    endif()
+-endif ()
+-
++# Configure dependencies
+ #-----------------------------------------------------------------------------
+-# Add source directories
+-#-----------------------------------------------------------------------------
+-add_subdirectory(lib)
+-
+-option(ZSTD_PROGRAMS_LINK_SHARED "PROGRAMS LINK SHARED" OFF)
+-
+-if (ZSTD_BUILD_PROGRAMS)
+-    if (NOT ZSTD_BUILD_STATIC AND NOT ZSTD_PROGRAMS_LINK_SHARED)
+-        message(SEND_ERROR "You need to build static library to build zstd CLI")
+-    elseif(NOT ZSTD_BUILD_SHARED AND ZSTD_PROGRAMS_LINK_SHARED)
+-        message(SEND_ERROR "You need to build shared library to build zstd CLI")
+-    endif ()
+-
+-    add_subdirectory(programs)
+-endif ()
+-
+-if (ZSTD_BUILD_TESTS)
+-    enable_testing()
+-    if (NOT ZSTD_BUILD_STATIC)
+-        message(SEND_ERROR "You need to build static library to build tests")
+-    endif ()
+-
+-    add_subdirectory(tests)
+-endif ()
+-
+-if (ZSTD_BUILD_CONTRIB)
+-    add_subdirectory(contrib)
+-endif ()
++include(ZstdDependencies)
+ 
+ #-----------------------------------------------------------------------------
+-# Add clean-all target
++# Configure build targets
+ #-----------------------------------------------------------------------------
+-add_custom_target(clean-all
+-   COMMAND ${CMAKE_BUILD_TOOL} clean
+-   COMMAND rm -rf ${CMAKE_BINARY_DIR}/
+-)
++include(ZstdBuild)
+ 
+ #-----------------------------------------------------------------------------
+-# Generate Package Config files
+-#
+-# This section is based on the boiler plate code from:
+-# https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html#creating-packages
+-#-----------------------------------------------------------------------------
+-include(CMakePackageConfigHelpers)
+-write_basic_package_version_file(
+-    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfigVersion.cmake"
+-    VERSION ${zstd_VERSION}
+-    COMPATIBILITY SameMajorVersion
+-    )
+-
+-# A Package Config file that works from the build directory
+-export(EXPORT zstdExports
+-    FILE "${CMAKE_CURRENT_BINARY_DIR}/zstdTargets.cmake"
+-    NAMESPACE zstd::
+-    )
+-
+-# A Package Config file that works from the installation directory
+-set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/zstd)
+-install(EXPORT zstdExports
+-    FILE zstdTargets.cmake
+-    NAMESPACE zstd::
+-    DESTINATION ${ConfigPackageLocation}
+-    )
+-configure_package_config_file(
+-    zstdConfig.cmake.in
+-    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfig.cmake"
+-    INSTALL_DESTINATION ${ConfigPackageLocation}
+-)
+-install(FILES
+-    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfig.cmake"
+-    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfigVersion.cmake"
+-    DESTINATION ${ConfigPackageLocation}
+-    )
++# Configure package generation
++#-----------------------------------------------------------------------------
++include(ZstdPackage)
+diff --git a/build/cmake/CMakeModules/AddZstdCompilationFlags.cmake b/build/cmake/CMakeModules/AddZstdCompilationFlags.cmake
+index 25231b5ec32cc85765b96f1ae5dee586e1234d2c..3e7bcce5974ec6abf9804fd19c922a1f59129c61 100644
+--- a/build/cmake/CMakeModules/AddZstdCompilationFlags.cmake
++++ b/build/cmake/CMakeModules/AddZstdCompilationFlags.cmake
+@@ -1,5 +1,7 @@
+-include(CheckCXXCompilerFlag)
+ include(CheckCCompilerFlag)
++if(CMAKE_CXX_COMPILER)
++    include(CheckCXXCompilerFlag)
++endif()
+ 
+ if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.18)
+     set(ZSTD_HAVE_CHECK_LINKER_FLAG true)
+@@ -21,7 +23,7 @@ function(EnableCompilerFlag _flag _C _CXX _LD)
+             set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${_flag}" PARENT_SCOPE)
+         endif ()
+     endif ()
+-    if (_CXX)
++    if (_CXX AND CMAKE_CXX_COMPILER)
+         CHECK_CXX_COMPILER_FLAG(${_flag} CXX_FLAG_${varname})
+         if (CXX_FLAG_${varname})
+             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${_flag}" PARENT_SCOPE)
+diff --git a/build/cmake/CMakeModules/ZstdBuild.cmake b/build/cmake/CMakeModules/ZstdBuild.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..ada44a966ba5f1e7d9bf080de1ae3e945cc9abc0
+--- /dev/null
++++ b/build/cmake/CMakeModules/ZstdBuild.cmake
+@@ -0,0 +1,42 @@
++# ################################################################
++# ZSTD Build Targets Configuration
++# ################################################################
++
++# Always build the library first (this defines ZSTD_BUILD_STATIC/SHARED options)
++add_subdirectory(lib)
++
++# Validate build configuration after lib options are defined
++if(ZSTD_BUILD_PROGRAMS)
++    if(NOT ZSTD_BUILD_STATIC AND NOT ZSTD_PROGRAMS_LINK_SHARED)
++        message(SEND_ERROR "Static library required to build zstd CLI programs")
++    elseif(NOT ZSTD_BUILD_SHARED AND ZSTD_PROGRAMS_LINK_SHARED)
++        message(SEND_ERROR "Shared library required to build zstd CLI programs")
++    endif()
++endif()
++
++if(ZSTD_BUILD_TESTS AND NOT ZSTD_BUILD_STATIC)
++    message(SEND_ERROR "Static library required to build test suite")
++endif()
++
++# Add programs if requested
++if(ZSTD_BUILD_PROGRAMS)
++    add_subdirectory(programs)
++endif()
++
++# Add tests if requested
++if(ZSTD_BUILD_TESTS)
++    enable_testing()
++    add_subdirectory(tests)
++endif()
++
++# Add contrib utilities if requested
++if(ZSTD_BUILD_CONTRIB)
++    add_subdirectory(contrib)
++endif()
++
++# Clean-all target for thorough cleanup
++add_custom_target(clean-all
++    COMMAND ${CMAKE_BUILD_TOOL} clean
++    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/
++    COMMENT "Performing complete clean including build directory"
++)
+diff --git a/build/cmake/CMakeModules/ZstdDependencies.cmake b/build/cmake/CMakeModules/ZstdDependencies.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..4e90c5f1b98bf649c10f99c1e72465b9c21f172d
+--- /dev/null
++++ b/build/cmake/CMakeModules/ZstdDependencies.cmake
+@@ -0,0 +1,30 @@
++# ################################################################
++# ZSTD Dependencies Configuration
++# ################################################################
++
++# Function to handle HP-UX thread configuration
++function(setup_hpux_threads)
++    find_package(Threads)
++    if(NOT Threads_FOUND)
++        set(CMAKE_USE_PTHREADS_INIT 1 PARENT_SCOPE)
++        set(CMAKE_THREAD_LIBS_INIT -lpthread PARENT_SCOPE)
++        set(CMAKE_HAVE_THREADS_LIBRARY 1 PARENT_SCOPE)
++        set(Threads_FOUND TRUE PARENT_SCOPE)
++    endif()
++endfunction()
++
++# Configure threading support
++if(ZSTD_MULTITHREAD_SUPPORT AND UNIX)
++    if(CMAKE_SYSTEM_NAME MATCHES "HP-UX")
++        setup_hpux_threads()
++    else()
++        set(THREADS_PREFER_PTHREAD_FLAG ON)
++        find_package(Threads REQUIRED)
++    endif()
++    
++    if(CMAKE_USE_PTHREADS_INIT)
++        set(THREADS_LIBS "${CMAKE_THREAD_LIBS_INIT}")
++    else()
++        message(SEND_ERROR "ZSTD currently does not support thread libraries other than pthreads")
++    endif()
++endif()
+diff --git a/build/cmake/CMakeModules/ZstdOptions.cmake b/build/cmake/CMakeModules/ZstdOptions.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..3fca543a78e38aa3d2911c16ee94beff198db584
+--- /dev/null
++++ b/build/cmake/CMakeModules/ZstdOptions.cmake
+@@ -0,0 +1,68 @@
++# ################################################################
++# ZSTD Build Options Configuration
++# ################################################################
++
++# Legacy support configuration
++option(ZSTD_LEGACY_SUPPORT "Enable legacy format support" ON)
++
++if(ZSTD_LEGACY_SUPPORT)
++    message(STATUS "ZSTD_LEGACY_SUPPORT enabled")
++    set(ZSTD_LEGACY_LEVEL 5 CACHE STRING "Legacy support level")
++    add_definitions(-DZSTD_LEGACY_SUPPORT=${ZSTD_LEGACY_LEVEL})
++else()
++    message(STATUS "ZSTD_LEGACY_SUPPORT disabled")
++    add_definitions(-DZSTD_LEGACY_SUPPORT=0)
++endif()
++
++# Platform-specific options
++if(APPLE)
++    option(ZSTD_FRAMEWORK "Build as Apple Framework" OFF)
++endif()
++
++# Android-specific configuration
++if(ANDROID)
++    set(ZSTD_MULTITHREAD_SUPPORT_DEFAULT OFF)
++    # Handle old Android API levels
++    if((NOT ANDROID_PLATFORM_LEVEL) OR (ANDROID_PLATFORM_LEVEL VERSION_LESS 24))
++        message(STATUS "Configuring for old Android API - disabling fseeko/ftello")
++        add_compile_definitions(LIBC_NO_FSEEKO)
++    endif()
++else()
++    set(ZSTD_MULTITHREAD_SUPPORT_DEFAULT ON)
++endif()
++
++# Multi-threading support
++option(ZSTD_MULTITHREAD_SUPPORT "Enable multi-threading support" ${ZSTD_MULTITHREAD_SUPPORT_DEFAULT})
++
++if(ZSTD_MULTITHREAD_SUPPORT)
++    message(STATUS "Multi-threading support enabled")
++else()
++    message(STATUS "Multi-threading support disabled")
++endif()
++
++# Build component options
++option(ZSTD_BUILD_PROGRAMS "Build command-line programs" ON)
++option(ZSTD_BUILD_CONTRIB "Build contrib utilities" OFF)
++option(ZSTD_PROGRAMS_LINK_SHARED "Link programs against shared library" OFF)
++
++# Test configuration
++if(BUILD_TESTING)
++    set(ZSTD_BUILD_TESTS_default ON)
++else()
++    set(ZSTD_BUILD_TESTS_default OFF)
++endif()
++option(ZSTD_BUILD_TESTS "Build test suite" ${ZSTD_BUILD_TESTS_default})
++
++# MSVC-specific options
++if(MSVC)
++    option(ZSTD_USE_STATIC_RUNTIME "Link to static runtime libraries" OFF)
++endif()
++
++# C++ support (needed for tests)
++set(ZSTD_ENABLE_CXX ${ZSTD_BUILD_TESTS})
++if(ZSTD_ENABLE_CXX)
++    enable_language(CXX)
++endif()
++
++# Set global definitions
++add_definitions(-DXXH_NAMESPACE=ZSTD_)
+diff --git a/build/cmake/CMakeModules/ZstdPackage.cmake b/build/cmake/CMakeModules/ZstdPackage.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..5e40dd2c1fd5b3c1e536dca7610405281ad7cd68
+--- /dev/null
++++ b/build/cmake/CMakeModules/ZstdPackage.cmake
+@@ -0,0 +1,42 @@
++# ################################################################
++# ZSTD Package Configuration
++# ################################################################
++
++include(CMakePackageConfigHelpers)
++
++# Generate version file
++write_basic_package_version_file(
++    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfigVersion.cmake"
++    VERSION ${zstd_VERSION}
++    COMPATIBILITY SameMajorVersion
++)
++
++# Export targets for build directory
++export(EXPORT zstdExports
++    FILE "${CMAKE_CURRENT_BINARY_DIR}/zstdTargets.cmake"
++    NAMESPACE zstd::
++)
++
++# Configure package for installation
++set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/zstd)
++
++# Install exported targets
++install(EXPORT zstdExports
++    FILE zstdTargets.cmake
++    NAMESPACE zstd::
++    DESTINATION ${ConfigPackageLocation}
++)
++
++# Configure and install package config file
++configure_package_config_file(
++    zstdConfig.cmake.in
++    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfig.cmake"
++    INSTALL_DESTINATION ${ConfigPackageLocation}
++)
++
++# Install config files
++install(FILES
++    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfig.cmake"
++    "${CMAKE_CURRENT_BINARY_DIR}/zstdConfigVersion.cmake"
++    DESTINATION ${ConfigPackageLocation}
++)
+diff --git a/build/cmake/CMakeModules/ZstdVersion.cmake b/build/cmake/CMakeModules/ZstdVersion.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..fceb0ec0c23fdc6a42a10f1737a17c8b8eada3b2
+--- /dev/null
++++ b/build/cmake/CMakeModules/ZstdVersion.cmake
+@@ -0,0 +1,31 @@
++# ################################################################
++# ZSTD Version Configuration
++# ################################################################
++
++# Setup CMake policy version
++set(ZSTD_MAX_VALIDATED_CMAKE_MAJOR_VERSION "3")
++set(ZSTD_MAX_VALIDATED_CMAKE_MINOR_VERSION "13")
++
++# Determine appropriate policy version
++if("${ZSTD_MAX_VALIDATED_CMAKE_MAJOR_VERSION}" EQUAL "${CMAKE_MAJOR_VERSION}" AND
++   "${ZSTD_MAX_VALIDATED_CMAKE_MINOR_VERSION}" GREATER "${CMAKE_MINOR_VERSION}")
++    set(ZSTD_CMAKE_POLICY_VERSION "${CMAKE_VERSION}")
++else()
++    set(ZSTD_CMAKE_POLICY_VERSION "${ZSTD_MAX_VALIDATED_CMAKE_MAJOR_VERSION}.${ZSTD_MAX_VALIDATED_CMAKE_MINOR_VERSION}.0")
++endif()
++
++cmake_policy(VERSION ${ZSTD_CMAKE_POLICY_VERSION})
++
++# Parse version from header file
++include(GetZstdLibraryVersion)
++GetZstdLibraryVersion(${LIBRARY_DIR}/zstd.h zstd_VERSION_MAJOR zstd_VERSION_MINOR zstd_VERSION_PATCH)
++
++# Set version variables
++set(ZSTD_SHORT_VERSION "${zstd_VERSION_MAJOR}.${zstd_VERSION_MINOR}")
++set(ZSTD_FULL_VERSION "${zstd_VERSION_MAJOR}.${zstd_VERSION_MINOR}.${zstd_VERSION_PATCH}")
++
++# Project metadata
++set(zstd_HOMEPAGE_URL "https://facebook.github.io/zstd")
++set(zstd_DESCRIPTION "Zstandard is a real-time compression algorithm, providing high compression ratios.")
++
++message(STATUS "ZSTD VERSION: ${zstd_VERSION_MAJOR}.${zstd_VERSION_MINOR}.${zstd_VERSION_PATCH}")
+diff --git a/build/cmake/lib/CMakeLists.txt b/build/cmake/lib/CMakeLists.txt
+index 0a93e8d312bbe954fd3eb40483e58f5b0c444095..a6b894c4db957de9b0c4b1a86582b312a90606f6 100644
+--- a/build/cmake/lib/CMakeLists.txt
++++ b/build/cmake/lib/CMakeLists.txt
+@@ -97,9 +97,11 @@ if (ZSTD_LEGACY_SUPPORT)
+             ${LIBRARY_LEGACY_DIR}/zstd_v07.h)
+ endif ()
+ 
+-if (MSVC)
++if (MSVC AND NOT (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
+     set(MSVC_RESOURCE_DIR ${ZSTD_SOURCE_DIR}/build/VS2010/libzstd-dll)
+     set(PlatformDependResources ${MSVC_RESOURCE_DIR}/libzstd-dll.rc)
++else()
++    set(PlatformDependResources)
+ endif ()
+ 
+ # Explicitly set the language to C for all files, including ASM files.

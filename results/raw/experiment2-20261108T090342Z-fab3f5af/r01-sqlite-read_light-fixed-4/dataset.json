@@ -1,0 +1,11 @@
+{
+  "Name": "s3sync-corpus-v1/sqlite",
+  "Updates": 240,
+  "Initial": {
+    "Length": 134553678,
+    "Sha256": "bccb0448758b9083e1810bc196a15df6da540f30e6cfe4d1498b08c2d51a0d29"
+  },
+  "ManifestSha256": "5bee96787204d27f7bd315023eb7211d2c04b1ae7654e6b0d5d86547eb275fc3",
+  "HistorySha256": "5d833ddb273c1ba4025eb499a4ae82374c617d838684f6fe0a859103e4793a5e",
+  "Runtime": "{\u0022python\u0022: \u00223.14.4\u0022, \u0022sqlite\u0022: \u00223.46.1\u0022, \u0022zlib\u0022: \u00221.3.1\u0022}; corpus-script=d151166811566ea4b67e16a4bf6f05b3a3f63f3bb6dc53a26617ae1c048c1b9b; natural-script="
+}

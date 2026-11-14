@@ -1,0 +1,377 @@
+diff --git a/contrib/seekable_format/tests/seekable_tests.c b/contrib/seekable_format/tests/seekable_tests.c
+index f89bdc930cd3281aaa018786f6abdbca36bcaa3f..809ea6425eb8fec399f9048fe4da6b656d1871a2 100644
+--- a/contrib/seekable_format/tests/seekable_tests.c
++++ b/contrib/seekable_format/tests/seekable_tests.c
+@@ -316,6 +316,10 @@ int main(int argc, const char** argv)
+         for (pos = 0; pos < inSize; pos += 2) {
+             size_t const decStatus = ZSTD_seekable_decompress(stream, outBuffer, 1, pos);
+             if (decStatus != 1 || outBuffer[0] != inBuffer[pos]) {
++                free(seekBuffer);
++                free(outBuffer);
++                ZSTD_seekable_freeCStream(zscs);
++                ZSTD_seekable_free(stream);
+                 goto _test_error;
+             }
+         }
+@@ -323,6 +327,10 @@ int main(int argc, const char** argv)
+             /* We read more than the compressed size, meaning there were some rereads.
+                This is unneeded because we only seeked forward. */
+             printf("Too much data read: %zu read, with compressed size %zu\n", buffWrapper.totalRead, seekSize);
++            free(seekBuffer);
++            free(outBuffer);
++            ZSTD_seekable_freeCStream(zscs);
++            ZSTD_seekable_free(stream);
+             goto _test_error;
+         }
+ 
+@@ -342,6 +350,10 @@ int main(int argc, const char** argv)
+         for (idx = 0; idx < sizeof(tests) / sizeof(tests[0]); idx++) {
+             size_t const decStatus = ZSTD_seekable_decompress(stream, outBuffer, tests[idx].size, tests[idx].offset);
+             if (decStatus != tests[idx].size || memcmp(outBuffer, inBuffer + tests[idx].offset, tests[idx].size) != 0) {
++                free(seekBuffer);
++                free(outBuffer);
++                ZSTD_seekable_freeCStream(zscs);
++                ZSTD_seekable_free(stream);
+                 goto _test_error;
+             }
+         }
+diff --git a/programs/util.c b/programs/util.c
+index d11f13cfd7098eb4f0fb20427589d2baa2c7f55a..652530b122356c3bfdad24e43fafadb84e556145 100644
+--- a/programs/util.c
++++ b/programs/util.c
+@@ -928,6 +928,7 @@ static int UTIL_prepareFileList(const char* dirName,
+     hFile=FindFirstFileA(path, &cFile);
+     if (hFile == INVALID_HANDLE_VALUE) {
+         UTIL_DISPLAYLEVEL(1, "Cannot open directory '%s'\n", dirName);
++        free(path);
+         return 0;
+     }
+     free(path);
+diff --git a/tests/bigdict.c b/tests/bigdict.c
+index 748b60e79b1466e768feea6e6946b25cdbdcf603..230e5b9798a8fcffed4165a36be94c5cdf6b76af 100644
+--- a/tests/bigdict.c
++++ b/tests/bigdict.c
+@@ -80,29 +80,51 @@ int main(int argc, const char** argv)
+         goto cleanup;
+     }
+ 
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_windowLog, 31)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_nbWorkers, 1)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_overlapLog, 9)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_checksumFlag, 1)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_strategy, ZSTD_btopt)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_targetLength, 7)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_minMatch, 7)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_searchLog, 1)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_hashLog, 10)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_chainLog, 10)))
+-        return 1;
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_windowLog, 31))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_nbWorkers, 1))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_overlapLog, 9))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_checksumFlag, 1))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_strategy, ZSTD_btopt))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_targetLength, 7))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_minMatch, 7))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_searchLog, 1))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_hashLog, 10))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_chainLog, 10))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
+ 
+-    if (ZSTD_isError(ZSTD_DCtx_setParameter(dctx, ZSTD_d_windowLogMax, 31)))
+-        return 1;
++    if (ZSTD_isError(ZSTD_DCtx_setParameter(dctx, ZSTD_d_windowLogMax, 31))) {
++        _exit_code = 1;
++        goto cleanup;
++    }
+ 
+     RDG_genBuffer(buffer, bufferSize, 1.0, 0.0, 0xbeefcafe);
+ 
+@@ -111,13 +133,17 @@ int main(int argc, const char** argv)
+         int i;
+         for (i = 0; i < 10; ++i) {
+             fprintf(stderr, "Compressing 1 GB\n");
+-            if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_continue))
+-                return 1;
++            if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_continue)) {
++                _exit_code = 1;
++                goto cleanup;
++            }
+         }
+     }
+     fprintf(stderr, "Compressing 1 GB\n");
+-    if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_end))
+-        return 1;
++    if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_end)) {
++        _exit_code = 1;
++        goto cleanup;
++    }
+ 
+     fprintf(stderr, "Success!\n");
+ 
+diff --git a/tests/largeDictionary.c b/tests/largeDictionary.c
+index ff2bb2d7032c6c91f264f8f98dc651df5e6575c0..a3b96135f786a2a2f75ff5c2ad035842fc0e3955 100644
+--- a/tests/largeDictionary.c
++++ b/tests/largeDictionary.c
+@@ -72,35 +72,59 @@ int main(int argc, const char** argv)
+     void* roundtrip = malloc(dataSize);
+     (void)argc;
+     (void)argv;
++    int _exit_code = 0;
+ 
+     if (!buffer || !out || !roundtrip || !cctx || !dctx) {
+         fprintf(stderr, "Allocation failure\n");
+-        return 1;
++        _exit_code = 1;
++        goto _cleanup;
+     }
+ 
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_windowLog, 31)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_nbWorkers, 1)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_overlapLog, 9)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_checksumFlag, 1)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_strategy, ZSTD_btopt)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_targetLength, 7)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_minMatch, 7)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_searchLog, 1)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_hashLog, 10)))
+-        return 1;
+-    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_chainLog, 10)))
+-        return 1;
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_windowLog, 31))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_nbWorkers, 1))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_overlapLog, 9))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_checksumFlag, 1))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_strategy, ZSTD_btopt))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_targetLength, 7))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_minMatch, 7))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_searchLog, 1))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_hashLog, 10))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
++    if (ZSTD_isError(ZSTD_CCtx_setParameter(cctx, ZSTD_c_chainLog, 10))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
+ 
+-    if (ZSTD_isError(ZSTD_DCtx_setParameter(dctx, ZSTD_d_windowLogMax, 31)))
+-        return 1;
++    if (ZSTD_isError(ZSTD_DCtx_setParameter(dctx, ZSTD_d_windowLogMax, 31))) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
+ 
+     RDG_genBuffer(buffer, bufferSize, 1.0, 0.0, 0xbeefcafe);
+ 
+@@ -109,20 +133,25 @@ int main(int argc, const char** argv)
+         int i;
+         for (i = 0; i < 10; ++i) {
+             fprintf(stderr, "Compressing 1 GB\n");
+-            if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_continue))
+-                return 1;
++            if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_continue)) {
++                _exit_code = 1;
++                goto _cleanup;
++            }
+         }
+     }
+     fprintf(stderr, "Compressing 1 GB\n");
+-    if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_end))
+-        return 1;
++    if (compress(cctx, dctx, out, outSize, buffer, dataSize, roundtrip, ZSTD_e_end)) {
++        _exit_code = 1;
++        goto _cleanup;
++    }
+ 
+     fprintf(stderr, "Success!\n");
+ 
++_cleanup:
+     free(roundtrip);
+     free(out);
+     free(buffer);
+     ZSTD_freeDCtx(dctx);
+     ZSTD_freeCCtx(cctx);
+-    return 0;
++    return _exit_code;
+ }
+diff --git a/tests/legacy.c b/tests/legacy.c
+index 3be386495b143a0d21a56da6627359a53285bfdc..8fe291c5a0de0bfe18ab5f841db1169e9b25a733 100644
+--- a/tests/legacy.c
++++ b/tests/legacy.c
+@@ -56,6 +56,7 @@ static int testSimpleAPI(void)
+             } else {
+                 DISPLAY("ERROR: %s\n", ZSTD_getErrorName(ret));
+             }
++            free(output);
+             return 1;
+         }
+         if (ret != size) {
+@@ -64,6 +65,7 @@ static int testSimpleAPI(void)
+     }
+     if (memcmp(EXPECTED, output, size) != 0) {
+         DISPLAY("ERROR: Wrong decoded output produced\n");
++        free(output);
+         return 1;
+     }
+ 
+diff --git a/tests/longmatch.c b/tests/longmatch.c
+index 547b26190106381fa9f383456ec7585855f49831..8e4e51dc128ef8492e67cfb5d2d818c942494b81 100644
+--- a/tests/longmatch.c
++++ b/tests/longmatch.c
+@@ -39,24 +39,39 @@ int main(int argc, const char** argv)
+   unsigned windowLog = 18;
+   (void)argc;
+   (void)argv;
++  int _exit_code = 0;
+   /* Create stream */
+   ctx = ZSTD_createCCtx();
+   if (!ctx) { return 1; }
+   /* Set parameters */
+-  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_windowLog, windowLog)))
+-    return 2;
+-  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_chainLog, 13)))
+-    return 2;
+-  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_hashLog, 14)))
+-    return 2;
+-  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_searchLog, 1)))
+-    return 2;
+-  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_minMatch, 7)))
+-    return 2;
+-  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_targetLength, 16)))
+-    return 2;
+-  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_strategy, ZSTD_fast)))
+-    return 2;
++  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_windowLog, windowLog))) {
++    _exit_code = 2;
++    goto _clean_ctx;
++  }
++  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_chainLog, 13))) {
++    _exit_code = 2;
++    goto _clean_ctx;
++  }
++  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_hashLog, 14))) {
++    _exit_code = 2;
++    goto _clean_ctx;
++  }
++  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_searchLog, 1))) {
++    _exit_code = 2;
++    goto _clean_ctx;
++  }
++  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_minMatch, 7))) {
++    _exit_code = 2;
++    goto _clean_ctx;
++  }
++  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_targetLength, 16))) {
++    _exit_code = 2;
++    goto _clean_ctx;
++  }
++  if (ZSTD_isError(ZSTD_CCtx_setParameter(ctx, ZSTD_c_strategy, ZSTD_fast))) {
++    _exit_code = 2;
++    goto _clean_ctx;
++  }
+   {
+     U64 compressed = 0;
+     const U64 toCompress = ((U64)1) << 33;
+@@ -81,22 +96,28 @@ int main(int argc, const char** argv)
+     }
+     printf("Compressing, trying to generate a segfault \n");
+     if (compress(ctx, out, srcBuffer, size)) {
+-      return 1;
++       _exit_code = 1;
++       goto _clean_buffer;
+     }
+     compressed += size;
+     while (compressed < toCompress) {
+       const size_t block = rand() % (size - pos + 1);
+       if (pos == size) { pos = 0; }
+       if (compress(ctx, out, srcBuffer + pos, block)) {
+-        return 1;
++        _exit_code = 1;
++        goto _clean_buffer;
+       }
+       pos += block;
+       compressed += block;
+     }
+     printf("Compression completed successfully (no error triggered)\n");
++
++_clean_buffer:
+     free(srcBuffer);
+     free(dstBuffer);
+   }
++
++_clean_ctx:
+   ZSTD_freeCCtx(ctx);
+-  return 0;
++  return _exit_code;
+ }

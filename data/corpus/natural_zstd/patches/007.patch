@@ -1,0 +1,13 @@
+diff --git a/build/meson/meson.build b/build/meson/meson.build
+index 5c35478d5467ad45ec3771f30c82722ce8df32da..bae4d250112f8e22d0d359c7f78d34bf785dff78 100644
+--- a/build/meson/meson.build
++++ b/build/meson/meson.build
+@@ -10,7 +10,7 @@
+ 
+ project('zstd',
+   ['c', 'cpp'],
+-  license: ['BSD', 'GPLv2'],
++  license: 'BSD-3-Clause OR GPL-2.0-only',
+   default_options : [
+     # There shouldn't be any need to force a C standard convention for zstd
+     # but in case one would want that anyway, this can be done here.

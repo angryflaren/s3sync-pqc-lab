@@ -1,0 +1,51 @@
+diff --git a/.github/workflows/commit.yml b/.github/workflows/commit.yml
+index af3028e3cd1c5c370fae5b0c3490c30d3c93c7a3..8b8bb0f5757900150d00bf4bc33e7089e3bc8112 100644
+--- a/.github/workflows/commit.yml
++++ b/.github/workflows/commit.yml
+@@ -99,6 +99,6 @@ jobs:
+         echo "      are still good, copy it into the repo and commit it."
+         echo "> diff tests/regression/results.csv $CIRCLE_ARTIFACTS/results.csv"
+         diff tests/regression/results.csv $CIRCLE_ARTIFACTS/results.csv
+-    - uses: actions/upload-artifact@v7.0.0
++    - uses: actions/upload-artifact@v7.0.1
+       with:
+         path: "/tmp/circleci-artifacts"
+diff --git a/.github/workflows/dev-long-tests.yml b/.github/workflows/dev-long-tests.yml
+index 447a865c57391ab706fe9062a31b2544a1377e92..441cd26834cc76057e50a5211eb463200992879f 100644
+--- a/.github/workflows/dev-long-tests.yml
++++ b/.github/workflows/dev-long-tests.yml
+@@ -317,7 +317,7 @@ jobs:
+         dry-run: false
+         sanitizer: ${{ matrix.sanitizer }}
+     - name: Upload Crash
+-      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # tag=v7.0.0
++      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # tag=v7.0.1
+       if: failure() && steps.build.outcome == 'success'
+       with:
+         name: ${{ matrix.sanitizer }}-artifacts
+diff --git a/.github/workflows/scorecards.yml b/.github/workflows/scorecards.yml
+index 1e372f63a95e7b4e17352c9a9f008c897571b40a..caa862ca3549b67b64e66b9e6029d1e001c9abf1 100644
+--- a/.github/workflows/scorecards.yml
++++ b/.github/workflows/scorecards.yml
+@@ -51,7 +51,7 @@ jobs:
+       # Upload the results as artifacts (optional). Commenting out will disable uploads of run results in SARIF
+       # format to the repository Actions tab.
+       - name: "Upload artifact"
+-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # tag=v7.0.0
++        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # tag=v7.0.1
+         with:
+           name: SARIF file
+           path: results.sarif
+diff --git a/.github/workflows/windows-artifacts.yml b/.github/workflows/windows-artifacts.yml
+index cb659e5fbe7885f43ac4c6a3dac44e01c9af0f0a..cd1ef23de736266ad12fa1933d9f0ba8d422fe30 100644
+--- a/.github/workflows/windows-artifacts.yml
++++ b/.github/workflows/windows-artifacts.yml
+@@ -93,7 +93,7 @@ jobs:
+           mv bin/ zstd-${{ github.ref_name }}-${{matrix.ziparch}}/
+ 
+       - name: Publish zstd-$VERSION-${{matrix.ziparch}}.zip for manual inspection
+-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # tag=v7.0.0
++        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # tag=v7.0.1
+         with:
+           compression-level: 9  # maximum compression
+           if-no-files-found: error # defaults to `warn`

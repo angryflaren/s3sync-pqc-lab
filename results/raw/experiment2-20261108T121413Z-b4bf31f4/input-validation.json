@@ -1,0 +1,25 @@
+{
+  "DatasetDirectory": "/home/lab/s3sync-lab/project/data/corpus",
+  "PreparationRuntime": "{\u0022python\u0022: \u00223.14.4\u0022, \u0022sqlite\u0022: \u00223.46.1\u0022, \u0022zlib\u0022: \u00221.3.1\u0022}",
+  "CorpusScriptSha256": "d151166811566ea4b67e16a4bf6f05b3a3f63f3bb6dc53a26617ae1c048c1b9b",
+  "NaturalScriptSha256": "",
+  "Groups": [
+    {
+      "Name": "sqlite",
+      "Updates": 240,
+      "Files": [
+        {
+          "RelativePath": "sqlite/catalog.sqlite",
+          "Fingerprint": {
+            "Length": 134553600,
+            "Sha256": "a6008780ed732949bb5a49d1f23e937e0164cc6900b2104def0196a7e16c573f"
+          }
+        }
+      ],
+      "InitialFileCount": 1,
+      "InitialContentBytes": 134553600,
+      "ManifestSha256": "5bee96787204d27f7bd315023eb7211d2c04b1ae7654e6b0d5d86547eb275fc3",
+      "HistorySha256": "5d833ddb273c1ba4025eb499a4ae82374c617d838684f6fe0a859103e4793a5e"
+    }
+  ]
+}

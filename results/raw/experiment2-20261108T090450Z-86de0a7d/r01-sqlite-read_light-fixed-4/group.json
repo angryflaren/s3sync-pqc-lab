@@ -1,0 +1,11 @@
+{
+  "group": "sqlite",
+  "readProfile": "read_light",
+  "updates": 3,
+  "availableUpdates": 240,
+  "initialFiles": 1,
+  "initialContentBytes": 134553600,
+  "bundleFormat": "S3GRP002",
+  "MaximumGroupBytes": 268435456,
+  "readTraceSha256": "f3a931496f3720116d8496fce8af4baabcf10a391b127e9551e0cdc0f8eae256"
+}

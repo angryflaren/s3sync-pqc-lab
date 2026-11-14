@@ -1,0 +1,39 @@
+diff --git a/.github/workflows/dev-long-tests.yml b/.github/workflows/dev-long-tests.yml
+index da607543e85a1e5d22049d48f4a0f966db880fcb..c5b1e22d5bc8cef6bc311de19695b7dc07eae0e5 100644
+--- a/.github/workflows/dev-long-tests.yml
++++ b/.github/workflows/dev-long-tests.yml
+@@ -274,7 +274,7 @@ jobs:
+         shell: msys2 {0}
+     steps:
+     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
+-    - uses: msys2/setup-msys2@e9898307ac31d1a803454791be09ab9973336e1c # tag=v2.31.1
++    - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # tag=v2.32.0
+       with:
+         msystem: MINGW64
+         install: make
+diff --git a/.github/workflows/dev-short-tests.yml b/.github/workflows/dev-short-tests.yml
+index cfd0294cad8ba098adb2642b0f23988d5724a547..4b8a95d185f5913ac883cdb797eb8378606b1799 100644
+--- a/.github/workflows/dev-short-tests.yml
++++ b/.github/workflows/dev-short-tests.yml
+@@ -487,7 +487,7 @@ jobs:
+         shell: msys2 {0}
+     steps:
+     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
+-    - uses: msys2/setup-msys2@e9898307ac31d1a803454791be09ab9973336e1c # tag=v2.31.1
++    - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # tag=v2.32.0
+       with:
+         msystem: ${{ matrix.msystem }}
+         install: make diffutils
+diff --git a/.github/workflows/windows-artifacts.yml b/.github/workflows/windows-artifacts.yml
+index 9998584d972b9ede89f8e7aa3d566c0f87538cb9..97454beb2094eae50907add33242386533b8abc1 100644
+--- a/.github/workflows/windows-artifacts.yml
++++ b/.github/workflows/windows-artifacts.yml
+@@ -31,7 +31,7 @@ jobs:
+       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
+ 
+       # MSYS2 setup
+-      - uses: msys2/setup-msys2@e9898307ac31d1a803454791be09ab9973336e1c # tag=v2.31.1
++      - uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # tag=v2.32.0
+         if: matrix.shell == 'msys2'
+         with:
+           msystem: ${{ matrix.msystem }}

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "parameters": "--include-transitive",
+  "projects": [
+    {
+      "path": "/home/lab/s3sync-lab/project/S3Sync.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "AWSSDK.S3",
+              "requestedVersion": "4.0.104.8",
+              "resolvedVersion": "4.0.104.8"
+            },
+            {
+              "id": "BouncyCastle.Cryptography",
+              "requestedVersion": "2.7.0",
+              "resolvedVersion": "2.7.0"
+            },
+            {
+              "id": "Octopus.Octodiff",
+              "requestedVersion": "2.0.551",
+              "resolvedVersion": "2.0.551"
+            }
+          ],
+          "transitivePackages": [
+            {
+              "id": "AWSSDK.Core",
+              "resolvedVersion": "4.0.102.14"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

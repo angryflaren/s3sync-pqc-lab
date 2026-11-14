@@ -1,0 +1,39 @@
+diff --git a/programs/zstd.1.md b/programs/zstd.1.md
+index bb9258d571b9f494a156ab147b6ebe22ef775b00..1721441dfbbbd2b71c42221f20e1a7b85f61c592 100644
+--- a/programs/zstd.1.md
++++ b/programs/zstd.1.md
+@@ -131,6 +131,7 @@ the last one takes effect.
+     In all cases, the nb of threads is capped to `ZSTDMT_NBWORKERS_MAX`,
+     which is either 64 in 32-bit mode, or 256 for 64-bit environments.
+     This modifier does nothing if `zstd` is compiled without multithread support.
++    Note that memory usage increases with each thread.
+ * `--single-thread`:
+     Use a single thread for both I/O and compression.
+     As compression is serialized with I/O, this can be slightly slower.
+@@ -157,7 +158,7 @@ the last one takes effect.
+     when combined with multiple worker threads (>=2).
+ * `--long[=#]`:
+     enables long distance matching with `#` `windowLog`, if `#` is not
+-    present it defaults to `27`.
++    present it defaults to `27`. The highest possible value is 31.
+     This increases the window size (`windowLog`) and memory usage for both the
+     compressor and decompressor.
+     This setting is designed to improve the compression ratio for files with
+diff --git a/programs/zstdcli.c b/programs/zstdcli.c
+index 8b67f5e878a79adffffcd310d53dd1abde700da4..31b06d67be5affee814b49f8de3478026c83d953 100644
+--- a/programs/zstdcli.c
++++ b/programs/zstdcli.c
+@@ -1556,7 +1556,12 @@ int main(int argCount, const char* argv[])
+     /* check compression level limits */
+     {   int const maxCLevel = ultra ? ZSTD_maxCLevel() : ZSTDCLI_CLEVEL_MAX;
+         if (cLevel > maxCLevel) {
+-            DISPLAYLEVEL(2, "Warning : compression level higher than max, reduced to %i \n", maxCLevel);
++            DISPLAYLEVEL(2, "Warning : compression level higher than max, reduced to %i. ", maxCLevel);
++            DISPLAYLEVEL(2, "Specify --ultra to raise the limit to 22 and use "
++                            "--long=31 for maximum compression. Note that this "
++                            "requires high amounts of memory, and the resulting data "
++                            "might be rejected by third-party decoders and is "
++                            "therefore only recommended for archival purposes. \n");            
+             cLevel = maxCLevel;
+     }   }
+ #endif

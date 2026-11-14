@@ -1,0 +1,71 @@
+{
+  "all_updates_replayed": 240,
+  "format_check_interval": 20,
+  "runtime": {
+    "python": "3.12.14",
+    "sqlite": "3.53.1"
+  },
+  "checkpoints": [
+    {
+      "step": 20,
+      "bytes": 500375552,
+      "sha256": "1f2fc74ec2ee96d6fb18b71261c6556c0a69108918d58dc5945810c4273241e9"
+    },
+    {
+      "step": 40,
+      "bytes": 500375552,
+      "sha256": "1485abdfd0919dfab029f3221c5c48762a273f453e7810c43964fb535737de2b"
+    },
+    {
+      "step": 60,
+      "bytes": 500375552,
+      "sha256": "1d0df76b1abb3ff3aeaf055d58c6898cf5a3c215bdbec102bec6eb87b5180a41"
+    },
+    {
+      "step": 80,
+      "bytes": 500375552,
+      "sha256": "3d29178333d9ecbfd343c9315a6ca7f54a1bd0c5ea1fefcb9f56704e31de2fdc"
+    },
+    {
+      "step": 100,
+      "bytes": 500375552,
+      "sha256": "3ef5947c2778eab19aadf31c26f4da3d1d8302101d691855bf1b554972a6941c"
+    },
+    {
+      "step": 120,
+      "bytes": 500375552,
+      "sha256": "126d333ba083501d3cf620b835edad81da949f8a8fcb11dafe5e433c86ef6feb"
+    },
+    {
+      "step": 140,
+      "bytes": 500375552,
+      "sha256": "a35e5bc80adc17f6dd31ebf1ebb9269fc431691ae361b5667b78e1bf9185cd35"
+    },
+    {
+      "step": 160,
+      "bytes": 500375552,
+      "sha256": "d93500b12655b6d909c04a333c33cfcee242df777eb697275d3880d16741665d"
+    },
+    {
+      "step": 180,
+      "bytes": 500375552,
+      "sha256": "e6187bdca43f04ca3db4011e095c1a9569cc3ace598d6ae08e2be9664812866f"
+    },
+    {
+      "step": 200,
+      "bytes": 500375552,
+      "sha256": "e2eeff62627a4a6252199a23b7910441cb39ccbb41b54ed0c08aec3184a8e722"
+    },
+    {
+      "step": 220,
+      "bytes": 500375552,
+      "sha256": "9485820c6ebffdcad444d1c11872c178210f97f8ece025565c10a9b7b143f08c"
+    },
+    {
+      "step": 240,
+      "bytes": 500375552,
+      "sha256": "485143465a7c00caeab9c79c7e7afdef99274413a2f8ecdbf0a72dcdaf77c7fb"
+    }
+  ],
+  "performance_results": null
+}

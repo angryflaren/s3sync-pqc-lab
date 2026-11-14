@@ -1,0 +1,20 @@
+diff --git a/lib/common/allocations.h b/lib/common/allocations.h
+index 5e8995501090fd631c0773e2c5ec233e7acc05e6..d4d392998f7870a40c76c2b2850073857b3b7af5 100644
+--- a/lib/common/allocations.h
++++ b/lib/common/allocations.h
+@@ -33,9 +33,13 @@ MEM_STATIC void* ZSTD_customMalloc(size_t size, ZSTD_customMem customMem)
+ MEM_STATIC void* ZSTD_customCalloc(size_t size, ZSTD_customMem customMem)
+ {
+     if (customMem.customAlloc) {
+-        /* calloc implemented as malloc+memset;
+-         * not as efficient as calloc, but next best guess for custom malloc */
++        /* calloc implemented as malloc+memset */
+         void* const ptr = customMem.customAlloc(customMem.opaque, size);
++
++        if (ptr == NULL) {
++            return NULL;
++        }
++
+         ZSTD_memset(ptr, 0, size);
+         return ptr;
+     }

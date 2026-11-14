@@ -1,0 +1,8 @@
+Results: /home/lab/s3sync-lab/project/results-experiment1-pilot/20261107T134939Z-b0a38c13
+fixed-2, repetition 1: 0/3, Full, chain=0
+fixed-2, repetition 1: 3/3, Delta, chain=3
+fixed-4, repetition 1: 0/3, Full, chain=0
+fixed-4, repetition 1: 3/3, Delta, chain=3
+adaptive, repetition 1: 0/3, Full, chain=0
+adaptive, repetition 1: 3/3, Delta, chain=3
+Completed. Summary: /home/lab/s3sync-lab/project/results-experiment1-pilot/20261107T134939Z-b0a38c13/summaries.csv

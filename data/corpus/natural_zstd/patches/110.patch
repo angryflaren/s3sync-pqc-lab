@@ -1,0 +1,466 @@
+diff --git a/contrib/linux-kernel/test/macro-test.sh b/contrib/linux-kernel/test/macro-test.sh
+index 9ea84aa66b1a212a1ae034e35072662e7a17e18d..403870561a0ecdf1402a5ad3850867a5a3289c90 100755
+--- a/contrib/linux-kernel/test/macro-test.sh
++++ b/contrib/linux-kernel/test/macro-test.sh
+@@ -35,6 +35,7 @@ println ""
+ test_not_present "ZSTD_NO_INTRINSICS"
+ test_not_present "ZSTD_NO_UNUSED_FUNCTIONS"
+ test_not_present "ZSTD_LEGACY_SUPPORT"
++test_not_present "ZSTD_LINUX_KERNEL"
+ test_not_present "STATIC_BMI2"
+ test_not_present "ZSTD_DLL_EXPORT"
+ test_not_present "ZSTD_DLL_IMPORT"
+diff --git a/lib/BUCK b/lib/BUCK
+index 5d10cfa10db2949012a4c30883e643f3426c117e..d3ad4ef4682d2b6cd9ba40e0128f30eb7f751c6a 100644
+--- a/lib/BUCK
++++ b/lib/BUCK
+@@ -83,6 +83,7 @@ cxx_library(
+     header_namespace='',
+     visibility=['PUBLIC'],
+     exported_headers=subdir_glob([
++        ('common', 'bmi2.h'),
+         ('common', 'compiler.h'),
+     ]),
+ )
+diff --git a/lib/common/bmi2.h b/lib/common/bmi2.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..8e61e23e253f9235d8c81699afc3c0a1b26b06ea
+--- /dev/null
++++ b/lib/common/bmi2.h
+@@ -0,0 +1,40 @@
++/*
++ * Copyright (c) Meta Platforms, Inc. and affiliates.
++ * All rights reserved.
++ *
++ * This source code is licensed under both the BSD-style license (found in the
++ * LICENSE file in the root directory of this source tree) and the GPLv2 (found
++ * in the COPYING file in the root directory of this source tree).
++ * You may select, at your option, one of the above-listed licenses.
++ */
++
++#ifndef ZSTD_BMI2_H
++#define ZSTD_BMI2_H
++
++#include "portability_macros.h"
++
++#if defined(ZSTD_USE_KERNEL_CPU_FEATURES)
++#  include <asm/cpufeature.h>
++#endif
++
++/*
++ * Select between the BMI2 and default implementations at the final dispatch
++ * site. Integrations may ignore the caller-provided hint and consult their own
++ * CPU-feature policy instead.
++ *
++ * ZSTD_USE_BMI2() may not evaluate its argument. ZSTD_SET_BMI2() may not
++ * evaluate its value argument, which avoids executing the userspace CPUID
++ * probe when the integration supplies the dispatch decision.
++ */
++#if !DYNAMIC_BMI2
++#  define ZSTD_USE_BMI2(bmi2) 0
++#  define ZSTD_SET_BMI2(state, value) do { } while (0)
++#elif defined(ZSTD_USE_KERNEL_CPU_FEATURES)
++#  define ZSTD_USE_BMI2(bmi2) cpu_feature_enabled(X86_FEATURE_BMI2)
++#  define ZSTD_SET_BMI2(state, value) do { (state) = 0; } while (0)
++#else
++#  define ZSTD_USE_BMI2(bmi2) (bmi2)
++#  define ZSTD_SET_BMI2(state, value) do { (state) = (value); } while (0)
++#endif
++
++#endif /* ZSTD_BMI2_H */
+diff --git a/lib/common/entropy_common.c b/lib/common/entropy_common.c
+index d73c8f00baeb80418582b3483449fa0c9a359510..f03a3fabbcc3f0fa9c2c524d85ccd3f8ecacd1d7 100644
+--- a/lib/common/entropy_common.c
++++ b/lib/common/entropy_common.c
+@@ -15,6 +15,7 @@
+ /* *************************************
+ *  Dependencies
+ ***************************************/
++#include "bmi2.h"
+ #include "mem.h"
+ #include "error_private.h"       /* ERR_*, ERROR */
+ #define FSE_STATIC_LINKING_ONLY  /* FSE_MIN_TABLELOG */
+@@ -209,11 +210,9 @@ size_t FSE_readNCount_bmi2(
+         short* normalizedCounter, unsigned* maxSVPtr, unsigned* tableLogPtr,
+         const void* headerBuffer, size_t hbSize, int bmi2)
+ {
+-#if DYNAMIC_BMI2
+-    if (bmi2) {
++    if (ZSTD_USE_BMI2(bmi2)) {
+         return FSE_readNCount_body_bmi2(normalizedCounter, maxSVPtr, tableLogPtr, headerBuffer, hbSize);
+     }
+-#endif
+     (void)bmi2;
+     return FSE_readNCount_body_default(normalizedCounter, maxSVPtr, tableLogPtr, headerBuffer, hbSize);
+ }
+@@ -334,11 +333,9 @@ size_t HUF_readStats_wksp(BYTE* huffWeight, size_t hwSize, U32* rankStats,
+                      void* workSpace, size_t wkspSize,
+                      int flags)
+ {
+-#if DYNAMIC_BMI2
+-    if (flags & HUF_flags_bmi2) {
++    if (ZSTD_USE_BMI2(flags & HUF_flags_bmi2)) {
+         return HUF_readStats_body_bmi2(huffWeight, hwSize, rankStats, nbSymbolsPtr, tableLogPtr, src, srcSize, workSpace, wkspSize);
+     }
+-#endif
+     (void)flags;
+     return HUF_readStats_body_default(huffWeight, hwSize, rankStats, nbSymbolsPtr, tableLogPtr, src, srcSize, workSpace, wkspSize);
+ }
+diff --git a/lib/common/fse_decompress.c b/lib/common/fse_decompress.c
+index 0da22a25bbf4ccb3bbb9941bab91d6550e9b4eab..521f758a594d5a0aa38ae32de063bcfae8f34a69 100644
+--- a/lib/common/fse_decompress.c
++++ b/lib/common/fse_decompress.c
+@@ -18,6 +18,7 @@
+ ****************************************************************/
+ #include "debug.h"      /* assert */
+ #include "bitstream.h"
++#include "bmi2.h"
+ #include "compiler.h"
+ #define FSE_STATIC_LINKING_ONLY
+ #include "fse.h"
+@@ -305,11 +306,9 @@ BMI2_TARGET_ATTRIBUTE static size_t FSE_decompress_wksp_body_bmi2(void* dst, siz
+ 
+ size_t FSE_decompress_wksp_bmi2(void* dst, size_t dstCapacity, const void* cSrc, size_t cSrcSize, unsigned maxLog, void* workSpace, size_t wkspSize, int bmi2)
+ {
+-#if DYNAMIC_BMI2
+-    if (bmi2) {
++    if (ZSTD_USE_BMI2(bmi2)) {
+         return FSE_decompress_wksp_body_bmi2(dst, dstCapacity, cSrc, cSrcSize, maxLog, workSpace, wkspSize);
+     }
+-#endif
+     (void)bmi2;
+     return FSE_decompress_wksp_body_default(dst, dstCapacity, cSrc, cSrcSize, maxLog, workSpace, wkspSize);
+ }
+diff --git a/lib/common/portability_macros.h b/lib/common/portability_macros.h
+index bcca634e4192c800333871de7951a9ce8dbcc275..857822f91eb3bbdfac087cf35c9d38ef2d1f2433 100644
+--- a/lib/common/portability_macros.h
++++ b/lib/common/portability_macros.h
+@@ -102,6 +102,18 @@
+ #  endif
+ #endif
+ 
++/*
++ * The Linux kernel importer consumes the outer guard while preserving the
++ * distinction below. Normal x86 kernel objects can use the kernel CPU-feature
++ * policy, while preboot objects cannot use that infrastructure.
++ */
++#if defined(ZSTD_LINUX_KERNEL)
++#  if defined(__KERNEL__) && defined(CONFIG_X86) && \
++      !defined(__DISABLE_EXPORTS)
++#    define ZSTD_USE_KERNEL_CPU_FEATURES
++#  endif
++#endif
++
+ /**
+  * Only enable assembly for GNU C compatible compilers,
+  * because other platforms may not support GAS assembly syntax.
+diff --git a/lib/compress/huf_compress.c b/lib/compress/huf_compress.c
+index 6f2194e7934846af1e7808fea41d18e6227c4481..009182725c055493a40cee33a88af5ea18b8faaa 100644
+--- a/lib/compress/huf_compress.c
++++ b/lib/compress/huf_compress.c
+@@ -24,6 +24,7 @@
+ *  Includes
+ ****************************************************************/
+ #include "../common/zstd_deps.h"     /* ZSTD_memcpy, ZSTD_memset */
++#include "../common/bmi2.h"
+ #include "../common/compiler.h"
+ #include "../common/bitstream.h"
+ #include "hist.h"
+@@ -1141,9 +1142,10 @@ HUF_compress1X_usingCTable_internal(void* dst, size_t dstSize,
+                               const void* src, size_t srcSize,
+                               const HUF_CElt* CTable, const int flags)
+ {
+-    if (flags & HUF_flags_bmi2) {
++    if (ZSTD_USE_BMI2(flags & HUF_flags_bmi2)) {
+         return HUF_compress1X_usingCTable_internal_bmi2(dst, dstSize, src, srcSize, CTable);
+     }
++    (void)flags;
+     return HUF_compress1X_usingCTable_internal_default(dst, dstSize, src, srcSize, CTable);
+ }
+ 
+diff --git a/lib/compress/zstd_compress.c b/lib/compress/zstd_compress.c
+index 50c3e6f7279047437464b3e2d342ee4a2a6edfe5..38c3fc0d4cde208fbdb12408e6ef2008ab254a67 100644
+--- a/lib/compress/zstd_compress.c
++++ b/lib/compress/zstd_compress.c
+@@ -13,6 +13,7 @@
+ ***************************************/
+ #include "../common/allocations.h"  /* ZSTD_customMalloc, ZSTD_customCalloc, ZSTD_customFree */
+ #include "../common/zstd_deps.h"  /* INT_MAX, ZSTD_memset, ZSTD_memcpy */
++#include "../common/bmi2.h"
+ #include "../common/mem.h"
+ #include "../common/error_private.h"
+ #include "hist.h"           /* HIST_countFast_wksp */
+@@ -113,7 +114,7 @@ static void ZSTD_initCCtx(ZSTD_CCtx* cctx, ZSTD_customMem memManager)
+     ZSTD_memset(cctx, 0, sizeof(*cctx));
+     cctx->customMem = memManager;
+ #if DYNAMIC_BMI2
+-    cctx->bmi2 = ZSTD_cpuSupportsBmi2();
++    ZSTD_SET_BMI2(cctx->bmi2, ZSTD_cpuSupportsBmi2());
+ #endif
+     {   size_t const err = ZSTD_CCtx_reset(cctx, ZSTD_reset_parameters);
+         assert(!ZSTD_isError(err));
+@@ -155,7 +156,7 @@ ZSTD_CCtx* ZSTD_initStaticCCtx(void* workspace, size_t workspaceSize)
+     cctx->tmpWorkspace = ZSTD_cwksp_reserve_object(&cctx->workspace, TMP_WORKSPACE_SIZE);
+     cctx->tmpWkspSize = TMP_WORKSPACE_SIZE;
+ #if DYNAMIC_BMI2
+-    cctx->bmi2 = ZSTD_cpuSupportsBmi2();
++    ZSTD_SET_BMI2(cctx->bmi2, ZSTD_cpuSupportsBmi2());
+ #endif
+     return cctx;
+ }
+diff --git a/lib/compress/zstd_compress_internal.h b/lib/compress/zstd_compress_internal.h
+index e233bc5ff1bd204208a9f08265781b29dad579bc..c15a94da3b501c5a09917a94354f0b158afa39ee 100644
+--- a/lib/compress/zstd_compress_internal.h
++++ b/lib/compress/zstd_compress_internal.h
+@@ -473,9 +473,10 @@ struct ZSTD_CCtx_s {
+     ZSTD_compressionStage_e stage;
+     int cParamsChanged;                  /* == 1 if cParams(except wlog) or compression level are changed in requestedParams. Triggers transmission of new params to ZSTDMT (if available) then reset to 0. */
+ #if DYNAMIC_BMI2
+-    int bmi2;                            /* == 1 if the CPU supports BMI1 & BMI2, determined once per context lifetime.
+-                                          * Never read this directly: use ZSTD_CCtx_get_bmi2(), which also handles builds
+-                                          * where BMI2 is enabled at compile time and this field does not exist. */
++    int bmi2;                            /* == 1 if the CPU supports BMI2 and 0 otherwise when CPU state
++                                          * is cached per context. Never read this directly: use ZSTD_CCtx_get_bmi2(),
++                                          * which also handles builds
++                                          * where cached CPU state is not used. */
+ #endif
+     ZSTD_CCtx_params requestedParams;
+     ZSTD_CCtx_params appliedParams;
+@@ -550,13 +551,15 @@ struct ZSTD_CCtx_s {
+ };
+ 
+ /**
+- * @returns 1 if calls should be dispatched to the BMI2_TARGET_ATTRIBUTE variant
+- *          of a function, rather than to its default variant.
++ * @returns the cached per-context BMI2 dispatch hint, or 0 when the build does
++ *          not use cached CPU state.
+  *
+  * Beware: this is *not* a "does the CPU support BMI2" test. When BMI2 is enabled
+  * at compile time, DYNAMIC_BMI2 is 0: the whole library is already compiled with
+  * BMI2, no separate variant exists, and this returns 0 even though the CPU does
+- * support BMI2. Only ever use it to select between the two variants of a function.
++ * support BMI2. Only use the result as a dispatch hint passed to a lower-level
++ * BMI2/default selector. Integrations may ignore the cached hint and consult
++ * their own CPU-feature policy at that selector.
+  */
+ MEM_STATIC int ZSTD_CCtx_get_bmi2(const struct ZSTD_CCtx_s* cctx) {
+ #if DYNAMIC_BMI2
+diff --git a/lib/compress/zstd_compress_sequences.c b/lib/compress/zstd_compress_sequences.c
+index 2968a9109964205d876348bd7e76fc51e4ea82ad..a7769cba1f3cd061b2388fad94c860cbf191276f 100644
+--- a/lib/compress/zstd_compress_sequences.c
++++ b/lib/compress/zstd_compress_sequences.c
+@@ -11,6 +11,7 @@
+  /*-*************************************
+  *  Dependencies
+  ***************************************/
++#include "../common/bmi2.h"
+ #include "zstd_compress_sequences.h"
+ 
+ /**
+@@ -428,15 +429,13 @@ size_t ZSTD_encodeSequences(
+             SeqDef const* sequences, size_t nbSeq, int longOffsets, int bmi2)
+ {
+     DEBUGLOG(5, "ZSTD_encodeSequences: dstCapacity = %u", (unsigned)dstCapacity);
+-#if DYNAMIC_BMI2
+-    if (bmi2) {
++    if (ZSTD_USE_BMI2(bmi2)) {
+         return ZSTD_encodeSequences_bmi2(dst, dstCapacity,
+                                          CTable_MatchLength, mlCodeTable,
+                                          CTable_OffsetBits, ofCodeTable,
+                                          CTable_LitLength, llCodeTable,
+                                          sequences, nbSeq, longOffsets);
+     }
+-#endif
+     (void)bmi2;
+     return ZSTD_encodeSequences_default(dst, dstCapacity,
+                                         CTable_MatchLength, mlCodeTable,
+diff --git a/lib/decompress/huf_decompress.c b/lib/decompress/huf_decompress.c
+index ae86ba18b8f77f9239d292201e81502935fb12e2..1cf329aae758611503c6415cfe3a25bfb6ff1f54 100644
+--- a/lib/decompress/huf_decompress.c
++++ b/lib/decompress/huf_decompress.c
+@@ -17,6 +17,7 @@
+ ****************************************************************/
+ #include <stddef.h>               /* size_t */
+ #include "../common/zstd_deps.h"  /* ZSTD_memcpy, ZSTD_memset */
++#include "../common/bmi2.h"
+ #include "../common/compiler.h"
+ #include "../common/bitstream.h"  /* BIT_* */
+ #include "../common/fse.h"        /* to compress headers */
+@@ -117,9 +118,10 @@ typedef size_t (*HUF_DecompressUsingDTableFn)(void *dst, size_t dstSize,
+     static size_t fn(void* dst, size_t dstSize, void const* cSrc,           \
+                      size_t cSrcSize, HUF_DTable const* DTable, int flags)  \
+     {                                                                       \
+-        if (flags & HUF_flags_bmi2) {                                       \
++        if (ZSTD_USE_BMI2(flags & HUF_flags_bmi2)) {                        \
+             return fn##_bmi2(dst, dstSize, cSrc, cSrcSize, DTable);         \
+         }                                                                   \
++        (void)flags;                                                        \
+         return fn##_default(dst, dstSize, cSrc, cSrcSize, DTable);          \
+     }
+ 
+@@ -903,18 +905,16 @@ static size_t HUF_decompress4X1_usingDTable_internal(void* dst, size_t dstSize,
+     HUF_DecompressUsingDTableFn fallbackFn = HUF_decompress4X1_usingDTable_internal_default;
+     HUF_DecompressFastLoopFn loopFn = HUF_decompress4X1_usingDTable_internal_fast_c_loop;
+ 
+-#if DYNAMIC_BMI2
+-    if (flags & HUF_flags_bmi2) {
++    if (ZSTD_USE_BMI2(flags & HUF_flags_bmi2)) {
+         fallbackFn = HUF_decompress4X1_usingDTable_internal_bmi2;
+ # if ZSTD_ENABLE_ASM_X86_64_BMI2
+         if (!(flags & HUF_flags_disableAsm)) {
+             loopFn = HUF_decompress4X1_usingDTable_internal_fast_asm_loop;
+         }
+ # endif
+-    } else {
++    } else if (DYNAMIC_BMI2) {
+         return fallbackFn(dst, dstSize, cSrc, cSrcSize, DTable);
+     }
+-#endif
+ 
+ #if ZSTD_ENABLE_ASM_X86_64_BMI2 && defined(__BMI2__)
+     if (!(flags & HUF_flags_disableAsm)) {
+@@ -1735,18 +1735,16 @@ static size_t HUF_decompress4X2_usingDTable_internal(void* dst, size_t dstSize,
+     HUF_DecompressUsingDTableFn fallbackFn = HUF_decompress4X2_usingDTable_internal_default;
+     HUF_DecompressFastLoopFn loopFn = HUF_decompress4X2_usingDTable_internal_fast_c_loop;
+ 
+-#if DYNAMIC_BMI2
+-    if (flags & HUF_flags_bmi2) {
++    if (ZSTD_USE_BMI2(flags & HUF_flags_bmi2)) {
+         fallbackFn = HUF_decompress4X2_usingDTable_internal_bmi2;
+ # if ZSTD_ENABLE_ASM_X86_64_BMI2
+         if (!(flags & HUF_flags_disableAsm)) {
+             loopFn = HUF_decompress4X2_usingDTable_internal_fast_asm_loop;
+         }
+ # endif
+-    } else {
++    } else if (DYNAMIC_BMI2) {
+         return fallbackFn(dst, dstSize, cSrc, cSrcSize, DTable);
+     }
+-#endif
+ 
+ #if ZSTD_ENABLE_ASM_X86_64_BMI2 && defined(__BMI2__)
+     if (!(flags & HUF_flags_disableAsm)) {
+diff --git a/lib/decompress/zstd_decompress.c b/lib/decompress/zstd_decompress.c
+index 7e6e01b47592e1560d6a6fd1bdd1506e0ab97a62..325f0b54dfcb2c77706c224d2c3afb30fe0d1937 100644
+--- a/lib/decompress/zstd_decompress.c
++++ b/lib/decompress/zstd_decompress.c
+@@ -57,6 +57,7 @@
+ *********************************************************/
+ #include "../common/zstd_deps.h"   /* ZSTD_memcpy, ZSTD_memmove, ZSTD_memset */
+ #include "../common/allocations.h"  /* ZSTD_customMalloc, ZSTD_customCalloc, ZSTD_customFree */
++#include "../common/bmi2.h"
+ #include "../common/error_private.h"
+ #include "../common/zstd_internal.h"  /* blockProperties_t */
+ #include "../common/mem.h"         /* low level memory routines */
+@@ -267,7 +268,7 @@ static void ZSTD_initDCtx_internal(ZSTD_DCtx* dctx)
+     dctx->oversizedDuration = 0;
+     dctx->isFrameDecompression = 1;
+ #if DYNAMIC_BMI2
+-    dctx->bmi2 = ZSTD_cpuSupportsBmi2();
++    ZSTD_SET_BMI2(dctx->bmi2, ZSTD_cpuSupportsBmi2());
+ #endif
+     dctx->ddictSet = NULL;
+     ZSTD_DCtx_resetParameters(dctx);
+diff --git a/lib/decompress/zstd_decompress_block.c b/lib/decompress/zstd_decompress_block.c
+index 4087ab7ebc7c074263cfeed2c7eb3370994e6b92..34a22394f7b07b87a50288ba0ae68400000ab2e9 100644
+--- a/lib/decompress/zstd_decompress_block.c
++++ b/lib/decompress/zstd_decompress_block.c
+@@ -15,6 +15,7 @@
+ *  Dependencies
+ *********************************************************/
+ #include "../common/zstd_deps.h"   /* ZSTD_memcpy, ZSTD_memmove, ZSTD_memset */
++#include "../common/bmi2.h"
+ #include "../common/compiler.h"    /* prefetch */
+ #include "../common/mem.h"         /* low level memory routines */
+ #include <stddef.h>
+@@ -629,13 +630,11 @@ void ZSTD_buildFSETable(ZSTD_seqSymbol* dt,
+             const U32* baseValue, const U8* nbAdditionalBits,
+             unsigned tableLog, void* wksp, size_t wkspSize, int bmi2)
+ {
+-#if DYNAMIC_BMI2
+-    if (bmi2) {
++    if (ZSTD_USE_BMI2(bmi2)) {
+         ZSTD_buildFSETable_body_bmi2(dt, normalizedCounter, maxSymbolValue,
+                 baseValue, nbAdditionalBits, tableLog, wksp, wkspSize);
+         return;
+     }
+-#endif
+     (void)bmi2;
+     ZSTD_buildFSETable_body_default(dt, normalizedCounter, maxSymbolValue,
+             baseValue, nbAdditionalBits, tableLog, wksp, wkspSize);
+@@ -2056,11 +2055,9 @@ ZSTD_decompressSequences(ZSTD_DCtx* dctx, void* dst, size_t maxDstSize,
+                    const ZSTD_longOffset_e isLongOffset)
+ {
+     DEBUGLOG(5, "ZSTD_decompressSequences");
+-#if DYNAMIC_BMI2
+-    if (ZSTD_DCtx_get_bmi2(dctx)) {
++    if (ZSTD_USE_BMI2(ZSTD_DCtx_get_bmi2(dctx))) {
+         return ZSTD_decompressSequences_bmi2(dctx, dst, maxDstSize, seqStart, seqSize, nbSeq, isLongOffset);
+     }
+-#endif
+     return ZSTD_decompressSequences_default(dctx, dst, maxDstSize, seqStart, seqSize, nbSeq, isLongOffset);
+ }
+ static size_t
+@@ -2069,11 +2066,9 @@ ZSTD_decompressSequencesSplitLitBuffer(ZSTD_DCtx* dctx, void* dst, size_t maxDst
+                                  const ZSTD_longOffset_e isLongOffset)
+ {
+     DEBUGLOG(5, "ZSTD_decompressSequencesSplitLitBuffer");
+-#if DYNAMIC_BMI2
+-    if (ZSTD_DCtx_get_bmi2(dctx)) {
++    if (ZSTD_USE_BMI2(ZSTD_DCtx_get_bmi2(dctx))) {
+         return ZSTD_decompressSequencesSplitLitBuffer_bmi2(dctx, dst, maxDstSize, seqStart, seqSize, nbSeq, isLongOffset);
+     }
+-#endif
+     return ZSTD_decompressSequencesSplitLitBuffer_default(dctx, dst, maxDstSize, seqStart, seqSize, nbSeq, isLongOffset);
+ }
+ #endif /* ZSTD_FORCE_DECOMPRESS_SEQUENCES_LONG */
+@@ -2092,11 +2087,9 @@ ZSTD_decompressSequencesLong(ZSTD_DCtx* dctx,
+                              const ZSTD_longOffset_e isLongOffset)
+ {
+     DEBUGLOG(5, "ZSTD_decompressSequencesLong");
+-#if DYNAMIC_BMI2
+-    if (ZSTD_DCtx_get_bmi2(dctx)) {
++    if (ZSTD_USE_BMI2(ZSTD_DCtx_get_bmi2(dctx))) {
+         return ZSTD_decompressSequencesLong_bmi2(dctx, dst, maxDstSize, seqStart, seqSize, nbSeq, isLongOffset);
+     }
+-#endif
+   return ZSTD_decompressSequencesLong_default(dctx, dst, maxDstSize, seqStart, seqSize, nbSeq, isLongOffset);
+ }
+ #endif /* ZSTD_FORCE_DECOMPRESS_SEQUENCES_SHORT */
+diff --git a/lib/decompress/zstd_decompress_internal.h b/lib/decompress/zstd_decompress_internal.h
+index 07b9732b4d456271cc895646644f32ba88beee4b..58a5bc8cc8f5874666b44e6b591c5bb1b6db9d4b 100644
+--- a/lib/decompress/zstd_decompress_internal.h
++++ b/lib/decompress/zstd_decompress_internal.h
+@@ -155,9 +155,10 @@ struct ZSTD_DCtx_s
+     size_t staticSize;
+     int isFrameDecompression;
+ #if DYNAMIC_BMI2
+-    int bmi2;                     /* == 1 if the CPU supports BMI1 & BMI2, determined once per context lifetime.
+-                                   * Never read this directly: use ZSTD_DCtx_get_bmi2(), which also handles builds
+-                                   * where BMI2 is enabled at compile time and this field does not exist. */
++    int bmi2;                     /* == 1 if the CPU supports BMI2 and 0 otherwise when CPU state
++                                   * is cached per context. Never read this directly: use ZSTD_DCtx_get_bmi2(),
++                                   * which also handles builds
++                                   * where cached CPU state is not used. */
+ #endif
+ 
+     /* dictionary */
+@@ -213,13 +214,15 @@ struct ZSTD_DCtx_s
+ };  /* typedef'd to ZSTD_DCtx within "zstd.h" */
+ 
+ /**
+- * @returns 1 if calls should be dispatched to the BMI2_TARGET_ATTRIBUTE variant
+- *          of a function, rather than to its default variant.
++ * @returns the cached per-context BMI2 dispatch hint, or 0 when the build does
++ *          not use cached CPU state.
+  *
+  * Beware: this is *not* a "does the CPU support BMI2" test. When BMI2 is enabled
+  * at compile time, DYNAMIC_BMI2 is 0: the whole library is already compiled with
+  * BMI2, no separate variant exists, and this returns 0 even though the CPU does
+- * support BMI2. Only ever use it to select between the two variants of a function.
++ * support BMI2. Only use the result as a dispatch hint passed to a lower-level
++ * BMI2/default selector. Integrations may ignore the cached hint and consult
++ * their own CPU-feature policy at that selector.
+  */
+ MEM_STATIC int ZSTD_DCtx_get_bmi2(const struct ZSTD_DCtx_s *dctx) {
+ #if DYNAMIC_BMI2

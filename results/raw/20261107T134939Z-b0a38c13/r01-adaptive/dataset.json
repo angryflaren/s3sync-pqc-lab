@@ -1,0 +1,11 @@
+{
+  "Name": "single-file-v1",
+  "Updates": 240,
+  "Initial": {
+    "Length": 500375552,
+    "Sha256": "477b691d8e490056c7a863e4860deee78dfde6eccbd6492afdcf70569a14fe76"
+  },
+  "ManifestSha256": "84e0df0d984d2156cc5dbff6ac5a48651ef83b1cd92146e59309f0ffb42f5190",
+  "HistorySha256": "4f8977c24bdb161399bef8df6cda03aa38c143152f36747577fd01d1b7cbbd0f",
+  "Runtime": "{\u0022python\u0022: \u00223.14.4\u0022, \u0022sqlite\u0022: \u00223.46.1\u0022, \u0022rows\u0022: 243712, \u0022steps\u0022: 240, \u0022changedRows\u0022: 8192}; script-sha256=89f22dc69d14f51389e0b910ab1fe346e895b1e6e67e1f0abbf20b4ff6daacb8"
+}

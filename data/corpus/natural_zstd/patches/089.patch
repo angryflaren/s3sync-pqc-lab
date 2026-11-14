@@ -1,0 +1,13 @@
+diff --git a/.github/workflows/android-ndk-build.yml b/.github/workflows/android-ndk-build.yml
+index 890d6fb7c9d55dd0b3e7b3ea0ed2c21ddf69068b..bd4aa6fde7fe1ee9ad2160a94e897e5abbc1fb9e 100644
+--- a/.github/workflows/android-ndk-build.yml
++++ b/.github/workflows/android-ndk-build.yml
+@@ -22,7 +22,7 @@ jobs:
+         distribution: 'temurin'
+ 
+     - name: Setup Android SDK
+-      uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3.2.2
++      uses: android-actions/setup-android@651bceb6f9ca583f16b8d75b62c36ded2ae6fc9c # v4.0.0
+ 
+     - name: Install Android NDK
+       run: |

@@ -1,0 +1,133 @@
+{
+  "Format": 1,
+  "Status": "completed",
+  "Group": "9836c6e71f0a496b9cd75a281ce07fbf",
+  "ObjectPrefix": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4",
+  "HeadKey": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/HEAD.json",
+  "Version": 240,
+  "Root": "8b3f927a42dac9c50bf68ea8e2433687d4b24cbe93a2f0ca26c88c10e63b716e257dcbbd960fb102d4ba5e8c383a3e3a",
+  "File": {
+    "Length": 500375552,
+    "Sha256": "2ca9c7d9ad74e2eb3cd1f49afe1e0e302ca94020130930c2118bd24dbf42cdca"
+  },
+  "Head": {
+    "Format": 1,
+    "Group": "9836c6e71f0a496b9cd75a281ce07fbf",
+    "Version": 240,
+    "Root": "8b3f927a42dac9c50bf68ea8e2433687d4b24cbe93a2f0ca26c88c10e63b716e257dcbbd960fb102d4ba5e8c383a3e3a",
+    "Objects": [
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/2336271795771bebda85f5b17f240e0bf0ff94b539034948f9b457ff29def5c3bf3400f89ac10edf4fb6ff7260369539.bin",
+        "Root": "2336271795771bebda85f5b17f240e0bf0ff94b539034948f9b457ff29def5c3bf3400f89ac10edf4fb6ff7260369539",
+        "Bytes": 500380530,
+        "Version": 225,
+        "Kind": "Full"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/b6dac7811fc38177609c27016e53dbfed70d64804bba9cc6af667b8252388128d0ff12032ca75d092820ffd1cf60bb7e.bin",
+        "Root": "b6dac7811fc38177609c27016e53dbfed70d64804bba9cc6af667b8252388128d0ff12032ca75d092820ffd1cf60bb7e",
+        "Bytes": 33775414,
+        "Version": 226,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/7fc73d464b8a9fc6ab6e9879db2f78f5dfe035bcac9b4871d440f725855533ae9e8c11656d47b8bb8bdef64fcb61f7e6.bin",
+        "Root": "7fc73d464b8a9fc6ab6e9879db2f78f5dfe035bcac9b4871d440f725855533ae9e8c11656d47b8bb8bdef64fcb61f7e6",
+        "Bytes": 33775414,
+        "Version": 227,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/75ee15a31d9ae08615e3288529883c915f8696d69df605cb11411755cc8478b85e6b453b917b1938ea78ea1b1eb74b1c.bin",
+        "Root": "75ee15a31d9ae08615e3288529883c915f8696d69df605cb11411755cc8478b85e6b453b917b1938ea78ea1b1eb74b1c",
+        "Bytes": 33775414,
+        "Version": 228,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/1fe48fd07ab48f34ef4a697f635fe9f3dd61db630fdf2f34f13d7cb49877effec67042eaae5c67c6724c53b0c019687b.bin",
+        "Root": "1fe48fd07ab48f34ef4a697f635fe9f3dd61db630fdf2f34f13d7cb49877effec67042eaae5c67c6724c53b0c019687b",
+        "Bytes": 33775414,
+        "Version": 229,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/359dfe631b6bb11b043d4baddd90a7d4d877a1b4dd727c77f58289d4261e61fb18b9242a88bfecba6f7e1ac3c0156c4e.bin",
+        "Root": "359dfe631b6bb11b043d4baddd90a7d4d877a1b4dd727c77f58289d4261e61fb18b9242a88bfecba6f7e1ac3c0156c4e",
+        "Bytes": 33775414,
+        "Version": 230,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/92fa904e313183a2981b6af19fdeec45d341f2603634123a50e4126e5da1dbf93e9fd4036e90c42b18153ce336696113.bin",
+        "Root": "92fa904e313183a2981b6af19fdeec45d341f2603634123a50e4126e5da1dbf93e9fd4036e90c42b18153ce336696113",
+        "Bytes": 33775414,
+        "Version": 231,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/f34e9d386312d01db58fc1ccf012c9d03a4542d5d2d293c93a3cafd9e49ce78d0d9c017e70d06b11a003b2213a84bacb.bin",
+        "Root": "f34e9d386312d01db58fc1ccf012c9d03a4542d5d2d293c93a3cafd9e49ce78d0d9c017e70d06b11a003b2213a84bacb",
+        "Bytes": 33775414,
+        "Version": 232,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/57fb5441cbf6fd67234c3c4e3cd62d64c3c2e1a15af9bb1cd6e07e1ff43fa7f28f2ab1f05d4f04c5f4f00b2b54548a88.bin",
+        "Root": "57fb5441cbf6fd67234c3c4e3cd62d64c3c2e1a15af9bb1cd6e07e1ff43fa7f28f2ab1f05d4f04c5f4f00b2b54548a88",
+        "Bytes": 33775414,
+        "Version": 233,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/3565896e74697e63d14a804a600fde25c418d3b52c801b71a9b3f66db99a57a002d48857127d3133df9eef118907dd40.bin",
+        "Root": "3565896e74697e63d14a804a600fde25c418d3b52c801b71a9b3f66db99a57a002d48857127d3133df9eef118907dd40",
+        "Bytes": 33775414,
+        "Version": 234,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/20bf145cdea6609bf59b70fb3ac2d39b1fadd59cfae581f9d7f4bc59b2f1f9fb6499bdd1f7918071cf531787951a4098.bin",
+        "Root": "20bf145cdea6609bf59b70fb3ac2d39b1fadd59cfae581f9d7f4bc59b2f1f9fb6499bdd1f7918071cf531787951a4098",
+        "Bytes": 33775414,
+        "Version": 235,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/f2d672b1ab3b78ed9f8567fbd0dcdfd1fc85a8077a07cc06e55f282574d8dd2b401601c4bcd2cff112efe2c05ef4f95b.bin",
+        "Root": "f2d672b1ab3b78ed9f8567fbd0dcdfd1fc85a8077a07cc06e55f282574d8dd2b401601c4bcd2cff112efe2c05ef4f95b",
+        "Bytes": 33775414,
+        "Version": 236,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/f0ecfa55cde3244992f1f05987dc16d36875b13fcb2570da297d7e57a8fd3b3c76ba8a19a23e7748f067931050192e40.bin",
+        "Root": "f0ecfa55cde3244992f1f05987dc16d36875b13fcb2570da297d7e57a8fd3b3c76ba8a19a23e7748f067931050192e40",
+        "Bytes": 33775414,
+        "Version": 237,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/dc8759495f6cc3fca2428e1aeade22f1f83fe7f2e39d3411acc035e92e55a249eab036e8f1572c0c85d50110d977523e.bin",
+        "Root": "dc8759495f6cc3fca2428e1aeade22f1f83fe7f2e39d3411acc035e92e55a249eab036e8f1572c0c85d50110d977523e",
+        "Bytes": 33775414,
+        "Version": 238,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/5ad8630e7f00421f83578114d201d565a00d215c451d9d169cb1d365351f11d5d53b892ba197264b781465c093e635e8.bin",
+        "Root": "5ad8630e7f00421f83578114d201d565a00d215c451d9d169cb1d365351f11d5d53b892ba197264b781465c093e635e8",
+        "Bytes": 33775414,
+        "Version": 239,
+        "Kind": "Delta"
+      },
+      {
+        "Key": "s3sync-lab/20261107T135327Z-6e96f042/r01-fixed-4/objects/8b3f927a42dac9c50bf68ea8e2433687d4b24cbe93a2f0ca26c88c10e63b716e257dcbbd960fb102d4ba5e8c383a3e3a.bin",
+        "Root": "8b3f927a42dac9c50bf68ea8e2433687d4b24cbe93a2f0ca26c88c10e63b716e257dcbbd960fb102d4ba5e8c383a3e3a",
+        "Bytes": 33775397,
+        "Version": 240,
+        "Kind": "Delta"
+      }
+    ]
+  }
+}

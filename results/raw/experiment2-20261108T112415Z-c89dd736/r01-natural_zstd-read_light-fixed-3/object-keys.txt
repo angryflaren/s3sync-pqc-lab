@@ -1,0 +1,5 @@
+s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-3/HEAD.json
+s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-3/objects/dcfc981bcae31452659bca1861d7efded271cf4f3e447dc199466cf417fac86c8e714af0550636c29a84a95a5b6f8e8d.bin
+s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-3/objects/5dac4bc90d7392e99a9f2fad25aeaf868f1dff2c93b0ef02ce9413d301526a8d89d7376df17f23f2d5f7620fd23546f0.bin
+s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-3/objects/37486aff90de229767d811d4a63d2d035f879bc493952f9a3a453cacac9be400aef7dcd07f68ba0b32d0c4ac094271b8.bin
+s3sync-lab/exp2-zstd-pilot-v3/experiment2-20261108T112415Z-c89dd736/r01-natural_zstd-read_light-fixed-3/objects/d6b802a7f479a12dac416cf83c4368793693fc54d17bd5f1b312c8fb7425ef1f8430dc134b5a628a378f98174c450d71.bin

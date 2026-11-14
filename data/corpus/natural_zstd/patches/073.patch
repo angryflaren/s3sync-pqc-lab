@@ -1,0 +1,13 @@
+diff --git a/programs/zstdcli.c b/programs/zstdcli.c
+index 01760ff8c4570ad52983c5d69751335dfb42889d..34db7bf51a0058d3378cb23de9eec05492077f56 100644
+--- a/programs/zstdcli.c
++++ b/programs/zstdcli.c
+@@ -264,7 +264,7 @@ static void usageAdvanced(const char* programName)
+     DISPLAYOUT("  --format=lzma                 Compress files to the `.lzma` format.\n");
+ #endif
+ #ifdef ZSTD_LZ4COMPRESS
+-    DISPLAYOUT( "  --format=lz4                 Compress files to the `.lz4` format.\n");
++    DISPLAYOUT( "  --format=lz4                  Compress files to the `.lz4` format.\n");
+ #endif
+ #endif  /* !ZSTD_NOCOMPRESS */
+ 
